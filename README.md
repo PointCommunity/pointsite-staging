@@ -6,6 +6,11 @@ A complete, responsive, GitHub-owned replacement for the current Point ATX SnapP
 
 The published website is intentionally read-only. It has no visitor-facing editor, admin panel, sign-in, database, content mutation API, or code-writing capability. Only collaborators with write access to the GitHub repository can change the site, and every published change is traceable to a commit and deployment.
 
+This staging repository adds a Worker wrapper that denies anonymous requests and
+validates the shared PointSite Builder GitHub session through the Builder before
+serving static assets. A separate staging probe secret permits read-only CI
+verification. `workers.dev` and preview URLs remain disabled.
+
 ## Everyday editing
 
 The main editing surface is [`content/site.ts`](content/site.ts). It contains:

@@ -1,0 +1,1399 @@
+{
+  "schemaVersion": 1,
+  "rendererVersion": "1.0.0",
+  "site": {
+    "name": "Point Community Church",
+    "shortName": "Point ATX",
+    "mission": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+    "email": "connect@pointaustin.org",
+    "address": {
+      "street": "11300 Old San Antonio Rd",
+      "city": "Manchaca",
+      "region": "TX",
+      "postalCode": "78652"
+    },
+    "service": {
+      "label": "Sunday Gathering",
+      "schedule": "Sunday at 10:30 AM"
+    },
+    "givingUrl": "https://subsplash.com/u/-W69J2R/give",
+    "socialLinks": [
+      {
+        "platform": "facebook",
+        "label": "Point ATX on Facebook",
+        "url": "https://www.facebook.com/pointatx/"
+      },
+      {
+        "platform": "instagram",
+        "label": "Point ATX on Instagram",
+        "url": "https://www.instagram.com/pointatx/"
+      }
+    ]
+  },
+  "theme": {
+    "preset": "point-classic",
+    "colors": {
+      "canvas": "#f3f0e8",
+      "surface": "#ffffff",
+      "text": "#20251f",
+      "mutedText": "#4e594d",
+      "primary": "#3e522c",
+      "onPrimary": "#ffffff",
+      "border": "#c9d0c7"
+    },
+    "headingFont": "serif",
+    "bodyFont": "sans",
+    "spacingDensity": "comfortable",
+    "radius": "soft",
+    "buttonStyle": "solid",
+    "surfaceStyle": "warm"
+  },
+  "navigation": [
+    {
+      "id": "00000000-0000-4000-8000-000000007001",
+      "label": "About",
+      "href": "/who-we-are",
+      "children": [
+        {
+          "id": "00000000-0000-4000-8000-000000007002",
+          "label": "Who We Are",
+          "href": "/who-we-are"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000007003",
+          "label": "What We Believe",
+          "href": "/what-we-believe"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000007004",
+          "label": "Leadership",
+          "href": "/leadership"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000007005",
+          "label": "Next Generation",
+          "href": "/next-generation"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000007006",
+      "label": "Connect",
+      "href": "/connect-card",
+      "children": [
+        {
+          "id": "00000000-0000-4000-8000-000000007007",
+          "label": "Connect Card",
+          "href": "/connect-card"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000007008",
+          "label": "Neighborhood Groups",
+          "href": "/neighborhood-groups"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000007009",
+          "label": "Prayer Request",
+          "href": "/prayer-request"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000007010",
+      "label": "Give",
+      "href": "/give",
+      "children": []
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000007011",
+      "label": "Contact",
+      "href": "/contact",
+      "children": []
+    }
+  ],
+  "pages": [
+    {
+      "id": "00000000-0000-4000-8000-000000005000",
+      "title": "Home",
+      "route": "/",
+      "status": "published",
+      "metadata": {
+        "title": "Home | Point Community Church",
+        "description": "Point Community Church in Manchaca, Texas."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001001",
+          "type": "hero",
+          "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+          "mediaId": "00000000-0000-4000-8000-000000002000",
+          "align": "left",
+          "surface": "image",
+          "actions": []
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001002",
+          "type": "heading",
+          "text": "A diverse group of ordinary people",
+          "level": 2,
+          "align": "left",
+          "width": "wide",
+          "supportingText": "We are a family of Jesus followers, empowered by the Spirit to make disciples of Jesus in all of life for the glory of God."
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001003",
+          "type": "splitFeature",
+          "eyebrow": "Life together",
+          "heading": "Neighborhood Groups",
+          "body": "Being the Church is more than a Sunday gathering. Discipleship happens in the everyday stuff of life within a community.",
+          "mediaId": "00000000-0000-4000-8000-000000002001",
+          "mediaAlt": "Friends and families sharing a meal",
+          "mediaSide": "left",
+          "proportion": "half",
+          "align": "center",
+          "surface": "canvas",
+          "action": {
+            "label": "Learn more",
+            "href": "/neighborhood-groups",
+            "style": "primary"
+          }
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001004",
+          "type": "splitFeature",
+          "eyebrow": "Kids ministry",
+          "heading": "Next Generation",
+          "body": "Kids are not the Church of tomorrow, but the Church today. Elementary-age kids and up worship with their parents in a multi-generational environment, while birth through preschool children have a safe, fun place to learn.",
+          "mediaId": "00000000-0000-4000-8000-000000002002",
+          "mediaAlt": "Families worshiping together at Point ATX",
+          "mediaSide": "left",
+          "proportion": "half",
+          "align": "center",
+          "surface": "surface",
+          "action": {
+            "label": "Learn more",
+            "href": "/next-generation",
+            "style": "primary"
+          }
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001005",
+          "type": "map",
+          "query": "11300 Old San Antonio Rd, Manchaca, TX 78652",
+          "title": "Map to Point Community Church"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005001",
+      "title": "Who We Are",
+      "route": "/who-we-are",
+      "status": "published",
+      "metadata": {
+        "title": "Who We Are | Point Community Church",
+        "description": "We are a family of disciples on mission."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001006",
+          "type": "hero",
+          "eyebrow": "About Point",
+          "heading": "Who We Are",
+          "body": "We are a family of disciples on mission.",
+          "mediaId": "00000000-0000-4000-8000-000000002009",
+          "align": "left",
+          "surface": "image",
+          "actions": []
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001007",
+          "type": "richText",
+          "content": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "Every Sunday at 10:30am, we gather at 11300 Old San Antonio Rd. to celebrate what God has done for us in the Gospel of Jesus and what God is doing through us as a body of believers. Everyone is welcome."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "We worship through singing, the study of the Bible and preaching, communion, testimonies of God’s faithfulness, baptism, and prayer."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001008",
+          "type": "cards",
+          "heading": "Family. Disciples. Mission.",
+          "columns": 3,
+          "items": [
+            {
+              "title": "Family",
+              "body": "As children of God, we provide care and encouragement for one another. Ephesians 2:19–22"
+            },
+            {
+              "title": "Disciples",
+              "body": "We are Jesus-followers growing in the good news that God loves us, Jesus saves us, and the Spirit empowers us. 2 Corinthians 5:17–21"
+            },
+            {
+              "title": "Mission",
+              "body": "We all have a purpose to make more disciples by pointing others to Jesus. Matthew 28:18–20"
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001009",
+          "type": "richText",
+          "content": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "The Bible uses the word “church” to describe people connected to one another because of Jesus. While we have a building and gatherings, the church is not defined by a building we enter or an event we attend. We, the people, are the church."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "God rescued his people through Jesus and calls the church to be his family living on his mission together. Joyfully living out the New Testament’s “one another” commands in light of the gospel is what we mean by being the church together."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005002",
+      "title": "Our Beliefs",
+      "route": "/what-we-believe",
+      "status": "published",
+      "metadata": {
+        "title": "Our Beliefs | Point Community Church",
+        "description": "Seven core beliefs form the foundation of our identity and practice."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001010",
+          "type": "heading",
+          "text": "Our Beliefs",
+          "level": 2,
+          "align": "left",
+          "width": "wide",
+          "supportingText": "We hold to seven core beliefs as the foundation of our identity and practice as a local church. Regardless of your beliefs, you are welcome to learn with us."
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001011",
+          "type": "cards",
+          "heading": "Core Beliefs",
+          "columns": 2,
+          "items": [
+            {
+              "title": "Bible",
+              "body": "We believe the Bible, as revealed to us in the Old and New Testaments, is our final authority and without error in its original manuscripts. Isaiah 40:8; Psalm 19:7; 2 Timothy 3:16; 2 Peter 1:20–21"
+            },
+            {
+              "title": "God",
+              "body": "We believe in one God who exists eternally as three co-equal, fully divine persons: the Father, Son, and Holy Spirit. Deuteronomy 6:4; Matthew 28:19; John 10:30; 2 Corinthians 13:14"
+            },
+            {
+              "title": "Jesus",
+              "body": "We believe that God incarnate, Jesus Christ, is both fully God and fully human at the same time. Isaiah 9:6; Matthew 1:18–25; John 1:1–14; Colossians 2:9"
+            },
+            {
+              "title": "Humanity",
+              "body": "We believe every person has inherent worth and value because they are created in the image of God, and yet every person is a sinner by nature and choice and unable to justify themselves before God by their own deeds. Genesis 1:26–27; Psalm 139:14; Romans 7:18; Ephesians 2:1–3"
+            },
+            {
+              "title": "Jesus’ death & resurrection",
+              "body": "We believe Jesus died in our place for our sins, was buried, and then was physically resurrected to new life. Isaiah 52:13–53:12; John 11:25; Romans 8:11; 1 Peter 2:24"
+            },
+            {
+              "title": "Salvation",
+              "body": "We believe people are reconciled to God and receive the gift of eternal life by the grace of God through faith in Jesus Christ, not as the result of human effort. John 3:16–18; Romans 3:24; Ephesians 2:8–9; Titus 3:5"
+            },
+            {
+              "title": "The return of Christ",
+              "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration. Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001012",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004001",
+          "heading": "Want to learn more?"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005003",
+      "title": "Leadership",
+      "route": "/leadership",
+      "status": "published",
+      "metadata": {
+        "title": "Leadership | Point Community Church",
+        "description": "Meet the leaders who equip our church family."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001013",
+          "type": "people",
+          "personIds": [
+            "00000000-0000-4000-8000-000000006000",
+            "00000000-0000-4000-8000-000000006001",
+            "00000000-0000-4000-8000-000000006002",
+            "00000000-0000-4000-8000-000000006003",
+            "00000000-0000-4000-8000-000000006004"
+          ],
+          "layout": "grid"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001014",
+          "type": "cards",
+          "heading": "Leadership",
+          "columns": 2,
+          "items": [
+            {
+              "title": "Structure",
+              "body": "Jesus Christ is the head of the Church. At each local expression, he calls specific followers to provide leadership and care. Their primary role is to equip the church to be the church."
+            },
+            {
+              "title": "Shared leadership",
+              "body": "Elders are biblically qualified men who govern and teach sound doctrine. Point Community’s Elder Team leads together—equal in authority and accountability, unique in function, and unified in direction and vision."
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001015",
+          "type": "richText",
+          "content": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "The local church was not created to operate in isolation. Our strongest partnership is the Association of Hill Country Churches, committed to reaching every person in Greater Austin with the life-changing reality of Jesus."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "Other partners include Christ Together Austin, Austin Church Planting Network, Austin Disaster Relief Network, TruCare Pregnancy Center, South Austin Young Life, Austin Bridge Builders Alliance, and Akins High School."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005004",
+      "title": "Next Generation",
+      "route": "/next-generation",
+      "status": "published",
+      "metadata": {
+        "title": "Next Generation | Point Community Church",
+        "description": "Kids are not the Church of tomorrow, but the Church today."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001016",
+          "type": "hero",
+          "eyebrow": "Kids Ministry",
+          "heading": "Next Generation",
+          "body": "We believe kids are not the Church of tomorrow, but the Church today.",
+          "mediaId": "00000000-0000-4000-8000-000000002005",
+          "align": "left",
+          "surface": "image",
+          "actions": []
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001017",
+          "type": "splitFeature",
+          "eyebrow": "First Point",
+          "heading": "Next Generation Kids Ministry",
+          "body": "First Point is our ministry for our youngest children. The goal is to point children from birth through preschool toward the amazing love of God. Children are always welcome in the main gathering. All volunteers are required to pass a background check.",
+          "mediaId": "00000000-0000-4000-8000-000000002006",
+          "mediaAlt": "Point ATX kids ministry",
+          "mediaSide": "left",
+          "proportion": "half",
+          "align": "center",
+          "surface": "canvas"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001018",
+          "type": "image",
+          "mediaId": "00000000-0000-4000-8000-000000002007",
+          "alt": "Children and families at Point ATX",
+          "aspect": "natural",
+          "fit": "cover"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001019",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004002",
+          "heading": "Contact Us"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005005",
+      "title": "Connect Card",
+      "route": "/connect-card",
+      "status": "published",
+      "metadata": {
+        "title": "Connect Card | Point Community Church",
+        "description": "We're glad you're here. Tell us a little about yourself."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001020",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004004",
+          "heading": "Connect Card"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005006",
+      "title": "Neighborhood Groups",
+      "route": "/neighborhood-groups",
+      "status": "published",
+      "metadata": {
+        "title": "Neighborhood Groups | Point Community Church",
+        "description": "Smaller groups where we can be the church together."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001021",
+          "type": "hero",
+          "eyebrow": "Church in everyday life",
+          "heading": "Neighborhood Groups",
+          "body": "Neighborhood Groups are smaller groups where we can be the church together in the places we live, work, play, and learn.",
+          "mediaId": "00000000-0000-4000-8000-000000002008",
+          "align": "left",
+          "surface": "image",
+          "actions": []
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001022",
+          "type": "cards",
+          "columns": 3,
+          "items": [
+            {
+              "title": "Elm Grove NG",
+              "body": "Mondays at 5:30pm\n673 Oyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
+            },
+            {
+              "title": "Coves of Cimarron NG",
+              "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: Nick and Jada Shock"
+            },
+            {
+              "title": "Oak Parke NG",
+              "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
+            },
+            {
+              "title": "Hillcrest NG",
+              "body": "Sundays at 6:00pm\nCoats Cove, Austin, TX 78748\nLeaders: Aaron and Haley Negron"
+            },
+            {
+              "title": "Shadow Creek NG",
+              "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler"
+            },
+            {
+              "title": "The Bend at Nuckol’s Crossing NG",
+              "body": "Wednesdays at 6:00pm\nMarble Creek Loop, Austin, TX 78747\nLeaders: Caleb Bryant"
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001023",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004006",
+          "heading": "Live in community with a mission"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001024",
+          "type": "faq",
+          "heading": "Finding your group",
+          "items": [
+            {
+              "question": "What is a Neighborhood Group?",
+              "answer": "A Neighborhood Group is a spiritual family living out Jesus’ mission to make disciples by helping one another grow in love for God and people. It is a family of Jesus followers on God’s mission."
+            },
+            {
+              "question": "Who is a Neighborhood Group for?",
+              "answer": "Neighborhood Groups are for everyone because everyone needs authentic friendships built on grace and truth. They are a safe place to ask hard questions, wrestle with doubts, and mobilize with others to love and serve our city."
+            },
+            {
+              "question": "How should I decide which group to attend?",
+              "answer": "We recommend beginning with the group geographically closest to you, making it easier to share everyday life. If that group does not work for you, another group will gladly welcome you."
+            },
+            {
+              "question": "What should I expect?",
+              "answer": "Groups are friendly, honest, mixed-demographic communities that typically meet in a home. They often share meals, discuss God’s word, and pray with and for each other. Groups are much more than a weekly meeting."
+            },
+            {
+              "question": "What if I have kids?",
+              "answer": "Every Neighborhood Group has childcare, though each group manages it differently. Check with the leader before attending for the details."
+            },
+            {
+              "question": "How can I get connected?",
+              "answer": "We have groups from South Austin to Kyle. Fill out the connection form and someone will contact you, or ask our host team or pastoral staff to introduce you to a group leader on Sunday morning."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005007",
+      "title": "Prayer Requests",
+      "route": "/prayer-request",
+      "status": "published",
+      "metadata": {
+        "title": "Prayer Requests | Point Community Church",
+        "description": "Our team prays for every request we receive."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001025",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004005",
+          "heading": "Prayer Request Form"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005008",
+      "title": "Giving",
+      "route": "/give",
+      "status": "published",
+      "metadata": {
+        "title": "Giving | Point Community Church",
+        "description": "God is generous, and so he calls us to be as well."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001026",
+          "type": "hero",
+          "eyebrow": "Generosity",
+          "heading": "Giving",
+          "body": "God is generous, and so he calls us to be as well.",
+          "mediaId": "00000000-0000-4000-8000-000000002004",
+          "align": "left",
+          "surface": "image",
+          "actions": []
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001027",
+          "type": "richText",
+          "content": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "What we do with what God has given us shows the world where our hearts are and helps proclaim the gospel. We want to glorify God with every area of our lives, including our finances."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001028",
+          "type": "cards",
+          "columns": 2,
+          "items": [
+            {
+              "title": "Give Online",
+              "body": "Give a one-time donation or set up a recurring gift securely through our current giving partner.",
+              "href": "https://subsplash.com/u/-W69J2R/give"
+            },
+            {
+              "title": "Give In Person",
+              "body": "A giving box is available in the back of the sanctuary for cash and check donations."
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001029",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004003",
+          "heading": "Have questions or need help?"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005009",
+      "title": "Contact Us",
+      "route": "/contact",
+      "status": "published",
+      "metadata": {
+        "title": "Contact Us | Point Community Church",
+        "description": "We would love to hear from you."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001030",
+          "type": "richText",
+          "content": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "Office Hours: Monday–Friday, 9am–5pm"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "connect@pointaustin.org"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "text": "11300 Old San Antonio Rd, Manchaca, TX 78652"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001031",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004000",
+          "heading": "Get In Touch"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001032",
+          "type": "cta",
+          "heading": "Building Rental",
+          "body": "Need a space?",
+          "action": {
+            "label": "Request the building",
+            "href": "/building-rental",
+            "style": "primary"
+          },
+          "surface": "surface"
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000005010",
+      "title": "Building Rental",
+      "route": "/building-rental",
+      "status": "published",
+      "metadata": {
+        "title": "Building Rental | Point Community Church",
+        "description": "Tell us about your organization and requested rental."
+      },
+      "blocks": [
+        {
+          "id": "00000000-0000-4000-8000-000000001033",
+          "type": "form",
+          "formId": "00000000-0000-4000-8000-000000004008",
+          "heading": "Building Rental Request"
+        }
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "id": "00000000-0000-4000-8000-000000004000",
+      "name": "Get In Touch",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Get In Touch from PointATX.org",
+      "submitLabel": "Contact Us",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003001",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003002",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003003",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003004",
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004001",
+      "name": "Want to learn more?",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Want to learn more? from PointATX.org",
+      "submitLabel": "Contact Us",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003005",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003006",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003007",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003008",
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004002",
+      "name": "Contact Us",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Contact Us from PointATX.org",
+      "submitLabel": "Contact Us",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003009",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003010",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003011",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003012",
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004003",
+      "name": "Have questions or need help?",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Have questions or need help? from PointATX.org",
+      "submitLabel": "Send",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003013",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003014",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003015",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003016",
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004004",
+      "name": "Connect Card",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Connect Card from PointATX.org",
+      "submitLabel": "Send",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003017",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003018",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003019",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003020",
+          "name": "phone",
+          "label": "Phone",
+          "type": "tel",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003021",
+          "name": "address1",
+          "label": "Address 1",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003022",
+          "name": "address2",
+          "label": "Address 2",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003023",
+          "name": "city",
+          "label": "City",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003024",
+          "name": "state",
+          "label": "State",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003025",
+          "name": "postalCode",
+          "label": "Zip / Postal Code",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003026",
+          "name": "visits",
+          "label": "How many times have you visited?",
+          "type": "radio",
+          "required": false,
+          "options": [
+            "This is my first time",
+            "A few times",
+            "Regular attender"
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003027",
+          "name": "interests",
+          "label": "I would like to learn more about",
+          "type": "checkbox",
+          "required": false,
+          "options": [
+            "Baptism",
+            "Volunteering",
+            "Membership",
+            "Neighborhood Groups",
+            "Jesus"
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003028",
+          "name": "heardAbout",
+          "label": "How did you hear about us?",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003029",
+          "name": "message",
+          "label": "Anything else you'd like to share?",
+          "type": "textarea",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004005",
+      "name": "Prayer Request Form",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Prayer Request Form from PointATX.org",
+      "submitLabel": "Send",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003030",
+          "name": "request",
+          "label": "How can we pray for you?",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003031",
+          "name": "followUp",
+          "label": "Would you like someone to follow up?",
+          "type": "radio",
+          "required": true,
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003032",
+          "name": "firstName",
+          "label": "First Name (optional)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003033",
+          "name": "lastName",
+          "label": "Last Name (optional)",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003034",
+          "name": "email",
+          "label": "Email Address (optional)",
+          "type": "email",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003035",
+          "name": "phone",
+          "label": "Phone Number (optional)",
+          "type": "tel",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004006",
+      "name": "Live in community with a mission",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Live in community with a mission from PointATX.org",
+      "submitLabel": "Send",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003036",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003037",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003038",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003039",
+          "name": "phone",
+          "label": "Phone Number",
+          "type": "tel",
+          "required": false
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003040",
+          "name": "location",
+          "label": "Location",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Southeast Austin",
+            "Southwest Austin",
+            "South Austin",
+            "West Buda",
+            "East Buda",
+            "Kyle"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004007",
+      "name": "Get text & updates on upcoming events",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Get text & updates on upcoming events from PointATX.org",
+      "submitLabel": "Send",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003041",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003042",
+          "name": "phone",
+          "label": "Mobile Phone",
+          "type": "tel",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000004008",
+      "name": "Building Rental Request",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Building Rental Request from PointATX.org",
+      "submitLabel": "Submit",
+      "fields": [
+        {
+          "id": "00000000-0000-4000-8000-000000003043",
+          "name": "firstName",
+          "label": "First Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003044",
+          "name": "lastName",
+          "label": "Last Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003045",
+          "name": "phone",
+          "label": "Phone Number",
+          "type": "tel",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003046",
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003047",
+          "name": "organization",
+          "label": "Organization",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000003048",
+          "name": "schedule",
+          "label": "Day, Time & Length of Rental",
+          "type": "textarea",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "id": "00000000-0000-4000-8000-000000002000",
+      "sourcePath": "/assets/austin-skyline.jpeg",
+      "alt": "Austin skyline over the Colorado River"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002001",
+      "sourcePath": "/assets/neighborhood-table.jpeg",
+      "alt": "Friends and families sharing a meal"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002002",
+      "sourcePath": "/assets/next-generation.jpeg",
+      "alt": "Families worshiping together at Point ATX"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002003",
+      "sourcePath": "/assets/next-generation-secondary.jpeg",
+      "alt": "Point families gathering together"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002004",
+      "sourcePath": "/assets/pages/giving.png",
+      "alt": "Point Community Church giving"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002005",
+      "sourcePath": "/assets/pages/kids-ministry-1.jpeg",
+      "alt": "Children participating in Point kids ministry"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002006",
+      "sourcePath": "/assets/pages/kids-ministry-2.jpeg",
+      "alt": "Point ATX kids ministry"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002007",
+      "sourcePath": "/assets/pages/kids-ministry-3.jpeg",
+      "alt": "Children and families at Point ATX"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002008",
+      "sourcePath": "/assets/pages/neighborhood-map.png",
+      "alt": "Map of Point neighborhood groups"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002009",
+      "sourcePath": "/assets/pages/who-we-are.jpeg",
+      "alt": "Point Community Church gathered together"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002010",
+      "sourcePath": "/assets/people/gonzo-gonzales.jpeg",
+      "alt": "Gonzo Gonzales"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002011",
+      "sourcePath": "/assets/people/josh-currer.jpeg",
+      "alt": "Josh Currer"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002012",
+      "sourcePath": "/assets/people/landon-berryhill.jpeg",
+      "alt": "Landon Berryhill"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002013",
+      "sourcePath": "/assets/people/laura-munoz.jpeg",
+      "alt": "Laura Munoz"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002014",
+      "sourcePath": "/assets/people/nick-shock.jpeg",
+      "alt": "Nick Shock"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002015",
+      "sourcePath": "/assets/people/sandra-louviere.jpeg",
+      "alt": "Sandra Louviere"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002016",
+      "sourcePath": "/assets/people/tim-gillen.jpeg",
+      "alt": "Tim Gillen"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002017",
+      "sourcePath": "/assets/point-logo.png",
+      "alt": "Point Community Church"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002018",
+      "sourcePath": "/assets/point-wordmark.jpeg",
+      "alt": "Point Community Church"
+    }
+  ],
+  "collections": {
+    "people": [
+      {
+        "id": "00000000-0000-4000-8000-000000006000",
+        "name": "Nick Shock",
+        "role": "Leadership & Teaching Elder",
+        "bio": "Nick Shock serves Point Community Church.",
+        "mediaId": "00000000-0000-4000-8000-000000002014",
+        "mediaAlt": "Nick Shock"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000006001",
+        "name": "Josh Currer",
+        "role": "Teaching Elder",
+        "bio": "Josh Currer serves Point Community Church.",
+        "mediaId": "00000000-0000-4000-8000-000000002011",
+        "mediaAlt": "Josh Currer"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000006002",
+        "name": "Gonzo Gonzales",
+        "role": "Elder",
+        "bio": "Gonzo Gonzales serves Point Community Church.",
+        "mediaId": "00000000-0000-4000-8000-000000002010",
+        "mediaAlt": "Gonzo Gonzales"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000006003",
+        "name": "Laura Munoz",
+        "role": "Head of Kids Ministry",
+        "bio": "Laura Munoz serves Point Community Church.",
+        "mediaId": "00000000-0000-4000-8000-000000002013",
+        "mediaAlt": "Laura Munoz"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000006004",
+        "name": "Sandra Louviere",
+        "role": "Administrator",
+        "bio": "Sandra Louviere serves Point Community Church.",
+        "mediaId": "00000000-0000-4000-8000-000000002015",
+        "mediaAlt": "Sandra Louviere"
+      }
+    ],
+    "beliefs": [
+      {
+        "id": "00000000-0000-4000-8000-000000008000",
+        "title": "Bible",
+        "body": "We believe the Bible, as revealed to us in the Old and New Testaments, is our final authority and without error in its original manuscripts.",
+        "references": "Isaiah 40:8; Psalm 19:7; 2 Timothy 3:16; 2 Peter 1:20–21"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008001",
+        "title": "God",
+        "body": "We believe in one God who exists eternally as three co-equal, fully divine persons: the Father, Son, and Holy Spirit.",
+        "references": "Deuteronomy 6:4; Matthew 28:19; John 10:30; 2 Corinthians 13:14"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008002",
+        "title": "Jesus",
+        "body": "We believe that God incarnate, Jesus Christ, is both fully God and fully human at the same time.",
+        "references": "Isaiah 9:6; Matthew 1:18–25; John 1:1–14; Colossians 2:9"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008003",
+        "title": "Humanity",
+        "body": "We believe every person has inherent worth and value because they are created in the image of God, and yet every person is a sinner by nature and choice and unable to justify themselves before God by their own deeds.",
+        "references": "Genesis 1:26–27; Psalm 139:14; Romans 7:18; Ephesians 2:1–3"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008004",
+        "title": "Jesus’ death & resurrection",
+        "body": "We believe Jesus died in our place for our sins, was buried, and then was physically resurrected to new life.",
+        "references": "Isaiah 52:13–53:12; John 11:25; Romans 8:11; 1 Peter 2:24"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008005",
+        "title": "Salvation",
+        "body": "We believe people are reconciled to God and receive the gift of eternal life by the grace of God through faith in Jesus Christ, not as the result of human effort.",
+        "references": "John 3:16–18; Romans 3:24; Ephesians 2:8–9; Titus 3:5"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000008006",
+        "title": "The return of Christ",
+        "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration.",
+        "references": "Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+      }
+    ],
+    "groups": [
+      {
+        "id": "00000000-0000-4000-8000-000000009000",
+        "name": "Elm Grove NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Mondays at 5:30pm",
+        "location": "673 Oyster Creek, Buda, TX 78610",
+        "leaders": "Richard and Rose Paez"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000009001",
+        "name": "Coves of Cimarron NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Tuesdays at 6:00pm",
+        "location": "Lantana Trail, Buda, TX 78610",
+        "leaders": "Nick and Jada Shock"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000009002",
+        "name": "Oak Parke NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Thursdays at 6:00pm",
+        "location": "Leadville Drive, Austin, TX 78749",
+        "leaders": "Jase and Claire Michener"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000009003",
+        "name": "Hillcrest NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Sundays at 6:00pm",
+        "location": "Coats Cove, Austin, TX 78748",
+        "leaders": "Aaron and Haley Negron"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000009004",
+        "name": "Shadow Creek NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Wednesdays at 6:00pm",
+        "location": "South First, Austin, TX 78748",
+        "leaders": "Russel and Kristen Hutzler"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000009005",
+        "name": "The Bend at Nuckol’s Crossing NG",
+        "description": "A Point Community Church Neighborhood Group.",
+        "status": "active",
+        "schedule": "Wednesdays at 6:00pm",
+        "location": "Marble Creek Loop, Austin, TX 78747",
+        "leaders": "Caleb Bryant"
+      }
+    ],
+    "events": []
+  }
+}
