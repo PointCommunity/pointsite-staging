@@ -1,0 +1,31 @@
+name: Quality
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d2343f2ac6e619c4955542695f0987c89a2b927f # v6.0.2
+      - uses: actions/setup-node@2492bc9cb576ffdd42665dc3f3d4a5a1126fbefd # v6.3.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm audit --audit-level=high
+      - name: Verify static-only output
+        run: |
+          test -f out/index.html
+          if rg -i "CF-Access-Jwt-Assertion|GITHUB_APP_PRIVATE_KEY|D1Database|R2Bucket" out; then
+            echo "Private runtime material entered the public bundle"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@330a01c4906d572fd21943251d5b67a08190066a # v5.0.0
+        with:
+          name: pointsite-staging-static
+          path: out
+          retention-days: 7
