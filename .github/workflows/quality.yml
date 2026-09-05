@@ -18,6 +18,8 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run verify:staging
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
       - run: npm audit --audit-level=high
       - name: Verify static-only output
         run: |
@@ -35,4 +37,11 @@ jobs:
         with:
           name: staging-verification-evidence
           path: artifacts/staging-evidence.json
+          retention-days: 30
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: always()
+        with:
+          name: staging-browser-evidence
+          path: playwright-report
+          if-no-files-found: warn
           retention-days: 30

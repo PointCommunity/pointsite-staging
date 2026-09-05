@@ -13,6 +13,7 @@
     "check": "npm run lint && npm run build",
     "test": "tsx --test tests/*.test.ts",
     "verify:staging": "npm run build && tsx scripts/verify-staging.mts",
+    "test:e2e": "playwright test",
     "sync:site-kit": "tsx scripts/sync-site-kit.mts",
     "deploy:staging": "npm run check && wrangler deploy"
   },
@@ -23,13 +24,15 @@
     "zod": "4.5.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
     "eslint-config-next": "16.3.3",
-    "typescript": "5.9.3",
     "tsx": "4.20.6",
+    "typescript": "5.9.3",
     "wrangler": "4.129.0"
   },
   "type": "module"
