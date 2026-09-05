@@ -35,5 +35,4 @@ jobs:
         run: npx tsx scripts/verify-staging.mts
         env:
           STAGING_URL: ${{ vars.STAGING_URL }}
-          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
-          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}

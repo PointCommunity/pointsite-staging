@@ -19,20 +19,13 @@ interface Manifest {
   candidateChecksum?: string;
 }
 
-export function accessServiceHeaders(
+export function stagingProbeHeaders(
   environment: Record<string, string | undefined> = process.env,
 ): Record<string, string> {
-  const clientId = environment.CF_ACCESS_CLIENT_ID;
-  const clientSecret = environment.CF_ACCESS_CLIENT_SECRET;
-  if (!clientId || !clientSecret) {
-    throw new Error(
-      "Live verification requires a complete Cloudflare Access service credential pair",
-    );
-  }
-  return {
-    "CF-Access-Client-Id": clientId,
-    "CF-Access-Client-Secret": clientSecret,
-  };
+  const secret = environment.STAGING_PROBE_SECRET;
+  if (!secret || secret.length < 32)
+    throw new Error("Live verification requires a staging probe secret");
+  return { "X-PointSite-Staging-Probe": secret };
 }
 
 async function filesBelow(path: string): Promise<string[]> {
@@ -186,7 +179,7 @@ export async function verifyStaging(root = process.cwd()) {
   });
   const liveUrl = process.env.STAGING_URL?.replace(/\/$/, "");
   if (liveUrl) {
-    const serviceHeaders = accessServiceHeaders();
+    const serviceHeaders = stagingProbeHeaders();
     const anonymous = await fetch(liveUrl, { redirect: "manual" });
     const anonymousDenied = [301, 302, 303, 307, 308, 401, 403].includes(
       anonymous.status,

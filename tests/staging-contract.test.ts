@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 import {
-  accessServiceHeaders,
   expectedCandidateChecksum,
+  stagingProbeHeaders,
 } from "../scripts/verify-staging.mts";
 
 test("rejects a deliberately corrupted baseline checksum", async () => {
@@ -16,24 +16,14 @@ test("rejects a deliberately corrupted baseline checksum", async () => {
   assert.notEqual(observed, "0".repeat(64));
 });
 
-test("builds Access service headers only from a complete credential pair", () => {
+test("builds a staging-only probe header only from an explicit secret", () => {
   assert.deepEqual(
-    accessServiceHeaders({
-      CF_ACCESS_CLIENT_ID: "client-id",
-      CF_ACCESS_CLIENT_SECRET: "client-secret",
-    }),
-    {
-      "CF-Access-Client-Id": "client-id",
-      "CF-Access-Client-Secret": "client-secret",
-    },
+    stagingProbeHeaders({ STAGING_PROBE_SECRET: "probe-secret-at-least-32-characters" }),
+    { "X-PointSite-Staging-Probe": "probe-secret-at-least-32-characters" },
   );
   assert.throws(
-    () => accessServiceHeaders({ CF_ACCESS_CLIENT_ID: "client-id" }),
-    /complete Cloudflare Access service credential pair/,
-  );
-  assert.throws(
-    () => accessServiceHeaders({}),
-    /complete Cloudflare Access service credential pair/,
+    () => stagingProbeHeaders({}),
+    /staging probe secret/i,
   );
 });
 
@@ -42,4 +32,6 @@ test("pins the PointSite account and disables every workers.dev route", async ()
   assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
   assert.match(config, /"workers_dev": false/);
   assert.match(config, /"preview_urls": false/);
+  assert.match(config, /"main": "\.\/worker\/index\.ts"/);
+  assert.doesNotMatch(config, /cloudflareaccess|r2_buckets/i);
 });
