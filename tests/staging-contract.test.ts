@@ -12,9 +12,14 @@ test("rejects a deliberately corrupted baseline checksum", async () => {
   const content = await readFile("content/builder-site.json", "utf8");
   const manifest = JSON.parse(
     await readFile("content/builder-site.manifest.json", "utf8"),
-  ) as { rendererVersion: string; source: string; sha256: string };
+  ) as {
+    rendererVersion: string;
+    source: string;
+    sha256?: string;
+    candidateChecksum?: string;
+  };
   const observed = await expectedCandidateChecksum(content, manifest);
-  assert.equal(observed, manifest.sha256);
+  assert.equal(observed, manifest.candidateChecksum ?? manifest.sha256);
   assert.notEqual(observed, "0".repeat(64));
 });
 
