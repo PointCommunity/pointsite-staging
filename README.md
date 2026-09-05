@@ -9,7 +9,10 @@ The published website is intentionally read-only. It has no visitor-facing edito
 This staging repository adds a Worker wrapper that denies anonymous requests and
 validates the shared PointSite Builder GitHub session through the Builder before
 serving static assets. A separate staging probe secret permits read-only CI
-verification. `workers.dev` and preview URLs remain disabled.
+verification. The `workers.dev` route is enabled only as an authenticated CI
+probe path because Bot Fight Mode challenges GitHub-hosted runners on the custom
+domain; preview URLs remain disabled. Both hosts execute the same Worker access
+gate before static assets are served.
 
 ## Everyday editing
 

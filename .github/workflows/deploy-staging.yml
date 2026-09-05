@@ -25,7 +25,8 @@ jobs:
       - name: Require the protected staging URL
         env:
           STAGING_URL: ${{ vars.STAGING_URL }}
-        run: test -n "$STAGING_URL"
+          STAGING_CI_URL: ${{ vars.STAGING_CI_URL }}
+        run: test -n "$STAGING_URL" && test -n "$STAGING_CI_URL"
       - name: Deploy exact static export to Cloudflare
         run: npx wrangler deploy
         env:
@@ -34,5 +35,5 @@ jobs:
       - name: Verify deployed staging routes and headers
         run: npx tsx scripts/verify-staging.mts
         env:
-          STAGING_URL: ${{ vars.STAGING_URL }}
+          STAGING_URL: ${{ vars.STAGING_CI_URL }}
           STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}

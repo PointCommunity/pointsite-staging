@@ -54,10 +54,10 @@ test("probes canonical trailing-slash route URLs without redirects", () => {
   );
 });
 
-test("pins the PointSite account and disables every workers.dev route", async () => {
+test("pins the PointSite account and exposes only the authenticated CI route", async () => {
   const config = await readFile("wrangler.jsonc", "utf8");
   assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
-  assert.match(config, /"workers_dev": false/);
+  assert.match(config, /"workers_dev": true/);
   assert.match(config, /"preview_urls": false/);
   assert.match(config, /"pattern": "staging\.pointatx\.org"/);
   assert.match(config, /"custom_domain": true/);
