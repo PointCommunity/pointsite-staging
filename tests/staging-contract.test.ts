@@ -36,3 +36,10 @@ test("builds Access service headers only from a complete credential pair", () =>
     /complete Cloudflare Access service credential pair/,
   );
 });
+
+test("pins the PointSite account and disables every workers.dev route", async () => {
+  const config = await readFile("wrangler.jsonc", "utf8");
+  assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
+  assert.match(config, /"workers_dev": false/);
+  assert.match(config, /"preview_urls": false/);
+});
