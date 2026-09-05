@@ -3,6 +3,7 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 import {
   expectedCandidateChecksum,
+  liveRouteUrl,
   stagingProbeHeaders,
 } from "../scripts/verify-staging.mts";
 
@@ -18,12 +19,22 @@ test("rejects a deliberately corrupted baseline checksum", async () => {
 
 test("builds a staging-only probe header only from an explicit secret", () => {
   assert.deepEqual(
-    stagingProbeHeaders({ STAGING_PROBE_SECRET: "probe-secret-at-least-32-characters" }),
+    stagingProbeHeaders({
+      STAGING_PROBE_SECRET: "probe-secret-at-least-32-characters",
+    }),
     { "X-PointSite-Staging-Probe": "probe-secret-at-least-32-characters" },
   );
-  assert.throws(
-    () => stagingProbeHeaders({}),
-    /staging probe secret/i,
+  assert.throws(() => stagingProbeHeaders({}), /staging probe secret/i);
+});
+
+test("probes canonical trailing-slash route URLs without redirects", () => {
+  assert.equal(
+    liveRouteUrl("https://staging.pointatx.org", "/"),
+    "https://staging.pointatx.org/",
+  );
+  assert.equal(
+    liveRouteUrl("https://staging.pointatx.org/", "/who-we-are"),
+    "https://staging.pointatx.org/who-we-are/",
   );
 });
 
@@ -32,6 +43,9 @@ test("pins the PointSite account and disables every workers.dev route", async ()
   assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
   assert.match(config, /"workers_dev": false/);
   assert.match(config, /"preview_urls": false/);
+  assert.match(config, /"pattern": "staging\.pointatx\.org"/);
+  assert.match(config, /"custom_domain": true/);
+  assert.match(config, /"run_worker_first": true/);
   assert.match(config, /"main": "\.\/worker\/index\.ts"/);
   assert.doesNotMatch(config, /cloudflareaccess|r2_buckets/i);
 });

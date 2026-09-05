@@ -28,6 +28,11 @@ export function stagingProbeHeaders(
   return { "X-PointSite-Staging-Probe": secret };
 }
 
+export function liveRouteUrl(origin: string, route: string): string {
+  const base = origin.replace(/\/$/, "");
+  return route === "/" ? `${base}/` : `${base}${route}/`;
+}
+
 async function filesBelow(path: string): Promise<string[]> {
   const entries = await readdir(path, { withFileTypes: true });
   const nested = await Promise.all(
@@ -192,7 +197,7 @@ export async function verifyStaging(root = process.cwd()) {
     for (const page of document.pages.filter(
       (item) => item.status !== "hidden",
     )) {
-      const response = await fetch(`${liveUrl}${page.route}`, {
+      const response = await fetch(liveRouteUrl(liveUrl, page.route), {
         headers: serviceHeaders,
         redirect: "manual",
       });
