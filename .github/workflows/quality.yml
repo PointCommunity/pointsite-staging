@@ -16,6 +16,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm test
+      - run: npm run verify:staging
       - run: npm audit --audit-level=high
       - name: Verify static-only output
         run: |
@@ -29,3 +31,8 @@ jobs:
           name: pointsite-staging-static
           path: out
           retention-days: 7
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: staging-verification-evidence
+          path: artifacts/staging-evidence.json
+          retention-days: 30

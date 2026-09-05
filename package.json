@@ -11,6 +11,8 @@
     "start": "next start",
     "lint": "eslint . --ignore-pattern .next --ignore-pattern out",
     "check": "npm run lint && npm run build",
+    "test": "tsx --test tests/*.test.ts",
+    "verify:staging": "npm run build && tsx scripts/verify-staging.mts",
     "sync:site-kit": "tsx scripts/sync-site-kit.mts",
     "deploy:staging": "npm run check && wrangler deploy"
   },
