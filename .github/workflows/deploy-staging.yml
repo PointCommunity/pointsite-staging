@@ -20,6 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - name: Verify exact candidate before deployment
+        run: npm test && npx tsx scripts/verify-staging.mts
       - name: Require the protected staging URL
         env:
           STAGING_URL: ${{ vars.STAGING_URL }}
