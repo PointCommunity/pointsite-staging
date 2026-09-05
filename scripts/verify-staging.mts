@@ -33,6 +33,32 @@ export function liveRouteUrl(origin: string, route: string): string {
   return route === "/" ? `${base}/` : `${base}${route}/`;
 }
 
+export async function liveResponseDetail(response: Response): Promise<string> {
+  const safeHeaders =
+    response.headers.get("x-content-type-options") === "nosniff" &&
+    response.headers.get("x-frame-options") === "DENY";
+  const diagnostics = [
+    `security headers ${safeHeaders ? "present" : "missing"}`,
+    response.headers.get("cf-mitigated")
+      ? `cf-mitigated=${response.headers.get("cf-mitigated")}`
+      : null,
+    response.headers.get("server")
+      ? `server=${response.headers.get("server")}`
+      : null,
+    response.headers.get("content-type")
+      ? `content-type=${response.headers.get("content-type")}`
+      : null,
+  ].filter(Boolean);
+  if (!response.ok) {
+    const body = (await response.clone().text())
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 240);
+    if (body) diagnostics.push(`body=${JSON.stringify(body)}`);
+  }
+  return `${response.status}; ${diagnostics.join("; ")}`;
+}
+
 async function filesBelow(path: string): Promise<string[]> {
   const entries = await readdir(path, { withFileTypes: true });
   const nested = await Promise.all(
@@ -207,7 +233,7 @@ export async function verifyStaging(root = process.cwd()) {
       checks.push({
         name: `live:${page.route}`,
         passed: response.ok && safeHeaders,
-        detail: `${response.status}; security headers ${safeHeaders ? "present" : "missing"}`,
+        detail: await liveResponseDetail(response),
       });
     }
   }

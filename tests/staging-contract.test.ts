@@ -3,6 +3,7 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 import {
   expectedCandidateChecksum,
+  liveResponseDetail,
   liveRouteUrl,
   stagingProbeHeaders,
 } from "../scripts/verify-staging.mts";
@@ -15,6 +16,21 @@ test("rejects a deliberately corrupted baseline checksum", async () => {
   const observed = await expectedCandidateChecksum(content, manifest);
   assert.equal(observed, manifest.sha256);
   assert.notEqual(observed, "0".repeat(64));
+});
+
+test("reports safe edge diagnostics without exposing request credentials", async () => {
+  const response = new Response("edge denied", {
+    status: 403,
+    headers: {
+      "cf-mitigated": "challenge",
+      "content-type": "text/plain",
+      server: "cloudflare",
+    },
+  });
+  assert.equal(
+    await liveResponseDetail(response),
+    '403; security headers missing; cf-mitigated=challenge; server=cloudflare; content-type=text/plain; body="edge denied"',
+  );
 });
 
 test("builds a staging-only probe header only from an explicit secret", () => {
