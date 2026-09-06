@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "rendererVersion": "1.1.0",
+  "schemaVersion": 2,
+  "rendererVersion": "2.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -126,85 +126,175 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001001",
-          "type": "hero",
-          "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
-          "mediaId": "00000000-0000-4000-8000-000000002000",
-          "align": "left",
-          "surface": "image",
-          "actions": [],
-          "variant": "homeHero"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000001002",
-          "type": "heading",
-          "text": "A diverse group\nof ordinary people",
-          "level": 2,
-          "align": "center",
-          "width": "wide",
-          "supportingText": "We are a family of Jesus followers, empowered by the Spirit to make disciples of Jesus in all of life for the glory of God.",
-          "eyebrow": "Point ATX",
-          "actions": [
+          "id": "a5a5a5a5-0000-4000-8000-000000001001",
+          "type": "section",
+          "name": "hero section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
             {
-              "label": "Who we are",
-              "href": "/who-we-are",
-              "style": "secondary"
-            },
-            {
-              "label": "Our beliefs",
-              "href": "/what-we-believe",
-              "style": "secondary"
+              "id": "5a5a5a5a-0000-4000-8000-000000001001",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001001",
+                "type": "hero",
+                "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+                "mediaId": "00000000-0000-4000-8000-000000002000",
+                "align": "center",
+                "surface": "image",
+                "actions": [],
+                "variant": "homeHero"
+              }
             }
-          ],
-          "variant": "homeIntro"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001003",
-          "type": "splitFeature",
-          "eyebrow": "Life together",
-          "heading": "Neighborhood Groups",
-          "body": "Being the Church is more than a Sunday gathering. Discipleship happens in the everyday stuff of life within a community.",
-          "mediaId": "00000000-0000-4000-8000-000000002001",
-          "mediaAlt": "Friends and families sharing a meal",
-          "mediaSide": "left",
-          "proportion": "half",
-          "align": "center",
-          "surface": "canvas",
-          "action": {
-            "label": "Learn more",
-            "href": "/neighborhood-groups",
-            "style": "primary"
-          },
-          "variant": "photoBanner"
+          "id": "a5a5a5a5-0000-4000-8000-000000001002",
+          "type": "section",
+          "name": "heading section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001002",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001002",
+                "type": "heading",
+                "text": "A diverse group\nof ordinary people",
+                "level": 2,
+                "align": "center",
+                "width": "wide",
+                "supportingText": "We are a family of Jesus followers, empowered by the Spirit to make disciples of Jesus in all of life for the glory of God.",
+                "eyebrow": "Point ATX",
+                "actions": [
+                  {
+                    "label": "Who we are",
+                    "href": "/who-we-are",
+                    "style": "secondary"
+                  },
+                  {
+                    "label": "Our beliefs",
+                    "href": "/what-we-believe",
+                    "style": "secondary"
+                  }
+                ],
+                "variant": "homeIntro"
+              }
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001004",
-          "type": "splitFeature",
-          "eyebrow": "Kids ministry",
-          "heading": "Next Generation",
-          "body": "Kids are not the Church of tomorrow, but the Church today. Elementary-age kids and up worship with their parents in a multi-generational environment, while birth through preschool children have a safe, fun place to learn.",
-          "mediaId": "00000000-0000-4000-8000-000000002002",
-          "mediaAlt": "Families worshiping together at Point ATX",
-          "mediaSide": "left",
-          "proportion": "half",
-          "align": "center",
-          "surface": "canvas",
-          "action": {
-            "label": "Learn more",
-            "href": "/next-generation",
-            "style": "primary"
-          },
-          "variant": "splitFeature"
+          "id": "a5a5a5a5-0000-4000-8000-000000001003",
+          "type": "section",
+          "name": "split Feature section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001003",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001003",
+                "type": "splitFeature",
+                "eyebrow": "Life together",
+                "heading": "Neighborhood Groups",
+                "body": "Being the Church is more than a Sunday gathering. Discipleship happens in the everyday stuff of life within a community.",
+                "mediaId": "00000000-0000-4000-8000-000000002001",
+                "mediaAlt": "Friends and families sharing a meal",
+                "mediaSide": "left",
+                "proportion": "half",
+                "align": "center",
+                "surface": "canvas",
+                "action": {
+                  "label": "Learn more",
+                  "href": "/neighborhood-groups",
+                  "style": "primary"
+                },
+                "variant": "photoBanner"
+              }
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001005",
-          "type": "map",
-          "query": "11300 Old San Antonio Rd, Manchaca, TX 78652",
-          "title": "Map to Point Community Church",
-          "eyebrow": "Come as you are",
-          "heading": "Gathering Times",
-          "body": "Sunday Gatherings: 10:30 AM\n11300 Old San Antonio Rd., Manchaca, TX 78652",
-          "variant": "gathering"
+          "id": "a5a5a5a5-0000-4000-8000-000000001004",
+          "type": "section",
+          "name": "split Feature section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001004",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001004",
+                "type": "splitFeature",
+                "eyebrow": "Kids ministry",
+                "heading": "Next Generation",
+                "body": "Kids are not the Church of tomorrow, but the Church today. Elementary-age kids and up worship with their parents in a multi-generational environment, while birth through preschool children have a safe, fun place to learn.",
+                "mediaId": "00000000-0000-4000-8000-000000002002",
+                "mediaAlt": "Families worshiping together at Point ATX",
+                "mediaSide": "left",
+                "proportion": "half",
+                "align": "center",
+                "surface": "canvas",
+                "action": {
+                  "label": "Learn more",
+                  "href": "/next-generation",
+                  "style": "primary"
+                },
+                "variant": "splitFeature"
+              }
+            }
+          ]
+        },
+        {
+          "id": "a5a5a5a5-0000-4000-8000-000000001005",
+          "type": "section",
+          "name": "map section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001005",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001005",
+                "type": "map",
+                "query": "11300 Old San Antonio Rd, Manchaca, TX 78652",
+                "title": "Map to Point Community Church",
+                "eyebrow": "Come as you are",
+                "heading": "Gathering Times",
+                "body": "Sunday Gatherings: 10:30 AM\n11300 Old San Antonio Rd., Manchaca, TX 78652",
+                "variant": "gathering"
+              }
+            }
+          ]
         }
       ]
     },
@@ -223,72 +313,126 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001006",
-          "type": "cards",
-          "columns": 2,
+          "id": "a5a5a5a5-0000-4000-8000-000000001006",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "eyebrow": "Our Gatherings",
-              "title": "Worship Gathering",
-              "body": "Every Sunday at 10:30am, we gather at 11300 Old San Antonio Rd. to celebrate what God has done for us in the Gospel of Jesus and what God is doing through us as a body of believers. Everyone is welcome.\n\nWe worship through singing, the study of the Bible and preaching, communion, testimonies of God’s faithfulness, baptism, and prayer."
-            },
-            {
-              "eyebrow": "Life together",
-              "title": "Neighborhood Groups",
-              "body": "A Neighborhood Group is a family of Jesus followers living together on God’s mission. It is a smaller expression of the church—ordinary people growing as disciples while making disciples in everyday life.\n\nOur groups meet at various times and places throughout the week."
+              "id": "5a5a5a5a-0000-4000-8000-000000001006",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001006",
+                "type": "cards",
+                "columns": 2,
+                "items": [
+                  {
+                    "eyebrow": "Our Gatherings",
+                    "title": "Worship Gathering",
+                    "body": "Every Sunday at 10:30am, we gather at 11300 Old San Antonio Rd. to celebrate what God has done for us in the Gospel of Jesus and what God is doing through us as a body of believers. Everyone is welcome.\n\nWe worship through singing, the study of the Bible and preaching, communion, testimonies of God’s faithfulness, baptism, and prayer."
+                  },
+                  {
+                    "eyebrow": "Life together",
+                    "title": "Neighborhood Groups",
+                    "body": "A Neighborhood Group is a family of Jesus followers living together on God’s mission. It is a smaller expression of the church—ordinary people growing as disciples while making disciples in everyday life.\n\nOur groups meet at various times and places throughout the week."
+                  }
+                ],
+                "variant": "splitEditorial"
+              }
             }
-          ],
-          "variant": "splitEditorial"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001007",
-          "type": "cards",
-          "eyebrow": "Our Identity",
-          "heading": "Family. Disciples. Mission.",
-          "columns": 3,
+          "id": "a5a5a5a5-0000-4000-8000-000000001007",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "title": "Family",
-              "body": "As children of God, we provide care and encouragement for one another.",
-              "supportingText": "Ephesians 2:19–22"
-            },
-            {
-              "title": "Disciples",
-              "body": "We are Jesus-followers growing in the good news that God loves us, Jesus saves us, and the Spirit empowers us.",
-              "supportingText": "2 Corinthians 5:17–21"
-            },
-            {
-              "title": "Mission",
-              "body": "We all have a purpose to make more disciples by pointing others to Jesus.",
-              "supportingText": "Matthew 28:18–20"
+              "id": "5a5a5a5a-0000-4000-8000-000000001007",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001007",
+                "type": "cards",
+                "eyebrow": "Our Identity",
+                "heading": "Family. Disciples. Mission.",
+                "columns": 3,
+                "items": [
+                  {
+                    "title": "Family",
+                    "body": "As children of God, we provide care and encouragement for one another.",
+                    "supportingText": "Ephesians 2:19–22"
+                  },
+                  {
+                    "title": "Disciples",
+                    "body": "We are Jesus-followers growing in the good news that God loves us, Jesus saves us, and the Spirit empowers us.",
+                    "supportingText": "2 Corinthians 5:17–21"
+                  },
+                  {
+                    "title": "Mission",
+                    "body": "We all have a purpose to make more disciples by pointing others to Jesus.",
+                    "supportingText": "Matthew 28:18–20"
+                  }
+                ],
+                "variant": "identity"
+              }
             }
-          ],
-          "variant": "identity"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001008",
-          "type": "richText",
-          "content": [
+          "id": "a5a5a5a5-0000-4000-8000-000000001008",
+          "type": "section",
+          "name": "rich Text section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
             {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "The Bible uses the word “church” to describe people connected to one another because of Jesus. While we have a building and gatherings, the church is not defined by a building we enter or an event we attend. We, the people, are the church."
-                }
-              ]
-            },
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "God rescued his people through Jesus and calls the church to be his family living on his mission together. Joyfully living out the New Testament’s “one another” commands in light of the gospel is what we mean by being the church together."
-                }
-              ]
+              "id": "5a5a5a5a-0000-4000-8000-000000001008",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001008",
+                "type": "richText",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "The Bible uses the word “church” to describe people connected to one another because of Jesus. While we have a building and gatherings, the church is not defined by a building we enter or an event we attend. We, the people, are the church."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "God rescued his people through Jesus and calls the church to be his family living on his mission together. Joyfully living out the New Testament’s “one another” commands in light of the gospel is what we mean by being the church together."
+                      }
+                    ]
+                  }
+                ],
+                "eyebrow": "More than a building",
+                "heading": "What is the Church anyway?",
+                "variant": "prose"
+              }
             }
-          ],
-          "eyebrow": "More than a building",
-          "heading": "What is the Church anyway?",
-          "variant": "prose"
+          ]
         }
       ]
     },
@@ -306,56 +450,92 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001009",
-          "type": "cards",
-          "eyebrow": "Core Beliefs",
-          "columns": 2,
+          "id": "a5a5a5a5-0000-4000-8000-000000001009",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "title": "Bible",
-              "body": "We believe the Bible, as revealed to us in the Old and New Testaments, is our final authority and without error in its original manuscripts.",
-              "supportingText": "Isaiah 40:8; Psalm 19:7; 2 Timothy 3:16; 2 Peter 1:20–21"
-            },
-            {
-              "title": "God",
-              "body": "We believe in one God who exists eternally as three co-equal, fully divine persons: the Father, Son, and Holy Spirit.",
-              "supportingText": "Deuteronomy 6:4; Matthew 28:19; John 10:30; 2 Corinthians 13:14"
-            },
-            {
-              "title": "Jesus",
-              "body": "We believe that God incarnate, Jesus Christ, is both fully God and fully human at the same time.",
-              "supportingText": "Isaiah 9:6; Matthew 1:18–25; John 1:1–14; Colossians 2:9"
-            },
-            {
-              "title": "Humanity",
-              "body": "We believe every person has inherent worth and value because they are created in the image of God, and yet every person is a sinner by nature and choice and unable to justify themselves before God by their own deeds.",
-              "supportingText": "Genesis 1:26–27; Psalm 139:14; Romans 7:18; Ephesians 2:1–3"
-            },
-            {
-              "title": "Jesus’ death & resurrection",
-              "body": "We believe Jesus died in our place for our sins, was buried, and then was physically resurrected to new life.",
-              "supportingText": "Isaiah 52:13–53:12; John 11:25; Romans 8:11; 1 Peter 2:24"
-            },
-            {
-              "title": "Salvation",
-              "body": "We believe people are reconciled to God and receive the gift of eternal life by the grace of God through faith in Jesus Christ, not as the result of human effort.",
-              "supportingText": "John 3:16–18; Romans 3:24; Ephesians 2:8–9; Titus 3:5"
-            },
-            {
-              "title": "The return of Christ",
-              "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration.",
-              "supportingText": "Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+              "id": "5a5a5a5a-0000-4000-8000-000000001009",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001009",
+                "type": "cards",
+                "eyebrow": "Core Beliefs",
+                "columns": 2,
+                "items": [
+                  {
+                    "title": "Bible",
+                    "body": "We believe the Bible, as revealed to us in the Old and New Testaments, is our final authority and without error in its original manuscripts.",
+                    "supportingText": "Isaiah 40:8; Psalm 19:7; 2 Timothy 3:16; 2 Peter 1:20–21"
+                  },
+                  {
+                    "title": "God",
+                    "body": "We believe in one God who exists eternally as three co-equal, fully divine persons: the Father, Son, and Holy Spirit.",
+                    "supportingText": "Deuteronomy 6:4; Matthew 28:19; John 10:30; 2 Corinthians 13:14"
+                  },
+                  {
+                    "title": "Jesus",
+                    "body": "We believe that God incarnate, Jesus Christ, is both fully God and fully human at the same time.",
+                    "supportingText": "Isaiah 9:6; Matthew 1:18–25; John 1:1–14; Colossians 2:9"
+                  },
+                  {
+                    "title": "Humanity",
+                    "body": "We believe every person has inherent worth and value because they are created in the image of God, and yet every person is a sinner by nature and choice and unable to justify themselves before God by their own deeds.",
+                    "supportingText": "Genesis 1:26–27; Psalm 139:14; Romans 7:18; Ephesians 2:1–3"
+                  },
+                  {
+                    "title": "Jesus’ death & resurrection",
+                    "body": "We believe Jesus died in our place for our sins, was buried, and then was physically resurrected to new life.",
+                    "supportingText": "Isaiah 52:13–53:12; John 11:25; Romans 8:11; 1 Peter 2:24"
+                  },
+                  {
+                    "title": "Salvation",
+                    "body": "We believe people are reconciled to God and receive the gift of eternal life by the grace of God through faith in Jesus Christ, not as the result of human effort.",
+                    "supportingText": "John 3:16–18; Romans 3:24; Ephesians 2:8–9; Titus 3:5"
+                  },
+                  {
+                    "title": "The return of Christ",
+                    "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration.",
+                    "supportingText": "Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+                  }
+                ],
+                "variant": "beliefs"
+              }
             }
-          ],
-          "variant": "beliefs"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001010",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004001",
-          "heading": "Want to learn more?",
-          "supportingText": "We'd love to hear from you. Fill out the form below to get started.",
-          "variant": "panel"
+          "id": "a5a5a5a5-0000-4000-8000-000000001010",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001010",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001010",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004001",
+                "heading": "Want to learn more?",
+                "supportingText": "We'd love to hear from you. Fill out the form below to get started.",
+                "variant": "panel"
+              }
+            }
+          ]
         }
       ]
     },
@@ -373,61 +553,115 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001011",
-          "type": "people",
-          "personIds": [
-            "00000000-0000-4000-8000-000000006000",
-            "00000000-0000-4000-8000-000000006001",
-            "00000000-0000-4000-8000-000000006002",
-            "00000000-0000-4000-8000-000000006003",
-            "00000000-0000-4000-8000-000000006004"
-          ],
-          "layout": "grid",
-          "variant": "leadership"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000001012",
-          "type": "cards",
-          "heading": "Leadership",
-          "columns": 2,
+          "id": "a5a5a5a5-0000-4000-8000-000000001011",
+          "type": "section",
+          "name": "people section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "eyebrow": "Leadership",
-              "title": "Structure",
-              "body": "Jesus Christ is the head of the Church. At each local expression, he calls specific followers to provide leadership and care. Their primary role is to equip the church to be the church, not to take on the entire ministry of the congregation themselves."
-            },
-            {
-              "eyebrow": "Elders",
-              "title": "Shared leadership",
-              "body": "Elders are biblically qualified men who govern and teach sound doctrine. Point Community’s Elder Team leads together—equal in authority and accountability, unique in function, and unified in direction and vision."
+              "id": "5a5a5a5a-0000-4000-8000-000000001011",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001011",
+                "type": "people",
+                "personIds": [
+                  "00000000-0000-4000-8000-000000006000",
+                  "00000000-0000-4000-8000-000000006001",
+                  "00000000-0000-4000-8000-000000006002",
+                  "00000000-0000-4000-8000-000000006003",
+                  "00000000-0000-4000-8000-000000006004"
+                ],
+                "layout": "grid",
+                "variant": "leadership"
+              }
             }
-          ],
-          "variant": "splitEditorialTone"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001013",
-          "type": "richText",
-          "content": [
+          "id": "a5a5a5a5-0000-4000-8000-000000001012",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
             {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "The local church was not created to operate in isolation. Our strongest partnership is the Association of Hill Country Churches, committed to reaching every person in Greater Austin with the life-changing reality of Jesus."
-                }
-              ]
-            },
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "Other partners include Christ Together Austin, Austin Church Planting Network, Austin Disaster Relief Network, TruCare Pregnancy Center, South Austin Young Life, Austin Bridge Builders Alliance, and Akins High School."
-                }
-              ]
+              "id": "5a5a5a5a-0000-4000-8000-000000001012",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001012",
+                "type": "cards",
+                "heading": "Leadership",
+                "columns": 2,
+                "items": [
+                  {
+                    "eyebrow": "Leadership",
+                    "title": "Structure",
+                    "body": "Jesus Christ is the head of the Church. At each local expression, he calls specific followers to provide leadership and care. Their primary role is to equip the church to be the church, not to take on the entire ministry of the congregation themselves."
+                  },
+                  {
+                    "eyebrow": "Elders",
+                    "title": "Shared leadership",
+                    "body": "Elders are biblically qualified men who govern and teach sound doctrine. Point Community’s Elder Team leads together—equal in authority and accountability, unique in function, and unified in direction and vision."
+                  }
+                ],
+                "variant": "splitEditorialTone"
+              }
             }
-          ],
-          "eyebrow": "Partnerships",
-          "heading": "Serving Austin together",
-          "variant": "prose"
+          ]
+        },
+        {
+          "id": "a5a5a5a5-0000-4000-8000-000000001013",
+          "type": "section",
+          "name": "rich Text section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001013",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001013",
+                "type": "richText",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "The local church was not created to operate in isolation. Our strongest partnership is the Association of Hill Country Churches, committed to reaching every person in Greater Austin with the life-changing reality of Jesus."
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "Other partners include Christ Together Austin, Austin Church Planting Network, Austin Disaster Relief Network, TruCare Pregnancy Center, South Austin Young Life, Austin Bridge Builders Alliance, and Akins High School."
+                      }
+                    ]
+                  }
+                ],
+                "eyebrow": "Partnerships",
+                "heading": "Serving Austin together",
+                "variant": "prose"
+              }
+            }
+          ]
         }
       ]
     },
@@ -446,38 +680,92 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001014",
-          "type": "splitFeature",
-          "eyebrow": "First Point",
-          "heading": "Next Generation\nKids Ministry",
-          "body": "First Point is our ministry for our youngest children. The goal is to point children from birth through preschool toward the amazing love of God. Our volunteers love and serve these little lives week in and week out using the First Look curriculum.\n\nChildren are always welcome in the main gathering. If you need to step out with an infant, audio of the message is available in the lobby.",
-          "mediaId": "00000000-0000-4000-8000-000000002006",
-          "mediaAlt": "Point ATX kids ministry",
-          "mediaSide": "left",
-          "proportion": "half",
-          "align": "center",
-          "surface": "canvas",
-          "note": "All volunteers are required to pass a background check before working in kids ministry.",
-          "calloutLabel": "Sunday Morning Child Care",
-          "calloutValue": "10:30am",
-          "variant": "imageSplit"
+          "id": "a5a5a5a5-0000-4000-8000-000000001014",
+          "type": "section",
+          "name": "split Feature section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001014",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001014",
+                "type": "splitFeature",
+                "eyebrow": "First Point",
+                "heading": "Next Generation\nKids Ministry",
+                "body": "First Point is our ministry for our youngest children. The goal is to point children from birth through preschool toward the amazing love of God. Our volunteers love and serve these little lives week in and week out using the First Look curriculum.\n\nChildren are always welcome in the main gathering. If you need to step out with an infant, audio of the message is available in the lobby.",
+                "mediaId": "00000000-0000-4000-8000-000000002006",
+                "mediaAlt": "Point ATX kids ministry",
+                "mediaSide": "left",
+                "proportion": "half",
+                "align": "center",
+                "surface": "canvas",
+                "note": "All volunteers are required to pass a background check before working in kids ministry.",
+                "calloutLabel": "Sunday Morning Child Care",
+                "calloutValue": "10:30am",
+                "variant": "imageSplit"
+              }
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001015",
-          "type": "image",
-          "mediaId": "00000000-0000-4000-8000-000000002007",
-          "alt": "Children and families at Point ATX",
-          "aspect": "natural",
-          "fit": "cover",
-          "variant": "wide"
+          "id": "a5a5a5a5-0000-4000-8000-000000001015",
+          "type": "section",
+          "name": "image section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001015",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001015",
+                "type": "image",
+                "mediaId": "00000000-0000-4000-8000-000000002007",
+                "alt": "Children and families at Point ATX",
+                "aspect": "natural",
+                "fit": "cover",
+                "variant": "wide"
+              }
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001016",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004002",
-          "heading": "Contact Us",
-          "supportingText": "We'd love to answer your questions about kids ministry.",
-          "variant": "panel"
+          "id": "a5a5a5a5-0000-4000-8000-000000001016",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001016",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001016",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004002",
+                "heading": "Contact Us",
+                "supportingText": "We'd love to answer your questions about kids ministry.",
+                "variant": "panel"
+              }
+            }
+          ]
         }
       ]
     },
@@ -495,11 +783,29 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001017",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004004",
-          "heading": "Connect Card",
-          "variant": "standalone"
+          "id": "a5a5a5a5-0000-4000-8000-000000001017",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001017",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001017",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004004",
+                "heading": "Connect Card",
+                "variant": "standalone"
+              }
+            }
+          ]
         }
       ]
     },
@@ -518,77 +824,131 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001018",
-          "type": "cards",
-          "columns": 3,
+          "id": "a5a5a5a5-0000-4000-8000-000000001018",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "title": "Elm Grove NG",
-              "body": "Mondays at 5:30pm\n673 Oyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
-            },
-            {
-              "title": "Coves of Cimarron NG",
-              "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: Nick and Jada Shock"
-            },
-            {
-              "title": "Oak Parke NG",
-              "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
-            },
-            {
-              "title": "Hillcrest NG",
-              "body": "Sundays at 6:00pm\nCoats Cove, Austin, TX 78748\nLeaders: Aaron and Haley Negron"
-            },
-            {
-              "title": "Shadow Creek NG",
-              "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler"
-            },
-            {
-              "title": "The Bend at Nuckol’s Crossing NG",
-              "body": "Wednesdays at 6:00pm\nMarble Creek Loop, Austin, TX 78747\nLeaders: Caleb Bryant"
+              "id": "5a5a5a5a-0000-4000-8000-000000001018",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001018",
+                "type": "cards",
+                "columns": 3,
+                "items": [
+                  {
+                    "title": "Elm Grove NG",
+                    "body": "Mondays at 5:30pm\n673 Oyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
+                  },
+                  {
+                    "title": "Coves of Cimarron NG",
+                    "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: Nick and Jada Shock"
+                  },
+                  {
+                    "title": "Oak Parke NG",
+                    "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
+                  },
+                  {
+                    "title": "Hillcrest NG",
+                    "body": "Sundays at 6:00pm\nCoats Cove, Austin, TX 78748\nLeaders: Aaron and Haley Negron"
+                  },
+                  {
+                    "title": "Shadow Creek NG",
+                    "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler"
+                  },
+                  {
+                    "title": "The Bend at Nuckol’s Crossing NG",
+                    "body": "Wednesdays at 6:00pm\nMarble Creek Loop, Austin, TX 78747\nLeaders: Caleb Bryant"
+                  }
+                ],
+                "variant": "groups"
+              }
             }
-          ],
-          "variant": "groups"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001019",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004006",
-          "heading": "Live in community with a mission",
-          "supportingText": "Submit this form and we will help you find a Neighborhood Group near you.",
-          "variant": "panel"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000001020",
-          "type": "faq",
-          "heading": "Finding your group",
+          "id": "a5a5a5a5-0000-4000-8000-000000001019",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "question": "What is a Neighborhood Group?",
-              "answer": "A Neighborhood Group is a spiritual family living out Jesus’ mission to make disciples by helping one another grow in love for God and people. It is a family of Jesus followers on God’s mission."
-            },
-            {
-              "question": "Who is a Neighborhood Group for?",
-              "answer": "Neighborhood Groups are for everyone because everyone needs authentic friendships built on grace and truth. They are a safe place to ask hard questions, wrestle with doubts, and mobilize with others to love and serve our city."
-            },
-            {
-              "question": "How should I decide which group to attend?",
-              "answer": "We recommend beginning with the group geographically closest to you, making it easier to share everyday life. If that group does not work for you, another group will gladly welcome you."
-            },
-            {
-              "question": "What should I expect?",
-              "answer": "Groups are friendly, honest, mixed-demographic communities that typically meet in a home. They often share meals, discuss God’s word, and pray with and for each other. Groups are much more than a weekly meeting."
-            },
-            {
-              "question": "What if I have kids?",
-              "answer": "Every Neighborhood Group has childcare, though each group manages it differently. Check with the leader before attending for the details."
-            },
-            {
-              "question": "How can I get connected?",
-              "answer": "We have groups from South Austin to Kyle. Fill out the connection form and someone will contact you, or ask our host team or pastoral staff to introduce you to a group leader on Sunday morning."
+              "id": "5a5a5a5a-0000-4000-8000-000000001019",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001019",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004006",
+                "heading": "Live in community with a mission",
+                "supportingText": "Submit this form and we will help you find a Neighborhood Group near you.",
+                "variant": "panel"
+              }
             }
-          ],
-          "eyebrow": "Common questions",
-          "variant": "groups"
+          ]
+        },
+        {
+          "id": "a5a5a5a5-0000-4000-8000-000000001020",
+          "type": "section",
+          "name": "faq section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001020",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001020",
+                "type": "faq",
+                "heading": "Finding your group",
+                "items": [
+                  {
+                    "question": "What is a Neighborhood Group?",
+                    "answer": "A Neighborhood Group is a spiritual family living out Jesus’ mission to make disciples by helping one another grow in love for God and people. It is a family of Jesus followers on God’s mission."
+                  },
+                  {
+                    "question": "Who is a Neighborhood Group for?",
+                    "answer": "Neighborhood Groups are for everyone because everyone needs authentic friendships built on grace and truth. They are a safe place to ask hard questions, wrestle with doubts, and mobilize with others to love and serve our city."
+                  },
+                  {
+                    "question": "How should I decide which group to attend?",
+                    "answer": "We recommend beginning with the group geographically closest to you, making it easier to share everyday life. If that group does not work for you, another group will gladly welcome you."
+                  },
+                  {
+                    "question": "What should I expect?",
+                    "answer": "Groups are friendly, honest, mixed-demographic communities that typically meet in a home. They often share meals, discuss God’s word, and pray with and for each other. Groups are much more than a weekly meeting."
+                  },
+                  {
+                    "question": "What if I have kids?",
+                    "answer": "Every Neighborhood Group has childcare, though each group manages it differently. Check with the leader before attending for the details."
+                  },
+                  {
+                    "question": "How can I get connected?",
+                    "answer": "We have groups from South Austin to Kyle. Fill out the connection form and someone will contact you, or ask our host team or pastoral staff to introduce you to a group leader on Sunday morning."
+                  }
+                ],
+                "eyebrow": "Common questions",
+                "variant": "groups"
+              }
+            }
+          ]
         }
       ]
     },
@@ -606,11 +966,29 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001021",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004005",
-          "heading": "Prayer Request Form",
-          "variant": "standalone"
+          "id": "a5a5a5a5-0000-4000-8000-000000001021",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001021",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001021",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004005",
+                "heading": "Prayer Request Form",
+                "variant": "standalone"
+              }
+            }
+          ]
         }
       ]
     },
@@ -629,46 +1007,100 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001022",
-          "type": "richText",
-          "content": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "text": "What we do with what God has given us shows the world where our hearts are and helps proclaim the gospel. We want to glorify God with every area of our lives, including our finances."
-                }
-              ]
-            }
-          ],
-          "eyebrow": "Why we give",
-          "heading": "Generosity is worship",
-          "variant": "prose"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000001023",
-          "type": "cards",
-          "columns": 2,
+          "id": "a5a5a5a5-0000-4000-8000-000000001022",
+          "type": "section",
+          "name": "rich Text section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
           "items": [
             {
-              "title": "Give Online",
-              "body": "Give a one-time donation or set up a recurring gift securely through our current giving partner.",
-              "href": "https://subsplash.com/u/-W69J2R/give"
-            },
-            {
-              "title": "Give In Person",
-              "body": "A giving box is available in the back of the sanctuary for cash and check donations."
+              "id": "5a5a5a5a-0000-4000-8000-000000001022",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001022",
+                "type": "richText",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "text": "What we do with what God has given us shows the world where our hearts are and helps proclaim the gospel. We want to glorify God with every area of our lives, including our finances."
+                      }
+                    ]
+                  }
+                ],
+                "eyebrow": "Why we give",
+                "heading": "Generosity is worship",
+                "variant": "prose"
+              }
             }
-          ],
-          "variant": "giving"
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001024",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004003",
-          "heading": "Have questions or need help?",
-          "supportingText": "We'd love to hear from you.",
-          "variant": "panel"
+          "id": "a5a5a5a5-0000-4000-8000-000000001023",
+          "type": "section",
+          "name": "cards section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001023",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001023",
+                "type": "cards",
+                "columns": 2,
+                "items": [
+                  {
+                    "title": "Give Online",
+                    "body": "Give a one-time donation or set up a recurring gift securely through our current giving partner.",
+                    "href": "https://subsplash.com/u/-W69J2R/give"
+                  },
+                  {
+                    "title": "Give In Person",
+                    "body": "A giving box is available in the back of the sanctuary for cash and check donations."
+                  }
+                ],
+                "variant": "giving"
+              }
+            }
+          ]
+        },
+        {
+          "id": "a5a5a5a5-0000-4000-8000-000000001024",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001024",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001024",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004003",
+                "heading": "Have questions or need help?",
+                "supportingText": "We'd love to hear from you.",
+                "variant": "panel"
+              }
+            }
+          ]
         }
       ]
     },
@@ -686,29 +1118,65 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001025",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004000",
-          "heading": "Monday–Friday\n9am–5pm",
-          "supportingText": "Fill out the form and we will get back to you as soon as possible.",
-          "eyebrow": "Office Hours",
-          "body": "connect@pointaustin.org\n11300 Old San Antonio Rd, Manchaca, TX 78652",
-          "linkLabel": "Get directions →",
-          "linkHref": "https://maps.google.com/?q=11300+Old+San+Antonio+Rd+Manchaca+TX+78652",
-          "variant": "contact"
+          "id": "a5a5a5a5-0000-4000-8000-000000001025",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001025",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001025",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004000",
+                "heading": "Monday–Friday\n9am–5pm",
+                "supportingText": "Fill out the form and we will get back to you as soon as possible.",
+                "eyebrow": "Office Hours",
+                "body": "connect@pointaustin.org\n11300 Old San Antonio Rd, Manchaca, TX 78652",
+                "linkLabel": "Get directions →",
+                "linkHref": "https://maps.google.com/?q=11300+Old+San+Antonio+Rd+Manchaca+TX+78652",
+                "variant": "contact"
+              }
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000001026",
-          "type": "cta",
-          "heading": "Building Rental",
-          "action": {
-            "label": "Request the building",
-            "href": "/building-rental",
-            "style": "primary"
-          },
-          "surface": "surface",
-          "eyebrow": "Need a space?",
-          "variant": "rental"
+          "id": "a5a5a5a5-0000-4000-8000-000000001026",
+          "type": "section",
+          "name": "cta section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001026",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001026",
+                "type": "cta",
+                "heading": "Building Rental",
+                "action": {
+                  "label": "Request the building",
+                  "href": "/building-rental",
+                  "style": "primary"
+                },
+                "surface": "surface",
+                "eyebrow": "Need a space?",
+                "variant": "rental"
+              }
+            }
+          ]
         }
       ]
     },
@@ -726,11 +1194,29 @@
       },
       "blocks": [
         {
-          "id": "00000000-0000-4000-8000-000000001027",
-          "type": "form",
-          "formId": "00000000-0000-4000-8000-000000004008",
-          "heading": "Building Rental Request",
-          "variant": "standalone"
+          "id": "a5a5a5a5-0000-4000-8000-000000001027",
+          "type": "section",
+          "name": "form section",
+          "layout": "compatibility",
+          "columns": 1,
+          "gap": "none",
+          "width": "full",
+          "surface": "transparent",
+          "padding": "none",
+          "items": [
+            {
+              "id": "5a5a5a5a-0000-4000-8000-000000001027",
+              "span": 12,
+              "align": "stretch",
+              "element": {
+                "id": "00000000-0000-4000-8000-000000001027",
+                "type": "form",
+                "formId": "00000000-0000-4000-8000-000000004008",
+                "heading": "Building Rental Request",
+                "variant": "standalone"
+              }
+            }
+          ]
         }
       ]
     }

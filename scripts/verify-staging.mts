@@ -105,7 +105,7 @@ export async function verifyStaging(root = process.cwd()) {
     name: "document-schema",
     passed: parsed.success,
     detail: parsed.success
-      ? "SiteDocument v1 is valid"
+      ? `SiteDocument v${parsed.data.schemaVersion} is valid`
       : parsed.error.issues
           .slice(0, 5)
           .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
