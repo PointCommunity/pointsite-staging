@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 4,
-  "rendererVersion": "4.0.0",
+  "schemaVersion": 5,
+  "rendererVersion": "5.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -1525,34 +1525,40 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Get In Touch from PointATX.org",
       "submitLabel": "Contact Us",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003001",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003002",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003003",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003004",
           "name": "message",
           "label": "Message",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     },
@@ -1562,34 +1568,40 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Want to learn more? from PointATX.org",
       "submitLabel": "Contact Us",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003005",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003006",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003007",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003008",
           "name": "message",
           "label": "Message",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     },
@@ -1599,34 +1611,40 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Contact Us from PointATX.org",
       "submitLabel": "Contact Us",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003009",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003010",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003011",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003012",
           "name": "message",
           "label": "Message",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     },
@@ -1636,34 +1654,40 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Have questions or need help? from PointATX.org",
       "submitLabel": "Send",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003013",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003014",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003015",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003016",
           "name": "message",
           "label": "Message",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     },
@@ -1673,69 +1697,80 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Connect Card from PointATX.org",
       "submitLabel": "Send",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003017",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003018",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003019",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003020",
           "name": "phone",
           "label": "Phone",
           "type": "tel",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003021",
           "name": "address1",
           "label": "Address 1",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003022",
           "name": "address2",
           "label": "Address 2",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003023",
           "name": "city",
           "label": "City",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003024",
           "name": "state",
           "label": "State",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003025",
           "name": "postalCode",
           "label": "Zip / Postal Code",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003026",
@@ -1747,7 +1782,8 @@
             "This is my first time",
             "A few times",
             "Regular attender"
-          ]
+          ],
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003027",
@@ -1761,21 +1797,24 @@
             "Membership",
             "Neighborhood Groups",
             "Jesus"
-          ]
+          ],
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003028",
           "name": "heardAbout",
           "label": "How did you hear about us?",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003029",
           "name": "message",
           "label": "Anything else you'd like to share?",
           "type": "textarea",
-          "required": false
+          "required": false,
+          "width": "half"
         }
       ]
     },
@@ -1785,13 +1824,16 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Prayer Request Form from PointATX.org",
       "submitLabel": "Send",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003030",
           "name": "request",
           "label": "How can we pray for you?",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003031",
@@ -1802,35 +1844,40 @@
           "options": [
             "Yes",
             "No"
-          ]
+          ],
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003032",
           "name": "firstName",
           "label": "First Name (optional)",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003033",
           "name": "lastName",
           "label": "Last Name (optional)",
           "type": "text",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003034",
           "name": "email",
           "label": "Email Address (optional)",
           "type": "email",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003035",
           "name": "phone",
           "label": "Phone Number (optional)",
           "type": "tel",
-          "required": false
+          "required": false,
+          "width": "half"
         }
       ]
     },
@@ -1840,34 +1887,40 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Live in community with a mission from PointATX.org",
       "submitLabel": "Send",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003036",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003037",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003038",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003039",
           "name": "phone",
           "label": "Phone Number",
           "type": "tel",
-          "required": false
+          "required": false,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003040",
@@ -1882,7 +1935,8 @@
             "West Buda",
             "East Buda",
             "Kyle"
-          ]
+          ],
+          "width": "half"
         }
       ]
     },
@@ -1892,20 +1946,24 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Get text & updates on upcoming events from PointATX.org",
       "submitLabel": "Send",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003041",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003042",
           "name": "phone",
           "label": "Mobile Phone",
           "type": "tel",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     },
@@ -1915,48 +1973,56 @@
       "recipientEmail": "connect@pointaustin.org",
       "subject": "Building Rental Request from PointATX.org",
       "submitLabel": "Submit",
+      "layout": "two-column",
+      "density": "comfortable",
       "fields": [
         {
           "id": "00000000-0000-4000-8000-000000003043",
           "name": "firstName",
           "label": "First Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003044",
           "name": "lastName",
           "label": "Last Name",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003045",
           "name": "phone",
           "label": "Phone Number",
           "type": "tel",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003046",
           "name": "email",
           "label": "Email",
           "type": "email",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003047",
           "name": "organization",
           "label": "Organization",
           "type": "text",
-          "required": true
+          "required": true,
+          "width": "half"
         },
         {
           "id": "00000000-0000-4000-8000-000000003048",
           "name": "schedule",
           "label": "Day, Time & Length of Rental",
           "type": "textarea",
-          "required": true
+          "required": true,
+          "width": "half"
         }
       ]
     }
@@ -2058,6 +2124,7 @@
       "alt": "Point Community Church"
     }
   ],
+  "linkedMedia": [],
   "collections": {
     "people": [
       {
