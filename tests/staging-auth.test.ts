@@ -17,6 +17,8 @@ test("denies anonymous staging requests and validates signed sessions through th
   );
   assert.ok(denied);
   assert.equal(denied.status, 401);
+  assert.match(await denied.text(), /href="https:\/\/builder\.pointatx\.org"/);
+  assert.match(denied.headers.get("content-type") ?? "", /text\/html/);
 
   const allowed = await authorizeStagingRequest(
     new Request("https://staging.pointatx.org/", {

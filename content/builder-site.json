@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 3,
-  "rendererVersion": "3.0.0",
+  "schemaVersion": 4,
+  "rendererVersion": "4.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -135,6 +135,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001001",
@@ -171,6 +174,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001002",
@@ -220,6 +226,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001003",
@@ -265,6 +274,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001004",
@@ -310,6 +322,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001005",
@@ -362,6 +377,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001006",
@@ -406,6 +424,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001007",
@@ -457,6 +478,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001008",
@@ -523,6 +547,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001009",
@@ -593,6 +620,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001010",
@@ -642,6 +672,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001011",
@@ -681,6 +714,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001012",
@@ -726,6 +762,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001013",
@@ -793,6 +832,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001014",
@@ -836,6 +878,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001015",
@@ -871,6 +916,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001016",
@@ -920,6 +968,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001017",
@@ -969,6 +1020,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001018",
@@ -1027,6 +1081,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001019",
@@ -1061,6 +1118,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001020",
@@ -1135,6 +1195,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001021",
@@ -1184,6 +1247,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001022",
@@ -1227,6 +1293,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001023",
@@ -1270,6 +1339,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001024",
@@ -1319,6 +1391,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001025",
@@ -1357,6 +1432,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001026",
@@ -1411,6 +1489,9 @@
           "width": "full",
           "surface": "transparent",
           "padding": "none",
+          "minRows": 1,
+          "backgroundPosition": "center",
+          "overlay": "none",
           "items": [
             {
               "id": "5a5a5a5a-0000-4000-8000-000000001027",
