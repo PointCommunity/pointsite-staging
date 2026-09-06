@@ -6,7 +6,20 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const builder = resolve(root, '../pointsite-builder/src/site-kit');
 const target = join(root, 'site-kit');
-const files = ['SiteRenderer.tsx','canonicalize.ts','default-site.ts','migrations.ts','registry.tsx','schema.ts','site.css','tokens.ts','types.ts','url-policy.ts','version.ts'];
+const files = [
+  'SiteRenderer.tsx',
+  'canonicalize.ts',
+  'default-site.ts',
+  'grid-layout.ts',
+  'migrations.ts',
+  'registry.tsx',
+  'schema.ts',
+  'site.css',
+  'tokens.ts',
+  'types.ts',
+  'url-policy.ts',
+  'version.ts',
+];
 
 await mkdir(target, { recursive: true });
 for (const file of files) await copyFile(join(builder, file), join(target, file));
