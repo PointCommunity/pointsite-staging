@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "rendererVersion": "2.0.0",
+  "schemaVersion": 3,
+  "rendererVersion": "3.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -140,6 +140,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001001",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001001",
                 "type": "hero",
@@ -168,6 +176,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001002",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001002",
                 "type": "heading",
@@ -209,6 +225,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001003",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001003",
                 "type": "splitFeature",
@@ -246,6 +270,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001004",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001004",
                 "type": "splitFeature",
@@ -283,6 +315,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001005",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001005",
                 "type": "map",
@@ -327,6 +367,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001006",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001006",
                 "type": "cards",
@@ -363,6 +411,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001007",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001007",
                 "type": "cards",
@@ -406,6 +462,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001008",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001008",
                 "type": "richText",
@@ -464,6 +528,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001009",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001009",
                 "type": "cards",
@@ -526,6 +598,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001010",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001010",
                 "type": "form",
@@ -567,6 +647,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001011",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001011",
                 "type": "people",
@@ -598,6 +686,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001012",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001012",
                 "type": "cards",
@@ -635,6 +731,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001013",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001013",
                 "type": "richText",
@@ -694,6 +798,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001014",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001014",
                 "type": "splitFeature",
@@ -729,6 +841,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001015",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001015",
                 "type": "image",
@@ -756,6 +876,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001016",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001016",
                 "type": "form",
@@ -797,6 +925,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001017",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001017",
                 "type": "form",
@@ -838,6 +974,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001018",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001018",
                 "type": "cards",
@@ -888,6 +1032,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001019",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001019",
                 "type": "form",
@@ -914,6 +1066,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001020",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001020",
                 "type": "faq",
@@ -980,6 +1140,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001021",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001021",
                 "type": "form",
@@ -1021,6 +1189,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001022",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001022",
                 "type": "richText",
@@ -1056,6 +1232,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001023",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001023",
                 "type": "cards",
@@ -1091,6 +1275,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001024",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001024",
                 "type": "form",
@@ -1132,6 +1324,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001025",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001025",
                 "type": "form",
@@ -1162,6 +1362,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001026",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001026",
                 "type": "cta",
@@ -1208,6 +1416,14 @@
               "id": "5a5a5a5a-0000-4000-8000-000000001027",
               "span": 12,
               "align": "stretch",
+              "grid": {
+                "desktop": {
+                  "column": 1,
+                  "row": 1,
+                  "columnSpan": 12,
+                  "rowSpan": 1
+                }
+              },
               "element": {
                 "id": "00000000-0000-4000-8000-000000001027",
                 "type": "form",
