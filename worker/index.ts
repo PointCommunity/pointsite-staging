@@ -29,6 +29,45 @@ function secured(response: Response): Response {
   return result;
 }
 
+function signInResponse(builderOrigin: string): Response {
+  const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PointSite Staging</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #101510; color: #f4f5f1; }
+      main { width: min(30rem, calc(100% - 2rem)); border: 1px solid #3d4939; background: #192018; padding: 2rem; }
+      p { color: #c5ccbf; line-height: 1.6; }
+      a { display: inline-flex; min-height: 2.75rem; align-items: center; border: 2px solid #9bc574; background: #9bc574; color: #172015; padding: .65rem 1rem; font-weight: 800; text-decoration: none; }
+      a:hover { background: #b2d88e; }
+      a:focus-visible { outline: 3px solid #f4f5f1; outline-offset: 3px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>PointSite staging is protected</h1>
+      <p>Sign in through PointSite Builder to preview staging.</p>
+      <a href="${builderOrigin}">Open PointSite Builder</a>
+    </main>
+  </body>
+</html>`;
+  const response = secured(
+    new Response(html, {
+      status: 401,
+      headers: { "content-type": "text/html; charset=utf-8" },
+    }),
+  );
+  response.headers.set(
+    "content-security-policy",
+    "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+  );
+  return response;
+}
+
 export async function authorizeStagingRequest(
   request: Request,
   env: StagingEnv,
@@ -45,8 +84,7 @@ export async function authorizeStagingRequest(
   if (probe && constantTimeEqual(probe, env.STAGING_PROBE_SECRET)) return null;
 
   const session = sessionCookie(request);
-  if (!session)
-    return secured(new Response("Sign in through PointSite Builder", { status: 401 }));
+  if (!session) return signInResponse(env.BUILDER_ORIGIN);
   const identity = await fetcher(`${env.BUILDER_ORIGIN}/api/me`, {
     headers: { cookie: `__Secure-pointsite_builder_session=${session}` },
     redirect: "manual",

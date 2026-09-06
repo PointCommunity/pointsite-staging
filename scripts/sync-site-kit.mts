@@ -11,6 +11,7 @@ const files = [
   'canonicalize.ts',
   'default-site.ts',
   'grid-layout.ts',
+  'linked-media.ts',
   'migrations.ts',
   'registry.tsx',
   'schema.ts',
