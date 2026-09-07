@@ -1,5 +1,8 @@
 {
-  "rendererVersion": "5.0.0",
-  "sha256": "267ee4bcbad4b0b5ebec812ba760bec1db060aaec1309056a8de1165bcc609bb",
+  "schemaVersion": 8,
+  "rendererVersion": "8.0.0",
+  "revisionId": "52b079b9-678c-4a3a-87c7-7dc8a9fc9eb5",
+  "revisionChecksum": "c5cecefe172b9270bee3fcc2473e00a8eddbce4c23adb2e0320cbe1791721d34",
+  "candidateChecksum": "d8b8fd2dc30dc0d07d2b07cace8310ceba841f8b3e3f462057838937819e5d66",
   "source": "PointCommunity/pointsite-builder"
 }
