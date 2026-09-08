@@ -109,6 +109,12 @@
       "label": "Contact",
       "href": "/contact",
       "children": []
+    },
+    {
+      "id": "2232362b-a6b0-4657-8bba-34f6a1ed8893",
+      "label": "New link",
+      "href": "/",
+      "children": []
     }
   ],
   "pages": [
@@ -3511,6 +3517,14 @@
         "bio": "Sandra Louviere serves Point Community Church.",
         "mediaId": "00000000-0000-4000-8000-000000002015",
         "mediaAlt": "Sandra Louviere"
+      },
+      {
+        "id": "084d507f-4a92-485c-8aea-14b2f111fcaa",
+        "name": "Caleb Bryant",
+        "role": "Deacon",
+        "bio": "Caleb Bryan serves Point Community Church.",
+        "mediaId": "367875a2-0d74-4f9b-b6a3-d2720723cfb0",
+        "mediaAlt": "Caleb Bryant"
       }
     ],
     "beliefs": [
