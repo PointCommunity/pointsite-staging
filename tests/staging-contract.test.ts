@@ -6,6 +6,7 @@ import {
   liveResponseDetail,
   liveRouteUrl,
   stagingProbeHeaders,
+  verifyStagingWithRetry,
 } from "../scripts/verify-staging.mts";
 import { SiteDocumentSchema } from "../site-kit/schema";
 import { RENDERER_IDENTITY } from "../site-kit/version";
@@ -94,6 +95,26 @@ test("probes canonical trailing-slash route URLs without redirects", () => {
   );
 });
 
+test("retries live verification without redeploying until routes converge", async () => {
+  let attempts = 0;
+  const slept: number[] = [];
+  const evidence = await verifyStagingWithRetry(
+    async () => {
+      attempts += 1;
+      return { ok: attempts === 3 } as Awaited<
+        ReturnType<typeof import("../scripts/verify-staging.mts").verifyStaging>
+      >;
+    },
+    [5_000, 15_000, 30_000],
+    async (milliseconds) => {
+      slept.push(milliseconds);
+    },
+  );
+  assert.equal(evidence.ok, true);
+  assert.equal(attempts, 3);
+  assert.deepEqual(slept, [5_000, 15_000]);
+});
+
 test("pins the PointSite account and exposes only the authenticated CI route", async () => {
   const config = await readFile("wrangler.jsonc", "utf8");
   assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
@@ -113,5 +134,6 @@ test("deploys through the idempotent exact-commit coordinator", async () => {
   );
   assert.match(workflow, /npx tsx scripts\/deploy-staging\.mts/);
   assert.match(workflow, /GITHUB_SHA: \$\{\{ github\.sha \}\}/);
+  assert.match(workflow, /STAGING_VERIFY_RETRY_SECONDS: 5,15,30,60/);
   assert.doesNotMatch(workflow, /run: npx wrangler deploy/);
 });

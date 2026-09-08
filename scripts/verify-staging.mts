@@ -251,8 +251,35 @@ export async function verifyStaging(root = process.cwd()) {
   };
 }
 
+export async function verifyStagingWithRetry(
+  verify: () => Promise<Awaited<ReturnType<typeof verifyStaging>>>,
+  delaysMs: number[],
+  sleep: (milliseconds: number) => Promise<void> = (milliseconds) =>
+    new Promise((resolveDelay) => setTimeout(resolveDelay, milliseconds)),
+) {
+  let evidence = await verify();
+  for (const delayMs of delaysMs) {
+    if (evidence.ok) break;
+    process.stderr.write(
+      `Live verification has not converged; retrying in ${delayMs / 1000}s\n`,
+    );
+    await sleep(delayMs);
+    evidence = await verify();
+  }
+  return evidence;
+}
+
 async function main() {
-  const evidence = await verifyStaging(resolve("."));
+  const retrySeconds = (process.env.STAGING_VERIFY_RETRY_SECONDS ?? "")
+    .split(",")
+    .filter(Boolean)
+    .map(Number);
+  if (retrySeconds.some((value) => !Number.isFinite(value) || value < 0))
+    throw new Error("STAGING_VERIFY_RETRY_SECONDS must contain non-negative numbers");
+  const evidence = await verifyStagingWithRetry(
+    () => verifyStaging(resolve(".")),
+    retrySeconds.map((value) => value * 1000),
+  );
   await mkdir("artifacts", { recursive: true });
   await writeFile(
     "artifacts/staging-evidence.json",
