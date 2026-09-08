@@ -38,3 +38,4 @@ jobs:
         env:
           STAGING_URL: ${{ vars.STAGING_CI_URL }}
           STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
+          STAGING_VERIFY_RETRY_SECONDS: 5,15,30,60
