@@ -3457,6 +3457,13 @@
       "id": "00000000-0000-4000-8000-000000002018",
       "sourcePath": "/assets/point-wordmark.jpeg",
       "alt": "Point Community Church"
+    },
+    {
+      "id": "367875a2-0d74-4f9b-b6a3-d2720723cfb0",
+      "sourcePath": "/assets/builder/367875a2-0d74-4f9b-b6a3-d2720723cfb0.png",
+      "alt": "Caleb",
+      "displayName": "Caleb",
+      "tags": []
     }
   ],
   "linkedMedia": [],
