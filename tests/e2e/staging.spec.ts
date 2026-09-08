@@ -57,7 +57,8 @@ test("primary navigation reaches a second generated page without client-only dat
     );
   }
   await page
-    .getByRole("navigation", { name: "Main navigation" })
+    .locator('section[aria-label="Site header"]')
+    .getByRole("navigation")
     .getByRole("link", { name: "About", exact: true })
     .click();
   await expect(page).toHaveURL(/\/who-we-are\/?$/);

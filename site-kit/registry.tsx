@@ -23,6 +23,7 @@ export const blockDefinitions: Record<
   spacer: { label: 'Spacer', supportsMoveButtons: true },
   text: { label: 'Text', supportsMoveButtons: true },
   button: { label: 'Button', supportsMoveButtons: true },
+  navigation: { label: 'Navigation', supportsMoveButtons: true },
 };
 
 function linkAttributes(href: string) {
@@ -46,6 +47,79 @@ function ActionLink({
     >
       {action.label}
     </a>
+  );
+}
+
+function NavigationBlock({
+  block,
+  document,
+  onNavigate,
+}: {
+  block: Extract<SiteElement, { type: 'navigation' }>;
+  document: SiteDocument;
+  onNavigate?: (route: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const navigationId = `point-navigation-${block.id}`;
+  return (
+    <div
+      className={`point-navigation point-navigation--${block.orientation} point-navigation--${block.align} point-navigation--${block.surface}`}
+    >
+      {block.orientation === 'responsive' ? (
+        <button
+          className="point-navigation__toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls={navigationId}
+          onClick={() => setOpen((value) => !value)}
+        >
+          Menu
+        </button>
+      ) : null}
+      <nav
+        id={navigationId}
+        className={
+          open ? 'point-navigation__menu point-navigation__menu--open' : 'point-navigation__menu'
+        }
+        aria-label={block.label}
+        onClick={() => setOpen(false)}
+      >
+        {document.navigation.map((item) => (
+          <div className="point-navigation__item" key={item.id}>
+            <a
+              href={item.href}
+              {...linkAttributes(item.href)}
+              onClick={(event) => {
+                if (!onNavigate || !item.href.startsWith('/')) return;
+                event.preventDefault();
+                onNavigate(item.href);
+              }}
+            >
+              {item.label}
+              {item.children.length ? <span aria-hidden="true">⌄</span> : null}
+            </a>
+            {item.children.length ? (
+              <div className="point-navigation__dropdown">
+                {item.children.map((child) => (
+                  <a
+                    href={child.href}
+                    key={child.id}
+                    {...linkAttributes(child.href)}
+                    onClick={(event) => {
+                      if (!onNavigate || !child.href.startsWith('/')) return;
+                      event.preventDefault();
+                      onNavigate(child.href);
+                    }}
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ))}
+      </nav>
+    </div>
   );
 }
 
@@ -286,10 +360,37 @@ function renderRichContent(block: Extract<SiteElement, { type: 'richText' }>) {
   });
 }
 
-export function renderBlock(block: SiteElement, document: SiteDocument): ReactNode {
+export function renderBlock(
+  block: SiteElement,
+  document: SiteDocument,
+  onNavigate?: (route: string) => void,
+): ReactNode {
   switch (block.type) {
     case 'hero': {
       const media = block.mediaId ? mediaRecord(document, block.mediaId) : undefined;
+      if (block.variant === 'pageHero') {
+        const hasImage = Boolean(media && block.surface === 'image');
+        return (
+          <section
+            className={`page-hero page-hero--${block.surface}${hasImage ? ' page-hero--image' : ''} point-align--${block.align}`}
+          >
+            {hasImage ? <img src={media?.sourcePath} alt="" /> : null}
+            {hasImage ? <div className="hero-shade" aria-hidden="true" /> : null}
+            <div className="shell page-hero-copy">
+              {block.eyebrow ? <p className="eyebrow">{block.eyebrow}</p> : null}
+              <h1>{block.heading}</h1>
+              {block.body ? <p>{block.body}</p> : null}
+              {block.actions.length ? (
+                <div className="point-actions">
+                  {block.actions.map((action, index) => (
+                    <ActionLink action={action} key={index} />
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </section>
+        );
+      }
       if (block.variant === 'homeHero')
         return (
           <section className={`home-hero home-hero--${block.align} home-hero--${block.surface}`}>
@@ -413,7 +514,7 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
     }
     case 'mediaEmbed': {
       const media = document.linkedMedia.find((candidate) => candidate.id === block.linkedMediaId);
-      if (!media) throw new Error(`Missing linked media ${block.linkedMediaId}`);
+      if (!media) return <p className="point-linked-media-missing">Linked media is unavailable.</p>;
       const className = `point-linked-media point-aspect--${block.aspect.replace(':', '-')} point-fit--${block.fit}`;
       const content =
         media.type === 'image' ? (
@@ -444,7 +545,7 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
       if (block.variant === 'photoBanner')
         return (
           <section
-            className={`home-feature home-feature--photo point-feature--${block.mediaSide} point-feature--${block.proportion} point-align-vertical--${block.align} point-surface--${block.surface}`}
+            className={`home-feature home-feature--photo point-feature--${block.mediaSide} point-feature--${block.proportion} point-align--${block.textAlign ?? 'left'} point-align-vertical--${block.align} point-surface--${block.surface}`}
           >
             <img src={media.sourcePath} alt={block.mediaAlt ?? media.alt} loading="lazy" />
             <div className="feature-shade" />
@@ -470,7 +571,7 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
       if (block.variant === 'splitFeature')
         return (
           <section
-            className={`home-feature home-feature--split point-feature--${block.mediaSide} point-feature--${block.proportion} point-align-vertical--${block.align} point-surface--${block.surface} shell`}
+            className={`home-feature home-feature--split point-feature--${block.mediaSide} point-feature--${block.proportion} point-align--${block.textAlign ?? 'left'} point-align-vertical--${block.align} point-surface--${block.surface} shell`}
           >
             <div className="feature-image">
               <img src={media.sourcePath} alt={block.mediaAlt ?? media.alt} loading="lazy" />
@@ -497,7 +598,7 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
       if (block.variant === 'imageSplit')
         return (
           <section
-            className={`content-section split-section image-split point-feature--${block.mediaSide} point-feature--${block.proportion} point-align-vertical--${block.align} point-surface--${block.surface}`}
+            className={`content-section split-section image-split point-feature--${block.mediaSide} point-feature--${block.proportion} point-align--${block.textAlign ?? 'left'} point-align-vertical--${block.align} point-surface--${block.surface}`}
           >
             <div>
               <img
@@ -536,7 +637,7 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
         );
       return (
         <section
-          className={`point-feature point-feature--${block.mediaSide} point-feature--${block.proportion} point-align-vertical--${block.align} point-surface--${block.surface}`}
+          className={`point-feature point-feature--${block.mediaSide} point-feature--${block.proportion} point-align--${block.textAlign ?? 'left'} point-align-vertical--${block.align} point-surface--${block.surface}`}
         >
           <div className="point-feature__media">
             <img src={media.sourcePath} alt={block.mediaAlt ?? media.alt} loading="lazy" />
@@ -896,6 +997,8 @@ export function renderBlock(block: SiteElement, document: SiteDocument): ReactNo
           <ActionLink action={block} />
         </div>
       );
+    case 'navigation':
+      return <NavigationBlock block={block} document={document} onNavigate={onNavigate} />;
     default:
       throw new Error(`Unsupported block type: ${(block as { type: string }).type}`);
   }
@@ -909,10 +1012,14 @@ const sectionTotalGap = {
   large: '33rem',
 } as const;
 
-export function renderSection(section: SectionBlock, document: SiteDocument): ReactNode {
+export function renderSection(
+  section: SectionBlock,
+  document: SiteDocument,
+  onNavigate?: (route: string) => void,
+): ReactNode {
   if (section.layout === 'compatibility') {
     const placement = section.items[0];
-    return placement ? renderBlock(placement.element, document) : null;
+    return placement ? renderBlock(placement.element, document, onNavigate) : null;
   }
 
   const style = {
@@ -925,7 +1032,7 @@ export function renderSection(section: SectionBlock, document: SiteDocument): Re
 
   return (
     <section
-      className={`point-layout-section point-layout-section--${section.layout} point-layout-section--${section.width} point-layout-section--${section.surface} point-layout-section--pad-${section.padding} point-layout-section--overlay-${section.overlay}`}
+      className={`point-layout-section point-layout-section--${section.layout} point-layout-section--position-${section.position} point-layout-section--${section.width} point-layout-section--${section.surface} point-layout-section--pad-${section.padding} point-layout-section--overlay-${section.overlay}`}
       aria-label={section.name}
     >
       {section.backgroundMediaId ? (
@@ -966,7 +1073,7 @@ export function renderSection(section: SectionBlock, document: SiteDocument): Re
               key={placement.id}
               style={placementStyle}
             >
-              {renderBlock(placement.element, document)}
+              {renderBlock(placement.element, document, onNavigate)}
             </div>
           );
         })}

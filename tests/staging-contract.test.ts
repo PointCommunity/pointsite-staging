@@ -7,9 +7,34 @@ import {
   liveRouteUrl,
   stagingProbeHeaders,
 } from "../scripts/verify-staging.mts";
+import { SiteDocumentSchema } from "../site-kit/schema";
+import { RENDERER_IDENTITY } from "../site-kit/version";
 
-test("rejects a deliberately corrupted baseline checksum", async () => {
+test("published candidate matches the committed renderer contract", async () => {
+  const document = JSON.parse(
+    await readFile("content/builder-site.json", "utf8"),
+  ) as { schemaVersion: number; rendererVersion: string };
+  const manifest = JSON.parse(
+    await readFile("content/builder-site.manifest.json", "utf8"),
+  ) as { schemaVersion: number; rendererVersion: string };
+
+  assert.deepEqual(
+    {
+      schemaVersion: document.schemaVersion,
+      rendererVersion: document.rendererVersion,
+    },
+    RENDERER_IDENTITY,
+  );
+  assert.equal(manifest.schemaVersion, RENDERER_IDENTITY.schemaVersion);
+  assert.equal(manifest.rendererVersion, RENDERER_IDENTITY.rendererVersion);
+  assert.doesNotThrow(() => SiteDocumentSchema.parse(document));
+});
+
+test("verifies the published candidate checksum including referenced media", async () => {
   const content = await readFile("content/builder-site.json", "utf8");
+  const document = JSON.parse(content) as {
+    media: Array<{ sourcePath: string }>;
+  };
   const manifest = JSON.parse(
     await readFile("content/builder-site.manifest.json", "utf8"),
   ) as {
@@ -18,7 +43,17 @@ test("rejects a deliberately corrupted baseline checksum", async () => {
     sha256?: string;
     candidateChecksum?: string;
   };
-  const observed = await expectedCandidateChecksum(content, manifest);
+  const media = await Promise.all(
+    document.media
+      .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+      .map(async (item) => ({
+        path: `public${item.sourcePath}`,
+        encoded: Buffer.from(
+          await readFile(`public${item.sourcePath}`),
+        ).toString("base64"),
+      })),
+  );
+  const observed = await expectedCandidateChecksum(content, manifest, media);
   assert.equal(observed, manifest.candidateChecksum ?? manifest.sha256);
   assert.notEqual(observed, "0".repeat(64));
 });
