@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spec: Idempotent Staging Deployment</title>
+    <style>
+      :root { color-scheme: dark; --bg: #0a0f0d; --panel: #141c18; --text: #eef7f0; --muted: #b8c8bd; --accent: #91d39a; --line: #344a3a; }
+      * { box-sizing: border-box; }
+      body { max-width: 960px; margin: auto; padding: 48px 24px 80px; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, sans-serif; }
+      h1, h2 { color: var(--accent); } section { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+      code, pre { color: #dcf5df; } pre { overflow: auto; padding: 16px; background: #070b09; } li, p { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <h1>Idempotent Staging Deployment</h1>
+    <section><h2>Problem</h2><p>Wrangler can upload and activate a Worker, then exit unsuccessfully when a later Cloudflare API lookup fails. A blind job rerun creates a redundant version and leaves Builder reporting a false deployment failure.</p></section>
+    <section><h2>Contract</h2><ul><li>Protected Staging is served only from <code>staging.pointatx.org</code>; <code>workers.dev</code> is disabled.</li><li>Every deployment is tagged with the immutable GitHub commit and labeled with the candidate checksum.</li><li>A normal zero exit remains success.</li><li>Only transient network, rate-limit, or Cloudflare 5xx exits may enter reconciliation.</li><li>Reconciliation succeeds only when the expected tagged version is the latest deployment and receives 100% traffic.</li><li>Confirmed failures remain failures. The existing live verifier remains the final authority.</li></ul></section>
+    <section><h2>Plan</h2><ol><li>Add failing tests for transient classification, exact tagged-version matching, and confirmed failure.</li><li>Implement a testable deployment coordinator with bounded read-only reconciliation retries.</li><li>Replace the raw workflow command and disable <code>workers.dev</code>.</li><li>Run unit, static, browser, and exact-head GitHub verification.</li><li>Publish and accept a controlled Builder revision, then finish Builder Issue #25.</li></ol></section>
+    <section><h2>Boundaries</h2><ul><li>Do not weaken exact-candidate checks, Staging authentication, or security headers.</li><li>Do not write to public Production.</li><li>Do not retry an upload when Cloudflare already activated the expected version.</li><li>Preserve the user-owned dirty Staging checkout; work only in the isolated Issue #12 worktree.</li></ul></section>
+    <section><h2>Verification</h2><pre><code>npm test
+npm run check
+npm run verify:staging
+npm run test:e2e
+git diff --check</code></pre></section>
+  </body>
+</html>

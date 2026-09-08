@@ -97,11 +97,21 @@ test("probes canonical trailing-slash route URLs without redirects", () => {
 test("pins the PointSite account and exposes only the authenticated CI route", async () => {
   const config = await readFile("wrangler.jsonc", "utf8");
   assert.match(config, /"account_id": "bc890091d86ddf9ce669e96e79d47746"/);
-  assert.match(config, /"workers_dev": true/);
+  assert.match(config, /"workers_dev": false/);
   assert.match(config, /"preview_urls": false/);
   assert.match(config, /"pattern": "staging\.pointatx\.org"/);
   assert.match(config, /"custom_domain": true/);
   assert.match(config, /"run_worker_first": true/);
   assert.match(config, /"main": "\.\/worker\/index\.ts"/);
   assert.doesNotMatch(config, /cloudflareaccess|r2_buckets/i);
+});
+
+test("deploys through the idempotent exact-commit coordinator", async () => {
+  const workflow = await readFile(
+    ".github/workflows/deploy-staging.yml",
+    "utf8",
+  );
+  assert.match(workflow, /npx tsx scripts\/deploy-staging\.mts/);
+  assert.match(workflow, /GITHUB_SHA: \$\{\{ github\.sha \}\}/);
+  assert.doesNotMatch(workflow, /run: npx wrangler deploy/);
 });

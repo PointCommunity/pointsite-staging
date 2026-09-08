@@ -15,7 +15,7 @@
     "verify:staging": "npm run build && tsx scripts/verify-staging.mts",
     "test:e2e": "playwright test",
     "sync:site-kit": "tsx scripts/sync-site-kit.mts",
-    "deploy:staging": "npm run check && wrangler deploy"
+    "deploy:staging": "npm run check && tsx scripts/deploy-staging.mts"
   },
   "dependencies": {
     "next": "16.3.3",
