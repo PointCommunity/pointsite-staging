@@ -1,69 +1,10 @@
 'use client';
 
-import { Fragment, useState, type ReactNode } from 'react';
+import { Fragment, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react';
 import { renderSection } from './registry';
 import { themeToTokens } from './tokens';
 import type { PageDocument, SiteDocument } from './types';
 import './site.css';
-
-function mediaSource(document: SiteDocument, id?: string): string | undefined {
-  if (!id) return undefined;
-  return document.media.find((candidate) => candidate.id === id)?.sourcePath;
-}
-
-function SiteHeader({ document, overlay = false }: { document: SiteDocument; overlay?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const logo = document.media.find((candidate) => candidate.sourcePath.endsWith('/point-logo.png'));
-  return (
-    <header className={`site-header ${overlay ? 'site-header--overlay' : ''}`}>
-      <div className="header-inner">
-        <a href="/" className="brand" aria-label={`${document.site.name} home`}>
-          {logo ? (
-            <img src={logo.sourcePath} alt="Point" width="498" height="188" />
-          ) : (
-            document.site.shortName
-          )}
-        </a>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-expanded={open}
-          aria-controls="site-navigation"
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span />
-          <span />
-          <span />
-          <span className="sr-only">Menu</span>
-        </button>
-        <nav
-          id="site-navigation"
-          className={open ? 'nav nav--open' : 'nav'}
-          aria-label="Main navigation"
-          onClick={() => setOpen(false)}
-        >
-          {document.navigation.map((item) => (
-            <div className="nav-item" key={item.id}>
-              <a href={item.href}>
-                {item.label}
-                {item.children.length ? <span aria-hidden="true">⌄</span> : null}
-              </a>
-              {item.children.length ? (
-                <div className="nav-dropdown">
-                  {item.children.map((child) => (
-                    <a href={child.href} key={child.id}>
-                      {child.label}
-                    </a>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          ))}
-        </nav>
-      </div>
-    </header>
-  );
-}
 
 function SiteFooter({
   document,
@@ -125,36 +66,39 @@ export function SiteFrame({
   children,
   editing = false,
   onEditFooter,
+  onNavigate,
 }: {
   document: SiteDocument;
   page: PageDocument;
   children: ReactNode;
   editing?: boolean;
   onEditFooter?: () => void;
+  onNavigate?: (route: string) => void;
 }) {
   const isHome = page.template === 'home' || page.route === '/';
-  const hero = mediaSource(document, page.heroMediaId);
+  const navigate = (event: ReactMouseEvent) => {
+    if (!onNavigate) return;
+    const anchor = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href]');
+    const href = anchor?.getAttribute('href');
+    if (!href) return;
+    const isRootRelative = href.startsWith('/');
+    const url = isRootRelative ? null : new URL(href, globalThis.location.origin);
+    const pathname = isRootRelative ? href.split(/[?#]/, 1)[0] : url?.pathname;
+    const target = document.pages.find((candidate) => candidate.route === pathname);
+    if (!target || (!isRootRelative && url?.origin !== globalThis.location.origin)) return;
+    event.preventDefault();
+    onNavigate(target.route);
+  };
   return (
     <div
       className={`point-site${editing ? ' point-site--editing' : ''}`}
       style={themeToTokens(document.theme)}
+      onClickCapture={navigate}
     >
       <a className="skip-link point-skip-link" href="#point-main">
         Skip to main content
       </a>
-      {isHome ? <SiteHeader document={document} overlay /> : <SiteHeader document={document} />}
       <main id="point-main">
-        {!isHome ? (
-          <header className={`page-hero ${hero ? 'page-hero--image' : ''}`}>
-            {hero ? <img src={hero} alt="" /> : null}
-            {hero ? <div className="hero-shade" /> : null}
-            <div className="shell page-hero-copy">
-              {page.eyebrow ? <p className="eyebrow">{page.eyebrow}</p> : null}
-              <h1>{page.title}</h1>
-              {page.intro ? <p>{page.intro}</p> : null}
-            </div>
-          </header>
-        ) : null}
         {isHome ? children : <div className="page-body shell">{children}</div>}
       </main>
       <SiteFooter document={document} editing={editing} onEdit={onEditFooter} />
@@ -162,7 +106,15 @@ export function SiteFrame({
   );
 }
 
-export function SiteRenderer({ document, route }: { document: SiteDocument; route: string }) {
+export function SiteRenderer({
+  document,
+  route,
+  onNavigate,
+}: {
+  document: SiteDocument;
+  route: string;
+  onNavigate?: (route: string) => void;
+}) {
   const page = document.pages.find((candidate) => candidate.route === route);
   if (!page) {
     return (
@@ -173,9 +125,9 @@ export function SiteRenderer({ document, route }: { document: SiteDocument; rout
     );
   }
   return (
-    <SiteFrame document={document} page={page}>
+    <SiteFrame document={document} page={page} onNavigate={onNavigate}>
       {page.blocks.map((siteBlock) => (
-        <Fragment key={siteBlock.id}>{renderSection(siteBlock, document)}</Fragment>
+        <Fragment key={siteBlock.id}>{renderSection(siteBlock, document, onNavigate)}</Fragment>
       ))}
     </SiteFrame>
   );

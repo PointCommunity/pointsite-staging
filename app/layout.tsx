@@ -3,6 +3,7 @@ import { Lato, Libre_Baskerville } from 'next/font/google';
 import { basePath } from '@/lib/paths';
 import './globals.css';
 import '@/site-kit/site.css';
+import './staging-overrides.css';
 
 const lato = Lato({
   variable: '--font-sans',

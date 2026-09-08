@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spec: Staging Renderer v8 Recovery</title>
+    <style>
+      :root { color-scheme: dark; --bg: #0b0f0d; --panel: #151b17; --text: #edf5ed; --muted: #b7c5ba; --accent: #8fca91; --line: #34463a; }
+      * { box-sizing: border-box; }
+      body { max-width: 960px; margin: auto; padding: 48px 24px 80px; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, sans-serif; }
+      h1, h2 { color: var(--accent); } section { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+      code, pre { color: #d9f2d9; } pre { overflow: auto; padding: 16px; background: #090c0a; } li, p { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <h1>Staging Renderer v8 Recovery</h1>
+    <section><h2>Assumptions</h2><ol><li>Resolving the request authorizes a staging-only branch, pull request, merge, and deployment verification.</li><li>The published revision 83 content and uploaded media are intentional and must be preserved.</li><li>Builder Issue #22 and its dirty worktree are unrelated and must not be changed.</li></ol></section>
+    <section><h2>Objective</h2><p>Restore both PointSite staging GitHub Actions workflows by making the committed staging renderer compatible with the already-published schema-v8 candidate, while adding an early regression test for future renderer/content drift and preserving accessible responsive navigation.</p></section>
+    <section><h2>Tech stack and structure</h2><p>Node.js 22, TypeScript, Next.js 16 static export, React 19, Zod, Node test runner, Playwright, and Cloudflare Workers. Shared runtime files live in <code>site-kit/</code>; the staged candidate lives in <code>content/</code>; staging-only compatibility rules live in <code>app/staging-overrides.css</code>; checks live in <code>tests/</code>; synchronization lives in <code>scripts/</code>.</p></section>
+    <section><h2>Commands</h2><pre><code>Focused test: npm test -- --test-name-pattern="matches the committed renderer contract"
+Unit/contract tests: npm test
+Lint and build: npm run check
+Static verification: npm run verify:staging
+Browser acceptance: npm run test:e2e
+Diff validation: git diff --check</code></pre></section>
+    <section><h2>Code style</h2><pre><code>test("published candidate matches the committed renderer contract", async () =&gt; {
+  assert.equal(document.schemaVersion, RENDERER_IDENTITY.schemaVersion);
+  assert.equal(document.rendererVersion, RENDERER_IDENTITY.rendererVersion);
+});</code></pre><p>Follow the repository’s existing TypeScript, Node test runner, strict Zod, and single-quote formatting conventions.</p></section>
+    <section><h2>Testing strategy</h2><p>First add a focused contract test and prove it fails on the broken v5-renderer/v8-content commit. Then sync the exact v8 site-kit from clean Builder <code>origin/main</code>, rerun the focused test, and execute browser tests. Treat schema incompatibility, invalid media-aware checksum assertions, inaccessible inherited navigation color, and obsolete pixel equality against intentionally edited staging content as separate root causes. Finish with the repository’s complete local workflow-equivalent checks and exact-head GitHub workflows.</p></section>
+    <section><h2>Boundaries</h2><ul><li><strong>Always:</strong> preserve revision 83 content/media, use exact clean upstream renderer files, and verify both Quality and Deploy staging.</li><li><strong>Ask first:</strong> production PointSite publication, Builder application changes, authentication changes, or destructive recovery.</li><li><strong>Never:</strong> include private Builder credentials/data, overwrite unrelated dirty worktrees, push to the <code>production</code> remote, or weaken schema validation.</li></ul></section>
+    <section><h2>Success criteria</h2><ul><li>The v8 candidate parses with the committed v8 schema and renderer identity.</li><li>The sync inventory includes all runtime dependencies introduced in v6-v8.</li><li>Primary-surface navigation inherits the section’s accessible foreground color, and responsive navigation remains operable independent of its editor-configurable accessible label.</li><li>The staging candidate may differ intentionally from current production content while both retain the same route and responsive-layout coverage.</li><li>Local tests, lint, static build, staging verification, browser acceptance, audit, and diff checks pass.</li><li>Both GitHub workflows pass for the exact merged staging commit and protected staging routes verify.</li></ul></section>
+    <section><h2>Open questions</h2><p>None blocking. A Builder-side preflight that rejects future renderer drift is desirable but belongs to a separate Builder issue because Issue #22 is currently active.</p></section>
+  </body>
+</html>

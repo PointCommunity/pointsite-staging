@@ -42,7 +42,7 @@ const HeroBlockSchema = z.strictObject({
   align: z.enum(['left', 'center']),
   surface: z.enum(['canvas', 'primary', 'image']),
   actions: z.array(ActionSchema).max(2).default([]),
-  variant: z.enum(['standard', 'homeHero']).optional(),
+  variant: z.enum(['standard', 'homeHero', 'pageHero']).optional(),
 });
 
 const HeadingBlockSchema = z.strictObject({
@@ -114,7 +114,8 @@ const SplitFeatureBlockSchema = z.strictObject({
   mediaAlt: z.string().trim().min(1).max(300).optional(),
   mediaSide: z.enum(['left', 'right']),
   proportion: z.enum(['half', 'mediaWide', 'contentWide']),
-  align: z.enum(['start', 'center']),
+  align: z.enum(['start', 'center', 'end']),
+  textAlign: z.enum(['left', 'center', 'right']).optional(),
   surface: z.enum(['canvas', 'surface', 'primary']),
   action: ActionSchema.optional(),
   note: z.string().trim().max(500).optional(),
@@ -255,6 +256,15 @@ const ButtonBlockSchema = z.strictObject({
   align: z.enum(['left', 'center', 'right']),
 });
 
+const NavigationBlockSchema = z.strictObject({
+  ...BlockBase,
+  type: z.literal('navigation'),
+  label: z.string().trim().min(1).max(80),
+  orientation: z.enum(['responsive', 'horizontal', 'vertical']),
+  align: z.enum(['left', 'center', 'right']),
+  surface: z.enum(['transparent', 'canvas', 'primary']),
+});
+
 function isSafePlainText(value: string): boolean {
   return ![...value].some((character) => {
     const codePoint = character.codePointAt(0) ?? 0;
@@ -279,6 +289,7 @@ export const SiteElementSchema = z.discriminatedUnion('type', [
   SpacerBlockSchema,
   TextBlockSchema,
   ButtonBlockSchema,
+  NavigationBlockSchema,
 ]);
 
 export const GridAreaSchema = z
@@ -318,6 +329,7 @@ export const SectionBlockSchema = z
     type: z.literal('section'),
     name: z.string().trim().min(1).max(80),
     layout: z.enum(['compatibility', 'flow', 'grid']),
+    position: z.enum(['flow', 'overlay']),
     columns: z.union([
       z.literal(1),
       z.literal(2),
@@ -517,9 +529,6 @@ const PageSchema = z.strictObject({
   route: CanonicalRouteSchema,
   status: z.enum(['draft', 'published', 'hidden']),
   template: z.enum(['home', 'standard']).optional(),
-  eyebrow: z.string().trim().max(80).optional(),
-  intro: z.string().trim().max(500).optional(),
-  heroMediaId: uuid.optional(),
   metadata: z.strictObject({
     title: z.string().trim().min(1).max(70),
     description: z.string().trim().min(1).max(180),
@@ -530,7 +539,7 @@ const PageSchema = z.strictObject({
 
 export const SiteDocumentSchema = z
   .strictObject({
-    schemaVersion: z.literal(5),
+    schemaVersion: z.literal(8),
     rendererVersion: z.string().regex(/^\d+\.\d+\.\d+$/),
     site: z.strictObject({
       name: shortText,
