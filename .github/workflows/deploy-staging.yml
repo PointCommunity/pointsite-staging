@@ -1,4 +1,5 @@
 name: Deploy staging
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Deploy Staging manually from {0}', github.ref_name) || format('Deploy Staging candidate - {0}', github.event.head_commit.message) }}
 on:
   workflow_dispatch:
   push:

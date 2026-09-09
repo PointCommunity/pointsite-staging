@@ -137,3 +137,21 @@ test("deploys through the idempotent exact-commit coordinator", async () => {
   assert.match(workflow, /STAGING_VERIFY_RETRY_SECONDS: 5,15,30,60/);
   assert.doesNotMatch(workflow, /run: npx wrangler deploy/);
 });
+
+test("names validation and deployment runs by purpose and trigger context", async () => {
+  const [qualityWorkflow, deployWorkflow] = await Promise.all([
+    readFile(".github/workflows/quality.yml", "utf8"),
+    readFile(".github/workflows/deploy-staging.yml", "utf8"),
+  ]);
+
+  assert.match(
+    qualityWorkflow,
+    /^run-name: \$\{\{ github\.event_name == 'pull_request' && format\('Validate Staging PR \{0\} - \{1\}', github\.event\.pull_request\.number, github\.event\.pull_request\.title\) \|\| format\('Validate Staging candidate - \{0\}', github\.event\.head_commit\.message\) \}\}$/m,
+  );
+  assert.match(
+    deployWorkflow,
+    /^run-name: \$\{\{ github\.event_name == 'workflow_dispatch' && format\('Deploy Staging manually from \{0\}', github\.ref_name\) \|\| format\('Deploy Staging candidate - \{0\}', github\.event\.head_commit\.message\) \}\}$/m,
+  );
+  assert.doesNotMatch(qualityWorkflow, /^run-name: .*Deploy Staging/m);
+  assert.doesNotMatch(deployWorkflow, /^run-name: .*Validate Staging/m);
+});
