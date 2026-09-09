@@ -1636,9 +1636,9 @@
   max-width: 100%;
 }
 .point-site .point-layout-item--grid > .page-hero {
-  width: 100%;
-  max-width: 100%;
-  margin-inline: 0;
+  width: 100vw;
+  max-width: none;
+  margin-inline: calc(50% - 50vw);
 }
 .point-site .point-layout-item--grid > .point-image,
 .point-site .point-layout-item--grid > .wide-photo,
@@ -1898,6 +1898,11 @@
   .point-site .point-layout-item--grid {
     grid-column: var(--point-grid-tablet-column) / span var(--point-grid-tablet-column-span);
     grid-row: var(--point-grid-tablet-row) / span var(--point-grid-tablet-row-span);
+  }
+  .point-site .point-layout-item--grid > .page-hero {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
   }
 }
 @media (max-width: 760px) {
