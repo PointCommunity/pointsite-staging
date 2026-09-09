@@ -174,13 +174,13 @@
             },
             {
               "id": "3c3c3c3c-0000-4000-8000-000000005000",
-              "span": 8,
+              "span": 4,
               "align": "center",
               "grid": {
                 "desktop": {
-                  "column": 5,
+                  "column": 9,
                   "row": 1,
-                  "columnSpan": 8,
+                  "columnSpan": 4,
                   "rowSpan": 2
                 },
                 "tablet": {
@@ -237,12 +237,15 @@
               "element": {
                 "id": "00000000-0000-4000-8000-000000001001",
                 "type": "hero",
-                "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+                "heading": "Point Community Church",
+                "body": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
                 "mediaId": "00000000-0000-4000-8000-000000002000",
                 "align": "center",
                 "surface": "image",
                 "actions": [],
-                "variant": "homeHero"
+                "variant": "homeHero",
+                "headingWidth": 68,
+                "bodyWidth": 92
               }
             }
           ]
