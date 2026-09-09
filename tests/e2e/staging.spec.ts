@@ -42,6 +42,22 @@ for (const route of routes) {
         () => document.documentElement.scrollWidth <= window.innerWidth + 1,
       ),
     ).toBe(true);
+    if (route !== "/") {
+      expect(
+        await page.locator(".page-hero").evaluate((hero) => {
+          const heroBounds = hero.getBoundingClientRect();
+          return Array.from(
+            hero.querySelectorAll<HTMLElement>(".point-hero-text-box"),
+          ).every((box) => {
+            const boxBounds = box.getBoundingClientRect();
+            return (
+              boxBounds.left >= heroBounds.left - 1 &&
+              boxBounds.right <= heroBounds.right + 1
+            );
+          });
+        }),
+      ).toBe(true);
+    }
   });
 }
 
