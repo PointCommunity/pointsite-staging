@@ -15,6 +15,8 @@ const routes = [
   "/building-rental",
 ];
 
+const layoutWidths = [1280, 768, 360];
+
 for (const route of routes) {
   test(`${route} renders semantic, accessible static content`, async ({
     page,
@@ -60,6 +62,69 @@ for (const route of routes) {
     }
   });
 }
+
+test("honors saved grid placement at every responsive breakpoint", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop",
+    "One Chromium run covers all required widths.",
+  );
+
+  for (const width of layoutWidths) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+
+    const geometry = await page.locator(".point-layout-item--grid").evaluateAll(
+      (items, viewportWidth) =>
+        items.map((item) => {
+          const element = item as HTMLElement;
+          const parent = element.parentElement as HTMLElement;
+          const itemStyle = getComputedStyle(element);
+          const parentStyle = getComputedStyle(parent);
+          const breakpoint =
+            viewportWidth <= 520
+              ? "mobile"
+              : viewportWidth <= 900
+                ? "tablet"
+                : "desktop";
+          const column = Number(
+            itemStyle.getPropertyValue(`--point-grid-${breakpoint}-column`),
+          );
+          const span = Number(
+            itemStyle.getPropertyValue(
+              `--point-grid-${breakpoint}-column-span`,
+            ),
+          );
+          const gap = Number.parseFloat(parentStyle.columnGap) || 0;
+          const parentBounds = parent.getBoundingClientRect();
+          const itemBounds = element.getBoundingClientRect();
+          const columnWidth = (parentBounds.width - gap * 11) / 12;
+
+          return {
+            actualLeft: itemBounds.left,
+            actualWidth: itemBounds.width,
+            expectedLeft:
+              parentBounds.left + (column - 1) * (columnWidth + gap),
+            expectedWidth: span * columnWidth + (span - 1) * gap,
+          };
+        }),
+      width,
+    );
+
+    expect(geometry.length, `${width}px grid fixture`).toBeGreaterThan(0);
+    for (const [index, item] of geometry.entries()) {
+      expect(
+        item.actualLeft,
+        `${width}px grid item ${index + 1} left edge`,
+      ).toBeCloseTo(item.expectedLeft, 0);
+      expect(
+        item.actualWidth,
+        `${width}px grid item ${index + 1} width`,
+      ).toBeCloseTo(item.expectedWidth, 0);
+    }
+  }
+});
 
 test("primary navigation reaches a second generated page without client-only data", async ({
   page,
