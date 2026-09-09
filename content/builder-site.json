@@ -301,59 +301,6 @@
           ]
         },
         {
-          "id": "14861b01-88ba-4e88-8cb9-8e7357b1ccc2",
-          "type": "section",
-          "name": "heading section copy",
-          "layout": "compatibility",
-          "position": "flow",
-          "columns": 1,
-          "gap": "none",
-          "width": "full",
-          "surface": "transparent",
-          "padding": "none",
-          "minRows": 1,
-          "backgroundPosition": "center",
-          "overlay": "none",
-          "items": [
-            {
-              "id": "56ab8c50-f392-4b9a-b935-46aceee80399",
-              "span": 12,
-              "align": "stretch",
-              "grid": {
-                "desktop": {
-                  "column": 1,
-                  "row": 1,
-                  "columnSpan": 12,
-                  "rowSpan": 1
-                }
-              },
-              "element": {
-                "id": "a3ca187b-563d-484f-9113-aa49daa84700",
-                "type": "heading",
-                "text": "A diverse group\nof ordinary people",
-                "level": 2,
-                "align": "center",
-                "width": "wide",
-                "supportingText": "We are a family of Jesus followers, empowered by the Spirit to make disciples of Jesus in all of life for the glory of God.",
-                "eyebrow": "Point ATX",
-                "actions": [
-                  {
-                    "label": "Who we are",
-                    "href": "/who-we-are",
-                    "style": "secondary"
-                  },
-                  {
-                    "label": "Our beliefs",
-                    "href": "/what-we-believe",
-                    "style": "secondary"
-                  }
-                ],
-                "variant": "homeIntro"
-              }
-            }
-          ]
-        },
-        {
           "id": "a5a5a5a5-0000-4000-8000-000000001003",
           "type": "section",
           "name": "split Feature section",
