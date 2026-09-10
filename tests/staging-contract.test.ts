@@ -9,6 +9,7 @@ import {
   verifyStagingWithRetry,
 } from "../scripts/verify-staging.mts";
 import { migrateDocument } from "../site-kit/migrations";
+import { defaultSiteDocument } from "../site-kit/default-site";
 import { RENDERER_IDENTITY } from "../site-kit/version";
 
 test("published candidate migrates into the committed renderer contract", async () => {
@@ -37,8 +38,26 @@ test("published candidate migrates into the committed renderer contract", async 
     },
     RENDERER_IDENTITY,
   );
-  assert.deepEqual(migrated.applied, ["8-to-9"]);
   assert.deepEqual(migrateDocument(migrated.document).applied, []);
+});
+
+test("v8 content migrates to the v9 renderer independently of published content", () => {
+  const legacyDocument = {
+    ...structuredClone(defaultSiteDocument),
+    schemaVersion: 8,
+    rendererVersion: "8.0.0",
+  };
+  const migrated = migrateDocument(legacyDocument);
+  assert.deepEqual(migrated.applied, ["8-to-9"]);
+  assert.equal(migrated.document.schemaVersion, 9);
+  assert.equal(migrated.document.rendererVersion, "9.0.0");
+  assert.deepEqual(migrateDocument(migrated.document).applied, []);
+});
+
+test("current renderer content needs no migration", () => {
+  const migrated = migrateDocument(structuredClone(defaultSiteDocument));
+  assert.deepEqual(migrated.applied, []);
+  assert.deepEqual(migrated.document, defaultSiteDocument);
 });
 
 test("verifies the published candidate checksum including referenced media", async () => {
