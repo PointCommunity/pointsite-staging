@@ -8,10 +8,10 @@ import {
   stagingProbeHeaders,
   verifyStagingWithRetry,
 } from "../scripts/verify-staging.mts";
-import { SiteDocumentSchema } from "../site-kit/schema";
+import { migrateDocument } from "../site-kit/migrations";
 import { RENDERER_IDENTITY } from "../site-kit/version";
 
-test("published candidate matches the committed renderer contract", async () => {
+test("published candidate migrates into the committed renderer contract", async () => {
   const document = JSON.parse(
     await readFile("content/builder-site.json", "utf8"),
   ) as { schemaVersion: number; rendererVersion: string };
@@ -24,11 +24,21 @@ test("published candidate matches the committed renderer contract", async () => 
       schemaVersion: document.schemaVersion,
       rendererVersion: document.rendererVersion,
     },
+    {
+      schemaVersion: manifest.schemaVersion,
+      rendererVersion: manifest.rendererVersion,
+    },
+  );
+  const migrated = migrateDocument(document);
+  assert.deepEqual(
+    {
+      schemaVersion: migrated.document.schemaVersion,
+      rendererVersion: migrated.document.rendererVersion,
+    },
     RENDERER_IDENTITY,
   );
-  assert.equal(manifest.schemaVersion, RENDERER_IDENTITY.schemaVersion);
-  assert.equal(manifest.rendererVersion, RENDERER_IDENTITY.rendererVersion);
-  assert.doesNotThrow(() => SiteDocumentSchema.parse(document));
+  assert.deepEqual(migrated.applied, ["8-to-9"]);
+  assert.deepEqual(migrateDocument(migrated.document).applied, []);
 });
 
 test("verifies the published candidate checksum including referenced media", async () => {
