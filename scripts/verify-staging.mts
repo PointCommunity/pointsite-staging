@@ -3,7 +3,8 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
-import { SiteDocumentSchema } from "../site-kit/schema";
+import { migrateDocument } from "../site-kit/migrations";
+import { RENDERER_IDENTITY } from "../site-kit/version";
 
 interface Check {
   name: string;
@@ -11,6 +12,7 @@ interface Check {
   detail: string;
 }
 interface Manifest {
+  schemaVersion?: number;
   rendererVersion: string;
   source: string;
   sha256?: string;
@@ -100,24 +102,40 @@ export async function verifyStaging(root = process.cwd()) {
   const manifest = JSON.parse(
     await readFile(join(root, "content/builder-site.manifest.json"), "utf8"),
   ) as Manifest;
-  const parsed = SiteDocumentSchema.safeParse(JSON.parse(content) as unknown);
+  const published = JSON.parse(content) as {
+    schemaVersion: number;
+    rendererVersion: string;
+  };
+  let migration: ReturnType<typeof migrateDocument> | undefined;
+  let migrationError = "";
+  try {
+    migration = migrateDocument(published);
+  } catch (error) {
+    migrationError = error instanceof Error ? error.message : String(error);
+  }
   checks.push({
     name: "document-schema",
-    passed: parsed.success,
-    detail: parsed.success
-      ? `SiteDocument v${parsed.data.schemaVersion} is valid`
-      : parsed.error.issues
-          .slice(0, 5)
-          .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
-          .join("; "),
+    passed: Boolean(migration),
+    detail: migration
+      ? `SiteDocument v${published.schemaVersion} migrates to v${migration.document.schemaVersion}`
+      : migrationError,
   });
-  if (!parsed.success)
+  if (!migration)
     return { ok: false, checkedAt: new Date().toISOString(), checks };
-  const document = parsed.data;
+  const document = migration.document;
+  checks.push({
+    name: "published-renderer-version",
+    passed:
+      manifest.rendererVersion === published.rendererVersion &&
+      manifest.schemaVersion === published.schemaVersion,
+    detail: `${manifest.schemaVersion}/${manifest.rendererVersion} / ${published.schemaVersion}/${published.rendererVersion}`,
+  });
   checks.push({
     name: "renderer-version",
-    passed: manifest.rendererVersion === document.rendererVersion,
-    detail: `${manifest.rendererVersion} / ${document.rendererVersion}`,
+    passed:
+      document.rendererVersion === RENDERER_IDENTITY.rendererVersion &&
+      document.schemaVersion === RENDERER_IDENTITY.schemaVersion,
+    detail: `${document.schemaVersion}/${document.rendererVersion}`,
   });
   checks.push({
     name: "source-repository",
@@ -275,7 +293,9 @@ async function main() {
     .filter(Boolean)
     .map(Number);
   if (retrySeconds.some((value) => !Number.isFinite(value) || value < 0))
-    throw new Error("STAGING_VERIFY_RETRY_SECONDS must contain non-negative numbers");
+    throw new Error(
+      "STAGING_VERIFY_RETRY_SECONDS must contain non-negative numbers",
+    );
   const evidence = await verifyStagingWithRetry(
     () => verifyStaging(resolve(".")),
     retrySeconds.map((value) => value * 1000),
