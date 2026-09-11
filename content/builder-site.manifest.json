@@ -1,8 +1,8 @@
 {
   "schemaVersion": 9,
   "rendererVersion": "9.0.0",
-  "revisionId": "f53f159f-0f7b-4d38-896a-9e987a2f245d",
+  "revisionId": "9eae8112-b12c-4b72-b341-79a31597bbf5",
   "revisionChecksum": "9ee1c7b0f2432f481fafdf6e44eb6e1b93b5d2ec223f787bf0997c8b4f471f15",
-  "candidateChecksum": "48850a7f503239d6a481c252351efe5a5c0c81f78c58e486f481c0e7ccd97dd3",
+  "candidateChecksum": "6dee96b22257950752e55171671e982d85eb7ba90d864143dc185f0e4dcf63b3",
   "source": "PointCommunity/pointsite-builder"
 }
