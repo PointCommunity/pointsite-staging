@@ -1,34 +1,5 @@
 /* Staging hardening that must survive mechanical site-kit synchronization. */
-.point-site .point-navigation {
-  color: inherit;
-}
-
 .point-site .tone-section {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-}
-
-.point-site .point-layout-section:has(.point-navigation),
-.point-site .point-layout-section:has(.point-navigation) .point-layout-section__grid,
-.point-site .point-layout-section:has(.point-navigation) .point-layout-item--grid {
-  overflow: visible;
-}
-
-@media (max-width: 900px) {
-  .point-site .point-navigation--responsive {
-    position: relative;
-    justify-content: flex-start;
-  }
-
-  .point-site .point-navigation--responsive .point-navigation__menu--open {
-    position: absolute;
-    z-index: 20;
-    top: 100%;
-    right: 0;
-    width: min(18rem, calc(100vw - 3rem));
-    padding: 0.5rem;
-    background: var(--point-primary);
-    color: var(--point-on-primary);
-    box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.24);
-  }
 }
