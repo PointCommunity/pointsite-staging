@@ -17,6 +17,50 @@ const routes = [
 
 const layoutWidths = [1280, 768, 360];
 
+test("preserves Desktop composition when the viewport widens", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop",
+    "The desktop project checks all wide viewports.",
+  );
+  for (const route of ["/", "/who-we-are"]) {
+    await page.setViewportSize({ width: 1280, height: 1000 });
+    await page.goto(route);
+    const measure = () =>
+      page.evaluate(async () => {
+        await document.fonts.ready;
+        const pixels = (value: number) => Number(value.toFixed(3));
+        return {
+          overflow: document.documentElement.scrollWidth - innerWidth,
+          elements: Array.from(
+            document.querySelectorAll("h1, h2, .point-layout-item--grid"),
+          ).map((element) => {
+            const bounds = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return {
+              width: pixels(bounds.width),
+              height: pixels(bounds.height),
+              centerOffset: pixels(
+                bounds.left + bounds.width / 2 - innerWidth / 2,
+              ),
+              fontSize: style.fontSize,
+            };
+          }),
+        };
+      });
+    const authored = await measure();
+    expect(authored.overflow).toBe(0);
+    expect(authored.elements.length).toBeGreaterThan(2);
+    for (const width of [
+      1281, 1337, 1338, 1391, 1392, 1440, 1920, 2560, 1280,
+    ]) {
+      await page.setViewportSize({ width, height: 1000 });
+      expect(await measure(), `${route} at ${width}px`).toEqual(authored);
+    }
+  }
+});
+
 for (const route of routes) {
   test(`${route} renders semantic, accessible static content`, async ({
     page,
