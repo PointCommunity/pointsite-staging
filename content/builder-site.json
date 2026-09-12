@@ -1171,6 +1171,14 @@
                     "title": "The return of Christ",
                     "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration.",
                     "supportingText": "Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+                  },
+                  {
+                    "title": "Discipleship",
+                    "body": "We believe that discipleship is learning to follow Jesus, becoming like Jesus, and helping others do the same."
+                  },
+                  {
+                    "title": "Sanctification",
+                    "body": "We believe that Sanctification is the process of becoming who Christ already created us to be."
                   }
                 ],
                 "variant": "beliefs"
@@ -1452,10 +1460,10 @@
                 "type": "people",
                 "personIds": [
                   "00000000-0000-4000-8000-000000006000",
-                  "00000000-0000-4000-8000-000000006001",
                   "00000000-0000-4000-8000-000000006002",
                   "00000000-0000-4000-8000-000000006003",
-                  "00000000-0000-4000-8000-000000006004"
+                  "00000000-0000-4000-8000-000000006004",
+                  "00000000-0000-4000-8000-000000006001"
                 ],
                 "layout": "grid",
                 "variant": "leadership"
@@ -1513,14 +1521,12 @@
                 "columns": 2,
                 "items": [
                   {
-                    "eyebrow": "Leadership",
                     "title": "Structure",
-                    "body": "Jesus Christ is the head of the Church. At each local expression, he calls specific followers to provide leadership and care. Their primary role is to equip the church to be the church, not to take on the entire ministry of the congregation themselves."
+                    "body": "Jesus Christ is the head of the Church. At each local expression, He calls specific followers to provide leadership and care. Their primary role is to equip the church to be the church, not to take on the entire ministry of the congregation themselves. As such, Point focuses on a decentralized model.\n\nTo assist the church in accomplishing Christ's mission, Point affirms the necessity of Deacons as the \"First Servants\" of various teams or ministries and is partly an administrative role. Biblically, a Deacon is a spiritually mature man or woman who has been set apart by the Holy Spirit and the local church for day-to-day service as required. \n\nIn addition, Point supports Neighborhood Group Leaders as spiritual leaders in a pastoral role, supporting the church in neighborhoods across South Austin. Neighborhood Groups are vital to our walk as believers, where we organize service opportunities and do life together as a community."
                   },
                   {
-                    "eyebrow": "Elders",
                     "title": "Shared leadership",
-                    "body": "Elders are biblically qualified men who govern and teach sound doctrine. Point Community’s Elder Team leads together—equal in authority and accountability, unique in function, and unified in direction and vision."
+                    "body": "Elders are biblically qualified men who govern and teach sound doctrine. Point Community’s Elder Team leads together—equal in authority and accountability, unique in function, and unified in direction and vision.\n\nDeacons function in submission to the local church elders in regards to all doctrinal questions, following after them as they follow Jesus Christ. Exercising spiritual authority within the Church is Biblically instructed to be exercised by men alone and Point Church affirms this view. Due to the practical nature of a “Deacon” Point Church also upholds that a Deacon may be male or female just as Phoebe was named among those in that role in Romans 16:1. \n\nNeighborhood Group Leaders  are similar to Deacons in most ways, except  that they support the growth and spiritual development of the church at a local level. Fostering stronger communities within the church and actively being involved in the mission of spreading the gospel in the day to day."
                   }
                 ],
                 "variant": "splitEditorialTone"
@@ -2392,27 +2398,23 @@
                 "items": [
                   {
                     "title": "Elm Grove NG",
-                    "body": "Mondays at 5:30pm\n673 Oyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
+                    "body": "Mondays at 5:30pm\nOyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
                   },
                   {
                     "title": "Coves of Cimarron NG",
-                    "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: Nick and Jada Shock"
+                    "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: John and April Blake"
                   },
                   {
                     "title": "Oak Parke NG",
                     "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
                   },
                   {
-                    "title": "Hillcrest NG",
-                    "body": "Sundays at 6:00pm\nCoats Cove, Austin, TX 78748\nLeaders: Aaron and Haley Negron"
-                  },
-                  {
                     "title": "Shadow Creek NG",
-                    "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler"
+                    "body": "Wednesdays at 6:00pm\nAshleaf Drive, Buda, TX 78610\nLeaders: Russel and Kristen Hutzler"
                   },
                   {
                     "title": "The Bend at Nuckol’s Crossing NG",
-                    "body": "Wednesdays at 6:00pm\nMarble Creek Loop, Austin, TX 78747\nLeaders: Caleb Bryant"
+                    "body": "Wednesdays at 6:00pm\nArbor Crest Lane, Austin, TX 78747\nLeaders: Caleb Bryant"
                   }
                 ],
                 "variant": "groups"
@@ -4155,6 +4157,29 @@
           "width": "half"
         }
       ]
+    },
+    {
+      "id": "de35a248-0c39-4a2f-b2ea-c8a093abfedd",
+      "name": "New form",
+      "recipientEmail": "connect@pointaustin.org",
+      "subject": "Website form",
+      "submitLabel": "Send",
+      "heading": "How can we help?",
+      "introduction": "Complete this short form and our team will follow up.",
+      "privacyNote": "Submitting opens your email app so you can review the message before sending.",
+      "successMessage": "Your email app is opening with this request ready to send.",
+      "layout": "single",
+      "density": "comfortable",
+      "fields": [
+        {
+          "id": "18689c9d-71a4-49a3-96ff-1422019102fb",
+          "name": "field1_375317ab",
+          "label": "blank",
+          "type": "email",
+          "required": true,
+          "width": "full"
+        }
+      ]
     }
   ],
   "media": [
@@ -4256,8 +4281,31 @@
     {
       "id": "367875a2-0d74-4f9b-b6a3-d2720723cfb0",
       "sourcePath": "/assets/builder/367875a2-0d74-4f9b-b6a3-d2720723cfb0.png",
-      "alt": "Caleb",
-      "displayName": "Caleb",
+      "alt": "Delete",
+      "displayName": "Delete",
+      "tags": []
+    },
+    {
+      "id": "bb294408-dfd1-4ef4-a4f3-4c9982e1c2a1",
+      "sourcePath": "/assets/builder/bb294408-dfd1-4ef4-a4f3-4c9982e1c2a1.png",
+      "alt": "New Photos",
+      "displayName": "Caleb Bryant",
+      "tags": [
+        "People"
+      ]
+    },
+    {
+      "id": "a390498a-8e4d-4481-b9e7-4c57ba5a26bd",
+      "sourcePath": "/assets/builder/a390498a-8e4d-4481-b9e7-4c57ba5a26bd.png",
+      "alt": "Jase and Claire",
+      "displayName": "Jase and Claire PNG",
+      "tags": []
+    },
+    {
+      "id": "cea9c5a3-590a-4b46-9fec-7142fae0970d",
+      "sourcePath": "/assets/builder/cea9c5a3-590a-4b46-9fec-7142fae0970d.png",
+      "alt": "Gonzo Updated",
+      "displayName": "Gonzo Gonzalez PNG",
       "tags": []
     }
   ],
@@ -4291,18 +4339,56 @@
       {
         "id": "00000000-0000-4000-8000-000000006003",
         "name": "Laura Munoz",
-        "role": "Head of Kids Ministry",
-        "bio": "Laura Munoz serves Point Community Church.",
+        "role": "Head of First Point Children's Ministry",
+        "bio": "Laura Munoz serves Point Community Church as the head of the First Point Children's Ministry.",
         "mediaId": "00000000-0000-4000-8000-000000002013",
         "mediaAlt": "Laura Munoz"
       },
       {
         "id": "00000000-0000-4000-8000-000000006004",
         "name": "Sandra Louviere",
-        "role": "Administrator",
-        "bio": "Sandra Louviere serves Point Community Church.",
+        "role": "Treasurer",
+        "bio": "Sandra Louviere serves Point Community Church, stewarding the monthly budget and treasury accounts.",
         "mediaId": "00000000-0000-4000-8000-000000002015",
         "mediaAlt": "Sandra Louviere"
+      },
+      {
+        "id": "3e36c9f7-536a-4354-b183-8279c357fb3c",
+        "name": "Caleb Bryant",
+        "role": "Administrative",
+        "bio": "Caleb Bryant serves Point Community Church in various administrative capacities.",
+        "mediaId": "367875a2-0d74-4f9b-b6a3-d2720723cfb0",
+        "mediaAlt": "Caleb Bryant"
+      },
+      {
+        "id": "a98ec4e8-1b5d-4602-b911-b2fe76f7dde2",
+        "name": "Richard and Rose Paez",
+        "role": "Neighborhood Group Leaders",
+        "bio": "Richard and Rose serve Point Community Church as Neighborhood Group Leaders."
+      },
+      {
+        "id": "46762338-79da-44ff-af04-691c3c91c4a8",
+        "name": "Russell and Kristin Hutzler",
+        "role": "Neighborhood Group Leaders",
+        "bio": "Russell and Kristin serve Point Community Church as Neighborhood Group Leaders."
+      },
+      {
+        "id": "914510d3-e897-4448-ac51-6c4f4c65f592",
+        "name": "John and April Blake",
+        "role": "Neighborhood Group Leaders",
+        "bio": "John and April serve Point Community Church as Neighborhood Group Leaders."
+      },
+      {
+        "id": "43f055de-2eab-41c8-9ece-a97a93220b90",
+        "name": "Chris Piedre",
+        "role": "Worship Leader",
+        "bio": "Chris serves Point Community Church as the worship team leader."
+      },
+      {
+        "id": "26d26d25-8e28-44a3-9190-4173de6b7478",
+        "name": "Joey and Roberta Castillo",
+        "role": "First Point Children's Ministry",
+        "bio": "Joey and Roberta serves Point Community Church as the interim heads of the First Point Children's Ministry."
       }
     ],
     "beliefs": [
