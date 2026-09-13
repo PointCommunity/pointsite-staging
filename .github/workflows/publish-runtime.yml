@@ -108,10 +108,15 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
       - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install the locked Chromium build for candidate verification
+        run: node node_modules/playwright/cli.js install --with-deps --only-shell chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
       - name: Build, verify and commit the captured inputs
         run: node --import tsx scripts/publication-run.mts prepare
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
       - name: Deploy and verify every static output file
         run: node --import tsx scripts/publication-run.mts deploy
         env:
@@ -128,6 +133,7 @@ jobs:
             const job = process.env.PUBLICATION_JOB_ID;
             if (!/^[a-f0-9-]{36}$/.test(job ?? "")) process.exit(1);
             await rm(join(process.env.RUNNER_TEMP, `pointsite-publication-${job}.json`), { force: true });
+            await rm(join(process.env.RUNNER_TEMP, "pointsite-publication-browser"), { recursive: true, force: true });
             for (const path of ["out", ".next", "node_modules"])
               await rm(path, { recursive: true, force: true });
           '

@@ -3,6 +3,28 @@ import { z } from "zod";
 import { checksumDocument } from "../site-kit/canonicalize";
 import type { OutputFile } from "./output-manifest.mts";
 
+/** CDN convergence may require another read. Never repeat a commit or deployment here. */
+export async function verifyPublicationOutputWithRetry(
+  input: Parameters<typeof verifyPublicationOutput>[0],
+  fetcher: typeof fetch = fetch,
+  sleep: (milliseconds: number) => Promise<void> = (milliseconds) =>
+    new Promise((resolve) => setTimeout(resolve, milliseconds)),
+) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await verifyPublicationOutput(input, fetcher);
+    } catch (error) {
+      if (
+        !(error instanceof Error) ||
+        error.message !== "PUBLICATION_LIVE_VERIFICATION_UNCONFIRMED" ||
+        attempt === 2
+      )
+        throw error;
+      await sleep([2_000, 5_000][attempt]);
+    }
+  }
+}
+
 /** Verify every exported byte against the retained manifest; never forward a credential across redirects. */
 export async function verifyPublicationOutput(
   input: {

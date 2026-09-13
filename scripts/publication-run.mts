@@ -11,7 +11,8 @@ import {
 } from "./publication-git.mts";
 import { outputManifest } from "./output-manifest.mts";
 import { deployPublicationWithProof } from "./deploy-staging.mts";
-import { verifyPublicationOutput } from "./publication-live.mts";
+import { verifyPublicationOutputWithRetry } from "./publication-live.mts";
+import { checkPublicationBrowser } from "./publication-browser.mts";
 
 const sha = z.string().regex(/^[a-f0-9]{40}$/);
 const digest = z.string().regex(/^[a-f0-9]{64}$/);
@@ -63,6 +64,7 @@ async function main() {
       input,
       (asset, index) => client.chunk(asset, index),
     );
+    checkPublicationBrowser(root, build.artifactDigest);
     await client.authorizeBuild(build);
     pushPublicationCommit(
       root,
@@ -99,7 +101,7 @@ async function main() {
     return;
   }
   if (operation === "verify-pages") {
-    await verifyPublicationOutput({
+    await verifyPublicationOutputWithRetry({
       target,
       ...output,
       candidateChecksum: build.candidateChecksum,
@@ -146,7 +148,7 @@ async function main() {
       };
     },
   });
-  await verifyPublicationOutput({
+  await verifyPublicationOutputWithRetry({
     target,
     ...output,
     candidateChecksum: build.candidateChecksum,

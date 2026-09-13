@@ -2,7 +2,70 @@ import assert from "node:assert/strict";
 import { createHash, randomUUID } from "node:crypto";
 import test from "node:test";
 import { checksumDocument } from "../site-kit/canonicalize";
-import { verifyPublicationOutput } from "../scripts/publication-live.mts";
+import {
+  verifyPublicationOutput,
+  verifyPublicationOutputWithRetry,
+} from "../scripts/publication-live.mts";
+
+test("live convergence retries complete read-only proofs at most three times", async () => {
+  const body = "Fixture";
+  const files = [
+    {
+      path: "index.html",
+      bytes: body.length,
+      sha256: createHash("sha256").update(body).digest("hex"),
+    },
+  ];
+  const input = {
+    target: "production" as const,
+    files,
+    artifactDigest: await checksumDocument(files),
+    candidateChecksum: "a".repeat(64),
+    workflowRevision: "b".repeat(40),
+  };
+  for (const unavailable of [2, 3]) {
+    let identities = 0;
+    let fileReads = 0;
+    const delays: number[] = [];
+    const fetcher: typeof fetch = async (url, init) => {
+      assert.equal(init?.method, undefined);
+      assert.equal(init?.redirect, "error");
+      assert.equal(new Headers(init?.headers).has("authorization"), false);
+      if (String(url).endsWith("/__pointsite_release.json")) {
+        if (++identities <= unavailable)
+          return new Response("private failure", { status: 503 });
+        return Response.json({
+          format: 2,
+          artifactDigest: input.artifactDigest,
+          candidateChecksum: input.candidateChecksum,
+          workflowRevision: input.workflowRevision,
+        });
+      }
+      fileReads++;
+      return new Response(body);
+    };
+    const result = verifyPublicationOutputWithRetry(
+      input,
+      fetcher,
+      async (delay) => {
+        delays.push(delay);
+      },
+    );
+    if (unavailable === 3) {
+      await assert.rejects(
+        result,
+        /^Error: PUBLICATION_LIVE_VERIFICATION_UNCONFIRMED$/,
+      );
+      assert.equal(identities, 3);
+      assert.equal(fileReads, 0);
+    } else {
+      assert.equal((await result).filesVerified, 1);
+      assert.equal(identities, 4);
+      assert.equal(fileReads, 1);
+    }
+    assert.deepEqual(delays, [2_000, 5_000]);
+  }
+});
 
 test("verifies every output hash between matching native release identities with scoped probe headers", async () => {
   const contents = new Map([
