@@ -1,0 +1,18 @@
+name: Verify Staging publication
+run-name: Verify Staging publication ${{ github.event.client_payload.verificationId }}
+on:
+  repository_dispatch:
+    types: [verify-publication]
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  verify:
+    if: github.repository == 'PointCommunity/pointsite-staging' && github.ref == 'refs/heads/main'
+    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@79d887468a80f24663851af1224f82bb3806ac97
+    with:
+      job_id: ${{ github.event.client_payload.verificationId }}
+      nonce: ${{ github.event.client_payload.nonce }}
+      target: staging
+    secrets:
+      STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
