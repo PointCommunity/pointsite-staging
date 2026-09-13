@@ -93,3 +93,63 @@ test("verifies every output hash between matching native release identities with
     }
   }
 });
+
+test("verifies public Pages output without credentials and preserves HTML file paths", async () => {
+  const contents = new Map([
+    ["404.html", "<html>Missing</html>"],
+    ["about/index.html", "<html>About</html>"],
+    ["index.html", "<html>Home</html>"],
+  ]);
+  const files = [...contents].map(([path, body]) => ({
+    path,
+    bytes: Buffer.byteLength(body),
+    sha256: createHash("sha256").update(body).digest("hex"),
+  }));
+  const input = {
+    target: "production" as const,
+    files,
+    artifactDigest: await checksumDocument(files),
+    candidateChecksum: "a".repeat(64),
+    workflowRevision: "b".repeat(40),
+  };
+  const requests: string[] = [];
+  const fetcher: typeof fetch = async (url, init) => {
+    const parsed = new URL(url instanceof Request ? url.url : url);
+    assert.equal(parsed.origin, "https://pointatx.org");
+    assert.equal(init?.redirect, "error");
+    assert.equal(new Headers(init?.headers).has("authorization"), false);
+    assert.equal(
+      new Headers(init?.headers).has("X-PointSite-Staging-Probe"),
+      false,
+    );
+    requests.push(parsed.pathname);
+    if (parsed.pathname === "/__pointsite_release.json")
+      return Response.json({
+        format: 2,
+        artifactDigest: input.artifactDigest,
+        candidateChecksum: input.candidateChecksum,
+        workflowRevision: input.workflowRevision,
+      });
+    const path =
+      parsed.pathname === "/"
+        ? "index.html"
+        : parsed.pathname === "/about/"
+          ? "about/index.html"
+          : parsed.pathname.slice(1);
+    assert.ok(contents.has(path));
+    return new Response(contents.get(path), {
+      status: path === "404.html" ? 404 : 200,
+    });
+  };
+  assert.deepEqual(await verifyPublicationOutput(input, fetcher), {
+    filesVerified: 3,
+    artifactDigest: input.artifactDigest,
+  });
+  assert.deepEqual(requests, [
+    "/__pointsite_release.json",
+    "/404.html",
+    "/about/",
+    "/",
+    "/__pointsite_release.json",
+  ]);
+});

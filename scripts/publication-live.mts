@@ -113,7 +113,7 @@ export async function verifyPublicationOutput(
           ? ""
           : file.path.endsWith("/index.html")
             ? file.path.slice(0, -10)
-            : file.path.endsWith(".html")
+            : input.target === "staging" && file.path.endsWith(".html")
               ? file.path.slice(0, -5)
               : file.path;
       const response = await read(

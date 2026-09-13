@@ -211,6 +211,16 @@ export class PublicationClient {
     );
   }
 
+  async reportPagesDeployment(artifactDigest: string) {
+    nonceSchema.parse(artifactDigest);
+    const response = await this.request("deployment", 1000, "POST", {
+      artifactDigest,
+    });
+    z.strictObject({ recorded: z.literal(true) }).parse(
+      JSON.parse(new TextDecoder().decode(response)),
+    );
+  }
+
   async chunk(assetId: string, index: number): Promise<Uint8Array> {
     z.uuid().parse(assetId);
     z.number().int().min(0).max(5).parse(index);

@@ -142,6 +142,7 @@ test("binds each mutation response to its requested phase and candidate commit",
     totalBytes: 123,
   };
   const paths: string[] = [];
+  let pages = false;
   const fetcher: typeof fetch = async (input, init) => {
     const url = new URL(input instanceof Request ? input.url : input);
     if (url.hostname.endsWith(".actions.githubusercontent.com"))
@@ -156,7 +157,11 @@ test("binds each mutation response to its requested phase and candidate commit",
       );
       assert.deepEqual(
         JSON.parse(String(init?.body)),
-        path === "build" ? build : { workerVersionId },
+        path === "build"
+          ? build
+          : pages
+            ? { artifactDigest: build.artifactDigest }
+            : { workerVersionId },
       );
     } else assert.equal(init?.body, undefined);
     return Response.json(
@@ -178,10 +183,13 @@ test("binds each mutation response to its requested phase and candidate commit",
   await client.commitBuild(commitSha);
   await client.authorizeDeployment();
   await client.reportDeployment(workerVersionId);
+  pages = true;
+  await client.reportPagesDeployment(build.artifactDigest);
   assert.deepEqual(paths, [
     "build",
     "commit",
     "authorize-deployment",
+    "deployment",
     "deployment",
   ]);
   await assert.rejects(client.commitBuild("b".repeat(40)));

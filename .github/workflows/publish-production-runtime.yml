@@ -1,4 +1,4 @@
-name: Publish immutable candidate
+name: Publish accepted public candidate
 on:
   workflow_call:
     inputs:
@@ -8,21 +8,14 @@ on:
       nonce:
         required: true
         type: string
-      target:
-        required: true
-        type: string
-    secrets:
-      CLOUDFLARE_API_TOKEN:
-        required: true
-      STAGING_PROBE_SECRET:
-        required: true
 permissions:
   contents: write
+  pages: write
   id-token: write
 env:
   PUBLICATION_JOB_ID: ${{ inputs.job_id }}
   PUBLICATION_NONCE: ${{ inputs.nonce }}
-  PUBLICATION_TARGET: ${{ inputs.target }}
+  PUBLICATION_TARGET: production
   NEXT_TELEMETRY_DISABLED: "1"
   BOOTSTRAP_JS: |
     import { appendFile } from 'node:fs/promises';
@@ -31,7 +24,7 @@ env:
       const nonce = process.env.PUBLICATION_NONCE;
       const operation = process.env.PUBLICATION_OPERATION;
       if (!/^[a-f0-9-]{36}$/.test(job ?? '') || !/^[a-f0-9]{64}$/.test(nonce ?? '') ||
-          !['reserve', 'finalize'].includes(operation) || process.env.PUBLICATION_TARGET !== 'staging') throw Error();
+          !['reserve', 'finalize'].includes(operation) || process.env.PUBLICATION_TARGET !== 'production') throw Error();
       const bounded = async (response, limit) => {
         if (!response.ok || !response.body) throw Error();
         const reader = response.body.getReader();
@@ -74,7 +67,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     environment:
-      name: staging
+      name: github-pages
       deployment: false
     permissions:
       contents: read
@@ -92,8 +85,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     environment:
-      name: staging
-      url: https://staging.pointatx.org
+      name: github-pages
+      url: https://pointatx.org
     env:
       PUBLICATION_SOURCE: ${{ needs.reserve.outputs.source }}
     steps:
@@ -108,16 +101,22 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Build, verify and commit the captured inputs
+      - name: Rebuild and commit only the accepted inputs
         run: node --import tsx scripts/publication-run.mts prepare
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Deploy and verify every static output file
-        run: node --import tsx scripts/publication-run.mts deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
+      - name: Upload the verified static output for one day
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: out
+          retention-days: 1
+          include-hidden-files: true
+      - name: Recheck authority immediately before public deployment
+        run: node --import tsx scripts/publication-run.mts authorize-pages
+      - name: Deploy with GitHub Pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+      - name: Verify every public static file and report the result
+        run: node --import tsx scripts/publication-run.mts verify-pages
       - name: Remove this runner's publication files
         if: always()
         run: |
@@ -128,6 +127,7 @@ jobs:
             const job = process.env.PUBLICATION_JOB_ID;
             if (!/^[a-f0-9-]{36}$/.test(job ?? "")) process.exit(1);
             await rm(join(process.env.RUNNER_TEMP, `pointsite-publication-${job}.json`), { force: true });
+            await rm(join(process.env.RUNNER_TEMP, "artifact.tar"), { force: true });
             for (const path of ["out", ".next", "node_modules"])
               await rm(path, { recursive: true, force: true });
           '
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     environment:
-      name: staging
+      name: github-pages
       deployment: false
     permissions:
       contents: read
