@@ -5,7 +5,7 @@ const sha = z.string().regex(/^[a-f0-9]{40}$/);
 const nonceSchema = z.string().regex(/^[a-f0-9]{64}$/);
 const builder = "https://builder.pointatx.org";
 
-async function boundedBytes(
+export async function boundedBytes(
   response: Response,
   maximum: number,
 ): Promise<Uint8Array> {
