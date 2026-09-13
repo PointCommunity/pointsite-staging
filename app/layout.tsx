@@ -1,21 +1,8 @@
 import type { Metadata } from 'next';
-import { Lato, Libre_Baskerville } from 'next/font/google';
 import { basePath } from '@/lib/paths';
 import './globals.css';
 import '@/site-kit/site.css';
 import './staging-overrides.css';
-
-const lato = Lato({
-  variable: '--font-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '700', '900'],
-});
-
-const libre = Libre_Baskerville({
-  variable: '--font-serif',
-  subsets: ['latin'],
-  weight: ['400', '700'],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pointatx.org/'),
@@ -41,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.variable} ${libre.variable}`}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

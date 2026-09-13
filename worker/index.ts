@@ -2,6 +2,7 @@ interface StagingEnv {
   ASSETS: { fetch(request: Request): Promise<Response> };
   BUILDER_ORIGIN: string;
   STAGING_PROBE_SECRET: string;
+  CF_VERSION_METADATA?: { id: string };
 }
 
 function sessionCookie(request: Request): string | null {
@@ -16,7 +17,8 @@ function constantTimeEqual(left: string, right: string): boolean {
   const length = Math.max(left.length, right.length);
   let difference = left.length ^ right.length;
   for (let index = 0; index < length; index++)
-    difference |= (left.charCodeAt(index) || 0) ^ (right.charCodeAt(index) || 0);
+    difference |=
+      (left.charCodeAt(index) || 0) ^ (right.charCodeAt(index) || 0);
   return difference === 0;
 }
 
@@ -78,7 +80,9 @@ export async function authorizeStagingRequest(
     env.STAGING_PROBE_SECRET.length < 32 ||
     env.BUILDER_ORIGIN !== "https://builder.pointatx.org"
   )
-    return secured(new Response("Staging authentication is not configured", { status: 503 }));
+    return secured(
+      new Response("Staging authentication is not configured", { status: 503 }),
+    );
 
   const probe = request.headers.get("X-PointSite-Staging-Probe") ?? "";
   if (probe && constantTimeEqual(probe, env.STAGING_PROBE_SECRET)) return null;
@@ -100,6 +104,74 @@ export async function authorizeStagingRequest(
 
 const worker = {
   async fetch(request: Request, env: StagingEnv): Promise<Response> {
+    const url = new URL(request.url);
+    if (
+      request.method === "GET" &&
+      url.pathname === "/__pointsite_release.json" &&
+      !url.search
+    ) {
+      try {
+        const version = env.CF_VERSION_METADATA?.id;
+        if (
+          !version ||
+          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(
+            version,
+          )
+        )
+          throw new Error("Missing native version");
+        // This endpoint exposes only four content-free release fields and the native
+        // Worker version. Never forward a session, probe header or arbitrary asset path.
+        const response = await env.ASSETS.fetch(
+          new Request(url, { headers: { accept: "application/json" } }),
+        );
+        if (!response.ok || !response.body)
+          throw new Error("Missing release identity");
+        const reader = response.body.getReader();
+        const chunks: Uint8Array[] = [];
+        let size = 0;
+        try {
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            size += value.length;
+            if (size > 1024) throw new Error("Oversized release identity");
+            chunks.push(value);
+          }
+        } finally {
+          await reader.cancel();
+          reader.releaseLock();
+        }
+        const bytes = new Uint8Array(size);
+        let offset = 0;
+        for (const chunk of chunks) {
+          bytes.set(chunk, offset);
+          offset += chunk.length;
+        }
+        const value: unknown = JSON.parse(new TextDecoder().decode(bytes));
+        if (!value || typeof value !== "object" || Array.isArray(value))
+          throw new Error("Invalid identity");
+        const release = value as Record<string, unknown>;
+        if (
+          Object.keys(release).length !== 4 ||
+          release.format !== 2 ||
+          typeof release.candidateChecksum !== "string" ||
+          !/^[a-f0-9]{64}$/.test(release.candidateChecksum) ||
+          typeof release.artifactDigest !== "string" ||
+          !/^[a-f0-9]{64}$/.test(release.artifactDigest) ||
+          typeof release.workflowRevision !== "string" ||
+          !/^[a-f0-9]{40}$/.test(release.workflowRevision)
+        )
+          throw new Error("Invalid identity");
+        return secured(Response.json({ ...release, workerVersionId: version }));
+      } catch {
+        return secured(
+          Response.json(
+            { error: "Release identity unavailable" },
+            { status: 503 },
+          ),
+        );
+      }
+    }
     const denied = await authorizeStagingRequest(request, env);
     if (denied) return denied;
     return secured(await env.ASSETS.fetch(request));

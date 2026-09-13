@@ -156,21 +156,25 @@ test("pins the PointSite account and exposes only the authenticated CI route", a
   assert.doesNotMatch(config, /cloudflareaccess|r2_buckets/i);
 });
 
-test("deploys through the idempotent exact-commit coordinator", async () => {
+test("deploys only through the reserved, immutable publication coordinator", async () => {
   const workflow = await readFile(
-    ".github/workflows/deploy-staging.yml",
+    ".github/workflows/publish-runtime.yml",
     "utf8",
   );
-  assert.match(workflow, /npx tsx scripts\/deploy-staging\.mts/);
-  assert.match(workflow, /GITHUB_SHA: \$\{\{ github\.sha \}\}/);
-  assert.match(workflow, /STAGING_VERIFY_RETRY_SECONDS: 5,15,30,60/);
+  assert.match(workflow, /node --import tsx scripts\/publication-run\.mts prepare/);
+  assert.match(workflow, /node --import tsx scripts\/publication-run\.mts deploy/);
+  assert.match(workflow, /needs: reserve/);
+  assert.match(workflow, /deployment: false/);
+  assert.match(workflow, /persist-credentials: false/);
+  assert.match(workflow, /package-manager-cache: false/);
+  assert.doesNotMatch(workflow, /^  (push|workflow_dispatch):/m);
   assert.doesNotMatch(workflow, /run: npx wrangler deploy/);
 });
 
 test("names validation and deployment runs by purpose and trigger context", async () => {
   const [qualityWorkflow, deployWorkflow] = await Promise.all([
     readFile(".github/workflows/quality.yml", "utf8"),
-    readFile(".github/workflows/deploy-staging.yml", "utf8"),
+    readFile(".github/workflows/publish-runtime.yml", "utf8"),
   ]);
 
   assert.match(
@@ -179,7 +183,7 @@ test("names validation and deployment runs by purpose and trigger context", asyn
   );
   assert.match(
     deployWorkflow,
-    /^run-name: \$\{\{ github\.event_name == 'workflow_dispatch' && format\('Deploy Staging manually from \{0\}', github\.ref_name\) \|\| format\('Deploy Staging candidate - \{0\}', github\.event\.head_commit\.message\) \}\}$/m,
+    /^name: Publish immutable candidate$/m,
   );
   assert.doesNotMatch(qualityWorkflow, /^run-name: .*Deploy Staging/m);
   assert.doesNotMatch(deployWorkflow, /^run-name: .*Validate Staging/m);
