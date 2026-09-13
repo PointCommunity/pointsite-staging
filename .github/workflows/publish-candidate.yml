@@ -9,7 +9,7 @@ permissions:
 jobs:
   publish:
     if: github.repository == 'PointCommunity/pointsite-staging' && github.ref == 'refs/heads/main'
-    uses: PointCommunity/pointsite-staging/.github/workflows/publish-runtime.yml@a397e2f61aac7bbc88cf3672765eb9572a957dc5
+    uses: PointCommunity/pointsite-staging/.github/workflows/publish-runtime.yml@9dc0b528e98abb8d57ae2e3a3a8d964c96c9c818
     with:
       job_id: ${{ github.event.client_payload.jobId }}
       nonce: ${{ github.event.client_payload.nonce }}
