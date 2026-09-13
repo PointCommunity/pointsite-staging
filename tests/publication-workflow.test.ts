@@ -4,6 +4,32 @@ import { randomUUID } from "node:crypto";
 import { Script } from "node:vm";
 import test from "node:test";
 
+test("the public entrypoint accepts only a captured job and pins the reusable implementation", async () => {
+  const caller = await readFile(
+    new URL("../.github/workflows/publish-candidate.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    caller,
+    /^  repository_dispatch:\n    types: \[publish-candidate\]/m,
+  );
+  assert.match(
+    caller,
+    /^    uses: PointCommunity\/pointsite-staging\/\.github\/workflows\/publish-runtime\.yml@[a-f0-9]{40}$/m,
+  );
+  assert.match(caller, /^      target: staging$/m);
+  assert.match(
+    caller,
+    /job_id: \$\{\{ github\.event\.client_payload\.jobId \}\}/,
+  );
+  assert.match(
+    caller,
+    /nonce: \$\{\{ github\.event\.client_payload\.nonce \}\}/,
+  );
+  assert.doesNotMatch(caller, /^  (push|workflow_dispatch):|secrets: inherit/m);
+  assert.match(caller, /^run-name: Publish Staging candidate /m);
+});
+
 test("the actual bootstrap reserves or finalizes only a Builder-verified native identity without exposing tokens", async () => {
   const workflow = await readFile(
     new URL("../.github/workflows/publish-runtime.yml", import.meta.url),

@@ -1,0 +1,19 @@
+name: Publish Staging candidate
+run-name: Publish Staging candidate ${{ github.event.client_payload.jobId }}
+on:
+  repository_dispatch:
+    types: [publish-candidate]
+permissions:
+  contents: write
+  id-token: write
+jobs:
+  publish:
+    if: github.repository == 'PointCommunity/pointsite-staging' && github.ref == 'refs/heads/main'
+    uses: PointCommunity/pointsite-staging/.github/workflows/publish-runtime.yml@33a9c32a9781253831feb5da721427302fde2fa1
+    with:
+      job_id: ${{ github.event.client_payload.jobId }}
+      nonce: ${{ github.event.client_payload.nonce }}
+      target: staging
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
