@@ -51,6 +51,7 @@ export class PublicationClient {
       string | undefined
     > = process.env,
     private readonly fetcher: typeof fetch = fetch,
+    private readonly purpose?: "verification",
   ) {
     z.uuid().parse(jobId);
     nonceSchema.parse(nonce);
@@ -74,7 +75,7 @@ export class PublicationClient {
         throw new Error("Invalid OIDC endpoint");
       url.searchParams.set(
         "audience",
-        `${builder}/publish/${this.jobId}/${this.nonce}`,
+        `${builder}/${this.purpose === "verification" ? "verify" : "publish"}/${this.jobId}/${this.nonce}`,
       );
       const response = await this.fetcher(url, {
         headers: { authorization: `Bearer ${requestToken}` },
@@ -118,12 +119,17 @@ export class PublicationClient {
     value?: unknown,
   ) {
     try {
+      if (
+        this.purpose === "verification" &&
+        !["claim", "inputs", "report"].includes(path)
+      )
+        throw new Error("PUBLICATION_REQUEST_REJECTED");
       const body = value === undefined ? undefined : JSON.stringify(value);
       if (body && Buffer.byteLength(body) > 8192)
         throw new Error("PUBLICATION_REQUEST_REJECTED");
       const token = await this.identity();
       const response = await this.fetcher(
-        `${builder}/api/publish/runner/${this.jobId}/${path}`,
+        `${builder}/api/publish/${this.purpose === "verification" ? "verification" : "runner"}/${this.jobId}/${path}`,
         {
           method,
           headers: {
@@ -168,6 +174,46 @@ export class PublicationClient {
       );
     } catch {
       throw new Error("PUBLICATION_INPUT_MISMATCH");
+    }
+  }
+
+  async verificationInputs(): Promise<unknown> {
+    if (this.purpose !== "verification")
+      throw new Error("PUBLICATION_REQUEST_REJECTED");
+    const bytes = await this.request("inputs", 8192);
+    try {
+      return JSON.parse(new TextDecoder().decode(bytes));
+    } catch {
+      throw new Error("PUBLICATION_INPUT_MISMATCH");
+    }
+  }
+
+  async reportVerification(value: {
+    artifactDigest: string;
+    deploymentId: string;
+    workerVersionId?: string;
+  }): Promise<void> {
+    if (this.purpose !== "verification")
+      throw new Error("PUBLICATION_REQUEST_REJECTED");
+    const report = z
+      .strictObject({
+        artifactDigest: nonceSchema,
+        deploymentId: z.string().regex(/^[1-9][0-9]{0,19}$/),
+        workerVersionId: z.uuid().optional(),
+      })
+      .parse(value);
+    // Only this immutable acknowledgement retries; it cannot deploy or change source.
+    for (const delay of [0, 1000, 3000]) {
+      if (delay) await new Promise((resolve) => setTimeout(resolve, delay));
+      try {
+        const bytes = await this.request("report", 1000, "POST", report);
+        z.strictObject({ recorded: z.literal(true) }).parse(
+          JSON.parse(new TextDecoder().decode(bytes)),
+        );
+        return;
+      } catch {
+        if (delay === 3000) throw new Error("PUBLICATION_REPORT_REJECTED");
+      }
     }
   }
 

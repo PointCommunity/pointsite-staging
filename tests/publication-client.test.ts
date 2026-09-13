@@ -194,3 +194,104 @@ test("binds each mutation response to its requested phase and candidate commit",
   ]);
   await assert.rejects(client.commitBuild("b".repeat(40)));
 });
+
+test("verification uses a separate audience and only metadata endpoints", async () => {
+  const job = randomUUID();
+  const nonce = "b".repeat(64);
+  const report = {
+    artifactDigest: "c".repeat(64),
+    deploymentId: "123",
+    workerVersionId: randomUUID(),
+  };
+  const paths: string[] = [];
+  let reports = 0;
+  const fetcher: typeof fetch = async (input, init) => {
+    const url = new URL(input instanceof Request ? input.url : input);
+    if (url.hostname.endsWith(".actions.githubusercontent.com")) {
+      assert.equal(
+        url.searchParams.get("audience"),
+        `https://builder.pointatx.org/verify/${job}/${nonce}`,
+      );
+      return Response.json({ value: tokenAt() });
+    }
+    assert.equal(url.origin, "https://builder.pointatx.org");
+    assert.ok(url.pathname.startsWith(`/api/publish/verification/${job}/`));
+    const path = url.pathname.split("/").at(-1)!;
+    paths.push(path);
+    if (path === "claim") return Response.json({ claimed: true });
+    if (path === "inputs")
+      return Response.json({ retained: "public metadata" });
+    assert.equal(path, "report");
+    assert.deepEqual(JSON.parse(String(init?.body)), report);
+    if (++reports === 1) throw new Error("private lost-response detail");
+    return Response.json({ recorded: true });
+  };
+  const client = new PublicationClient(
+    job,
+    nonce,
+    source,
+    environment,
+    fetcher,
+    "verification",
+  );
+  await client.claim();
+  assert.deepEqual(await client.verificationInputs(), {
+    retained: "public metadata",
+  });
+  await client.reportVerification(report);
+  assert.deepEqual(paths, ["claim", "inputs", "report", "report"]);
+  await assert.rejects(
+    client.authorizeDeployment(),
+    /PUBLICATION_REQUEST_REJECTED/,
+  );
+  await assert.rejects(
+    client.chunk(randomUUID(), 0),
+    /PUBLICATION_REQUEST_REJECTED/,
+  );
+  assert.equal(paths.length, 4);
+});
+
+test("verification report retries stop after three identical requests", async () => {
+  const bodies: unknown[] = [];
+  const report = { artifactDigest: "c".repeat(64), deploymentId: "123" };
+  const client = new PublicationClient(
+    randomUUID(),
+    "b".repeat(64),
+    source,
+    environment,
+    async (input, init) => {
+      const url = new URL(input instanceof Request ? input.url : input);
+      if (url.hostname.endsWith(".actions.githubusercontent.com"))
+        return Response.json({ value: tokenAt() });
+      bodies.push(JSON.parse(String(init?.body)));
+      return new Response("private provider detail", { status: 503 });
+    },
+    "verification",
+  );
+  await assert.rejects(
+    client.reportVerification(report),
+    /PUBLICATION_REPORT_REJECTED/,
+  );
+  assert.deepEqual(bodies, [report, report, report]);
+  await assert.rejects(
+    client.reportVerification({ ...report, deploymentId: "invalid" }),
+  );
+  const publisher = new PublicationClient(
+    randomUUID(),
+    "b".repeat(64),
+    source,
+    environment,
+    async () => {
+      throw new Error("Network must not be reached");
+    },
+  );
+  await assert.rejects(
+    publisher.verificationInputs(),
+    /PUBLICATION_REQUEST_REJECTED/,
+  );
+  await assert.rejects(
+    publisher.reportVerification(report),
+    /PUBLICATION_REQUEST_REJECTED/,
+  );
+  assert.equal(bodies.length, 3);
+});
