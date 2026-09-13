@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
+import { z } from "zod";
 
 interface CommandResult {
   exitCode: number;
@@ -68,10 +69,7 @@ export function reconcileExpectedDeployment(
   return { deploymentId: active.id, versionId: selected.version_id };
 }
 
-async function commandJson<T>(
-  run: CommandRunner,
-  args: string[],
-): Promise<T> {
+async function commandJson<T>(run: CommandRunner, args: string[]): Promise<T> {
   const result = await run(args);
   if (result.exitCode !== 0)
     throw new Error(`Cloudflare reconciliation query failed: ${result.output}`);
@@ -134,8 +132,7 @@ export async function deployWithReconciliation({
         deployments,
         commitSha,
       );
-      if (reconciled)
-        return { status: "reconciled", ...reconciled };
+      if (reconciled) return { status: "reconciled", ...reconciled };
     } catch (error) {
       lastQueryError = error;
     }
@@ -160,6 +157,46 @@ async function main() {
     candidateChecksum: manifest.candidateChecksum,
   });
   process.stdout.write(`${JSON.stringify(result)}\n`);
+}
+
+/** A successful CLI exit is not the native deployment identity. Always read back active traffic. */
+export async function deployPublicationWithProof(input: {
+  commitSha: string;
+  candidateChecksum: string;
+  run: CommandRunner;
+}) {
+  z.string()
+    .regex(/^[a-f0-9]{40}$/)
+    .parse(input.commitSha);
+  z.string()
+    .regex(/^[a-f0-9]{64}$/)
+    .parse(input.candidateChecksum);
+  try {
+    const deployed = await deployWithReconciliation(input);
+    if (deployed.status === "reconciled")
+      return z.uuid().parse(deployed.versionId);
+    const versions = await commandJson<WorkerVersion[]>(input.run, [
+      "wrangler",
+      "versions",
+      "list",
+      "--json",
+    ]);
+    const deployments = await commandJson<WorkerDeployment[]>(input.run, [
+      "wrangler",
+      "deployments",
+      "list",
+      "--json",
+    ]);
+    const active = reconcileExpectedDeployment(
+      versions,
+      deployments,
+      input.commitSha,
+    );
+    if (!active) throw new Error("Native deployment not confirmed");
+    return z.uuid().parse(active.versionId);
+  } catch {
+    throw new Error("PUBLICATION_DEPLOYMENT_UNCONFIRMED");
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)

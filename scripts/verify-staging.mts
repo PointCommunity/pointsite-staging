@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { migrateDocument } from "../site-kit/migrations";
 import { RENDERER_IDENTITY } from "../site-kit/version";
+import { publicationManifestChecksum } from "./publication-inputs.mts";
 
 interface Check {
   name: string;
@@ -12,6 +13,7 @@ interface Check {
   detail: string;
 }
 interface Manifest {
+  publicationProtocol?: number;
   schemaVersion?: number;
   rendererVersion: string;
   source: string;
@@ -78,6 +80,8 @@ export async function expectedCandidateChecksum(
   manifest: Manifest,
   media: Array<{ path: string; encoded: string }> = [],
 ): Promise<string> {
+  if (manifest.publicationProtocol === 2)
+    return publicationManifestChecksum(content, manifest, media);
   if (
     manifest.candidateChecksum &&
     manifest.revisionId &&
@@ -93,7 +97,10 @@ export async function expectedCandidateChecksum(
   return createHash("sha256").update(content).digest("hex");
 }
 
-export async function verifyStaging(root = process.cwd()) {
+export async function verifyStaging(
+  root = process.cwd(),
+  liveOrigin = process.env.STAGING_URL,
+) {
   const checks: Check[] = [];
   const content = await readFile(
     join(root, "content/builder-site.json"),
@@ -142,15 +149,19 @@ export async function verifyStaging(root = process.cwd()) {
     passed: manifest.source === "PointCommunity/pointsite-builder",
     detail: manifest.source,
   });
+  const paths =
+    manifest.publicationProtocol === 2
+      ? [...new Set(document.media.map((item) => item.sourcePath))].sort()
+      : document.media
+          .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+          .map((item) => item.sourcePath);
   const candidateMedia = await Promise.all(
-    document.media
-      .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
-      .map(async (item) => ({
-        path: `public${item.sourcePath}`,
-        encoded: Buffer.from(
-          await readFile(join(root, "public", item.sourcePath)),
-        ).toString("base64"),
-      })),
+    paths.map(async (path) => ({
+      path: `public${path}`,
+      encoded: Buffer.from(await readFile(join(root, "public", path))).toString(
+        "base64",
+      ),
+    })),
   );
   const observedChecksum = await expectedCandidateChecksum(
     content,
@@ -226,7 +237,7 @@ export async function verifyStaging(root = process.cwd()) {
       ? leaked.slice(root.length + 1)
       : `${outFiles.length} files scanned`,
   });
-  const liveUrl = process.env.STAGING_URL?.replace(/\/$/, "");
+  const liveUrl = liveOrigin?.replace(/\/$/, "");
   if (liveUrl) {
     const serviceHeaders = stagingProbeHeaders();
     const anonymous = await fetch(liveUrl, { redirect: "manual" });

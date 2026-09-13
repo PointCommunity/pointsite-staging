@@ -5,6 +5,7 @@ import {
   isTransientDeployFailure,
   reconcileExpectedDeployment,
   type CommandRunner,
+  deployPublicationWithProof,
 } from "../scripts/deploy-staging.mts";
 
 test("classifies only retryable Cloudflare and network deployment failures", () => {
@@ -12,8 +13,43 @@ test("classifies only retryable Cloudflare and network deployment failures", () 
   assert.equal(isTransientDeployFailure("HTTP 429 Too Many Requests"), true);
   assert.equal(isTransientDeployFailure("ECONNRESET by peer"), true);
   assert.equal(isTransientDeployFailure("uploaded 500 static assets"), false);
-  assert.equal(isTransientDeployFailure("authentication failed: code 10000"), false);
+  assert.equal(
+    isTransientDeployFailure("authentication failed: code 10000"),
+    false,
+  );
   assert.equal(isTransientDeployFailure("candidate checksum mismatch"), false);
+});
+
+test("requires native version identity and full traffic after a successful upload", async () => {
+  const commitSha = "a".repeat(40);
+  const candidateChecksum = "b".repeat(64);
+  const version = "10000000-0000-4000-8000-000000000001";
+  let percentage = 100;
+  const run: CommandRunner = async (args) => ({
+    exitCode: 0,
+    output:
+      args[1] === "deploy"
+        ? "uploaded"
+        : JSON.stringify(
+            args[1] === "versions"
+              ? [{ id: version, annotations: { "workers/tag": commitSha } }]
+              : [
+                  {
+                    id: "deployment",
+                    versions: [{ version_id: version, percentage }],
+                  },
+                ],
+          ),
+  });
+  assert.equal(
+    await deployPublicationWithProof({ commitSha, candidateChecksum, run }),
+    version,
+  );
+  percentage = 50;
+  await assert.rejects(
+    deployPublicationWithProof({ commitSha, candidateChecksum, run }),
+    /PUBLICATION_DEPLOYMENT_UNCONFIRMED/,
+  );
 });
 
 test("reconciles only the expected tagged version at 100 percent traffic", () => {

@@ -1,0 +1,154 @@
+name: Publish accepted public candidate
+on:
+  workflow_call:
+    inputs:
+      job_id:
+        required: true
+        type: string
+      nonce:
+        required: true
+        type: string
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+env:
+  PUBLICATION_JOB_ID: ${{ inputs.job_id }}
+  PUBLICATION_NONCE: ${{ inputs.nonce }}
+  PUBLICATION_TARGET: production
+  NEXT_TELEMETRY_DISABLED: "1"
+  BOOTSTRAP_JS: |
+    import { appendFile } from 'node:fs/promises';
+    try {
+      const job = process.env.PUBLICATION_JOB_ID;
+      const nonce = process.env.PUBLICATION_NONCE;
+      const operation = process.env.PUBLICATION_OPERATION;
+      if (!/^[a-f0-9-]{36}$/.test(job ?? '') || !/^[a-f0-9]{64}$/.test(nonce ?? '') ||
+          !['reserve', 'finalize'].includes(operation) || process.env.PUBLICATION_TARGET !== 'production') throw Error();
+      const bounded = async (response, limit) => {
+        if (!response.ok || !response.body) throw Error();
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8', { fatal: true });
+        let size = 0, text = '';
+        try {
+          for (;;) {
+            const chunk = await reader.read();
+            if (chunk.done) break;
+            size += chunk.value.length;
+            if (size > limit) throw Error();
+            text += decoder.decode(chunk.value, { stream: true });
+          }
+          return JSON.parse(text + decoder.decode());
+        } finally { await reader.cancel(); reader.releaseLock(); }
+      };
+      const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
+      if (url.protocol !== 'https:' || !url.hostname.endsWith('.actions.githubusercontent.com') ||
+          url.username || url.password || url.port) throw Error();
+      url.searchParams.set('audience', `https://builder.pointatx.org/publish/${job}/${nonce}`);
+      const { value } = await bounded(await fetch(url, {
+        headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` },
+        redirect: 'error', signal: AbortSignal.timeout(10000),
+      }), 20000);
+      if (typeof value !== 'string' || value.length > 16384) throw Error();
+      const source = JSON.parse(Buffer.from(value.split('.')[1], 'base64url').toString('utf8')).job_workflow_sha;
+      if (!/^[a-f0-9]{40}$/.test(source ?? '')) throw Error();
+      const result = await bounded(await fetch(`https://builder.pointatx.org/api/publish/runner/${job}/${operation}`, {
+        method: 'POST', headers: { authorization: `Bearer ${value}` },
+        redirect: 'error', signal: AbortSignal.timeout(30000),
+      }), 1000);
+      if (result[operation === 'reserve' ? 'reserved' : 'verified'] !== true) throw Error();
+      await appendFile(process.env.GITHUB_OUTPUT, `source=${source}\n`);
+    } catch {
+      console.error('Publication identity or state rejected. No deployment authorized.');
+      process.exitCode = 1;
+    }
+jobs:
+  reserve:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    environment:
+      name: github-pages
+      deployment: false
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      source: ${{ steps.reserve.outputs.source }}
+    steps:
+      - id: reserve
+        name: Reserve the signed run before creating a deployment record
+        env:
+          PUBLICATION_OPERATION: reserve
+        run: node --input-type=module -e "$BOOTSTRAP_JS"
+  execute:
+    needs: reserve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    environment:
+      name: github-pages
+      url: https://pointatx.org
+    env:
+      PUBLICATION_SOURCE: ${{ needs.reserve.outputs.source }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: PointCommunity/pointsite-staging
+          ref: ${{ needs.reserve.outputs.source }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install the locked Chromium build for candidate verification
+        run: node node_modules/playwright/cli.js install --with-deps --only-shell chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
+      - name: Rebuild and commit only the accepted inputs
+        run: node --import tsx scripts/publication-run.mts prepare
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
+      - name: Upload the verified static output for one day
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: out
+          retention-days: 1
+          include-hidden-files: true
+      - name: Recheck authority immediately before public deployment
+        run: node --import tsx scripts/publication-run.mts authorize-pages
+      - name: Deploy with GitHub Pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+      - name: Verify every public static file and report the result
+        run: node --import tsx scripts/publication-run.mts verify-pages
+      - name: Remove this runner's publication files
+        if: always()
+        run: |
+          # shellcheck disable=SC2016
+          node --input-type=module -e '
+            import { rm } from "node:fs/promises";
+            import { join } from "node:path";
+            const job = process.env.PUBLICATION_JOB_ID;
+            if (!/^[a-f0-9-]{36}$/.test(job ?? "")) process.exit(1);
+            await rm(join(process.env.RUNNER_TEMP, `pointsite-publication-${job}.json`), { force: true });
+            await rm(join(process.env.RUNNER_TEMP, "pointsite-publication-browser"), { recursive: true, force: true });
+            await rm(join(process.env.RUNNER_TEMP, "artifact.tar"), { force: true });
+            for (const path of ["out", ".next", "node_modules"])
+              await rm(path, { recursive: true, force: true });
+          '
+  finalize:
+    needs: [reserve, execute]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    environment:
+      name: github-pages
+      deployment: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Verify the completed native deployment and release identity
+        env:
+          PUBLICATION_OPERATION: finalize
+        run: node --input-type=module -e "$BOOTSTRAP_JS"
