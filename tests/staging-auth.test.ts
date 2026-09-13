@@ -8,6 +8,27 @@ const env = {
   ASSETS: { fetch: () => Promise.resolve(new Response("asset")) },
 };
 
+test("applies the existing asset protections in the Worker without an unservable export file", async () => {
+  const response = await worker.fetch(
+    new Request("https://staging.pointatx.org/", {
+      headers: { "X-PointSite-Staging-Probe": env.STAGING_PROBE_SECRET },
+    }),
+    env,
+  );
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), "asset");
+  assert.equal(
+    response.headers.get("content-security-policy"),
+    "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto:",
+  );
+  assert.equal(
+    response.headers.get("permissions-policy"),
+    "camera=(), microphone=(), geolocation=()",
+  );
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(response.headers.get("x-frame-options"), "DENY");
+});
+
 test("exposes only validated release hashes and native version while keeping all content protected", async () => {
   const release = {
     format: 2,

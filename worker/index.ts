@@ -28,6 +28,14 @@ function secured(response: Response): Response {
   result.headers.set("referrer-policy", "no-referrer");
   result.headers.set("x-content-type-options", "nosniff");
   result.headers.set("x-frame-options", "DENY");
+  result.headers.set(
+    "permissions-policy",
+    "camera=(), microphone=(), geolocation=()",
+  );
+  result.headers.set(
+    "content-security-policy",
+    "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' mailto:",
+  );
   return result;
 }
 
