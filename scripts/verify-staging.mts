@@ -3,9 +3,10 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
+import { publicationMediaPaths } from "../site-kit/publication-media";
 import { migrateDocument } from "../site-kit/migrations";
 import { RENDERER_IDENTITY } from "../site-kit/version";
-import { publicationMediaPaths } from "../site-kit/publication-media";
+import { publicationManifestChecksum } from "./publication-inputs.mts";
 
 interface Check {
   name: string;
@@ -13,6 +14,7 @@ interface Check {
   detail: string;
 }
 interface Manifest {
+  publicationProtocol?: number;
   mediaSelection?: "referenced";
   schemaVersion?: number;
   rendererVersion: string;
@@ -80,6 +82,8 @@ export async function expectedCandidateChecksum(
   manifest: Manifest,
   media: Array<{ path: string; encoded: string }> = [],
 ): Promise<string> {
+  if (manifest.publicationProtocol === 2)
+    return publicationManifestChecksum(content, manifest, media);
   if (
     manifest.candidateChecksum &&
     manifest.revisionId &&
@@ -95,7 +99,10 @@ export async function expectedCandidateChecksum(
   return createHash("sha256").update(content).digest("hex");
 }
 
-export async function verifyStaging(root = process.cwd()) {
+export async function verifyStaging(
+  root = process.cwd(),
+  liveOrigin = process.env.STAGING_URL,
+) {
   const checks: Check[] = [];
   const content = await readFile(
     join(root, "content/builder-site.json"),
@@ -144,21 +151,20 @@ export async function verifyStaging(root = process.cwd()) {
     passed: manifest.source === "PointCommunity/pointsite-builder",
     detail: manifest.source,
   });
-  const selectedPaths =
+  const paths =
     manifest.mediaSelection === "referenced"
       ? publicationMediaPaths(document)
-      : document.media.map((item) => item.sourcePath);
+      : manifest.publicationProtocol === 2
+        ? [...new Set(document.media.map((item) => item.sourcePath))].sort()
+        : document.media
+            .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+            .map((item) => item.sourcePath);
   const candidateMedia = await Promise.all(
-    (manifest.mediaSelection === "referenced"
-      ? selectedPaths
-      : document.media
-          .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
-          .map((item) => item.sourcePath)
-    ).map(async (sourcePath) => ({
-      path: `public${sourcePath}`,
-      encoded: Buffer.from(
-        await readFile(join(root, "public", sourcePath)),
-      ).toString("base64"),
+    paths.map(async (path) => ({
+      path: `public${path}`,
+      encoded: Buffer.from(await readFile(join(root, "public", path))).toString(
+        "base64",
+      ),
     })),
   );
   const observedChecksum = await expectedCandidateChecksum(
@@ -205,7 +211,11 @@ export async function verifyStaging(root = process.cwd()) {
       });
     }
   }
-  for (const sourcePath of selectedPaths) {
+  const requiredPaths =
+    manifest.mediaSelection === "referenced"
+      ? publicationMediaPaths(document)
+      : [...new Set(document.media.map((item) => item.sourcePath))];
+  for (const sourcePath of requiredPaths) {
     const asset = join(
       root,
       manifest.mediaSelection === "referenced" ? "out" : "public",
@@ -219,6 +229,16 @@ export async function verifyStaging(root = process.cwd()) {
       passed: present,
       detail: present ? "present" : "missing",
     });
+    if (manifest.mediaSelection === "referenced") {
+      const exported = await stat(join(root, "out", sourcePath))
+        .then((value) => value.isFile())
+        .catch(() => false);
+      checks.push({
+        name: `exported-asset:${sourcePath}`,
+        passed: exported,
+        detail: exported ? "present" : "missing",
+      });
+    }
   }
   const outFiles = await filesBelow(join(root, "out"));
   const banned =
@@ -239,7 +259,7 @@ export async function verifyStaging(root = process.cwd()) {
       ? leaked.slice(root.length + 1)
       : `${outFiles.length} files scanned`,
   });
-  const liveUrl = process.env.STAGING_URL?.replace(/\/$/, "");
+  const liveUrl = liveOrigin?.replace(/\/$/, "");
   if (liveUrl) {
     const serviceHeaders = stagingProbeHeaders();
     const anonymous = await fetch(liveUrl, { redirect: "manual" });
@@ -276,7 +296,7 @@ export async function verifyStaging(root = process.cwd()) {
     revisionChecksum: manifest.revisionChecksum ?? null,
     rendererVersion: manifest.rendererVersion,
     routes: document.pages.length,
-    assets: selectedPaths.length,
+    assets: requiredPaths.length,
     liveProbes: liveUrl ? "completed" : "not-requested",
     checks,
   };

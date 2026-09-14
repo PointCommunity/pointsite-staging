@@ -1,7 +1,8 @@
 # PointSite Staging Safety
 
 - This repository is an isolated staging target. Never push from this repository to the `production` remote.
-- Builder publication may update only `content/builder-site.json` and `content/builder-site.manifest.json`.
+- Builder candidate publication may update only `content/builder-site.json`, `content/builder-site.manifest.json`, `content/builder-site.output.json`, and the candidate's validated image paths under `public/assets/`. The output manifest records the complete static-file hashes needed for reproducible promotion and recovery.
+- Runtime and workflow changes are maintainer changes reviewed under the parent Builder Issue, never files accepted from a publication request. A runner uploads candidate objects only to its job-owned `builder-publications/<job-id>` branch; Builder's fresh authority and expected-base checks control the update to `main`.
 - A staging pass is not production approval. Production requires a separately reviewed exact candidate and explicit authorization.
 - Keep the exported website static: no private builder API, session token, D1 binding, object credential, or GitHub credential may enter this bundle.
 

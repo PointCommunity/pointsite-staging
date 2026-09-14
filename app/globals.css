@@ -1,4 +1,6 @@
 :root {
+  --font-sans: 'Point Lato';
+  --font-serif: 'Point Libre Baskerville';
   --ink: #171a17;
   --muted: #60665e;
   --paper: #fff;
