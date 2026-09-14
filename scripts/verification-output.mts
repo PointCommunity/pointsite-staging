@@ -13,6 +13,7 @@ export const VerificationInputSchema = z.strictObject({
   checkRunId: id,
   dispatchRevision: sha,
   workflowRevision: sha,
+  verificationDispatchRevision: sha.optional(),
   workerVersionId: z.uuid().optional(),
   build: z.strictObject({
     candidateChecksum: digest,
@@ -59,7 +60,7 @@ export async function verifyRetainedPublication(
     };
     const native = async () => {
       z.object({
-        object: z.object({ sha: z.literal(input.build.commitSha) }),
+        object: z.object({ sha: z.literal(input.verificationDispatchRevision ?? input.build.commitSha) }),
       }).parse(await read(`${api}/git/ref/heads/main`));
       z.array(
         z.object({
@@ -69,10 +70,6 @@ export async function verifyRetainedPublication(
             .refine((value) => String(value) === input.deploymentId),
           sha: z.literal(input.dispatchRevision),
           environment: z.literal(environment),
-          performed_via_github_app: z.object({
-            id: z.literal(15368),
-            slug: z.literal("github-actions"),
-          }),
         }),
       )
         .length(1)
@@ -81,6 +78,16 @@ export async function verifyRetainedPublication(
             `${api}/deployments?environment=${environment}&per_page=1`,
           ),
         );
+      // Environment deployments may have null App attribution. The native Actions
+      // check supplies the independently owned deployment link.
+      z.object({
+        id: z.number().int().refine((value) => String(value) === input.checkRunId),
+        status: z.literal("completed"),
+        head_sha: z.literal(input.dispatchRevision),
+        details_url: z.literal(`https://github.com/${repository}/actions/runs/${input.runId}/job/${input.checkRunId}`),
+        app: z.object({ id: z.literal(15368), slug: z.literal("github-actions") }),
+        deployment: z.object({ id: z.number().int().refine((value) => String(value) === input.deploymentId) }),
+      }).parse(await read(`${api}/check-runs/${input.checkRunId}`));
       z.array(
         z.object({
           state: z.enum(["success", "failure", "error"]),
@@ -161,6 +168,7 @@ export async function verifyRetainedPublication(
         candidateChecksum: z.literal(input.build.candidateChecksum),
         artifactDigest: z.literal(input.build.artifactDigest),
         workflowRevision: z.literal(input.workflowRevision),
+        sourceCommit: z.literal(input.build.commitSha).optional(),
         ...(input.workerVersionId
           ? { workerVersionId: z.literal(input.workerVersionId!) }
           : {}),

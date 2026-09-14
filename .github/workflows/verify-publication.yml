@@ -9,7 +9,7 @@ permissions:
 jobs:
   verify:
     if: github.repository == 'PointCommunity/pointsite-staging' && github.ref == 'refs/heads/main'
-    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@bed2916eb4ab7c3ebfd56a951a43b40cbd2b0081
+    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@e1ef2ae8369ff699550b04794c1955339d5e96de
     with:
       builder_origin: ${{ github.event.client_payload.builderOrigin }}
       job_id: ${{ github.event.client_payload.verificationId }}
