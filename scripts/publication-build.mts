@@ -7,6 +7,7 @@ import {
   mkdtemp,
   readFile,
   realpath,
+  readdir,
   rm,
   writeFile,
 } from "node:fs/promises";
@@ -127,6 +128,37 @@ export async function preparePublicationBuild(
       workflowRevision,
     });
     await build(directory, buildId);
+    if (input.candidate.mediaSelection === "referenced") {
+      const retained = new Set(
+        input.assets.map((asset) => `assets${asset.sourcePath.slice(7)}`),
+      );
+      const pruneImages = async (relative: string): Promise<void> => {
+        if (!(await lstat(join(directory, "out"))).isDirectory())
+          throw new Error("PUBLICATION_PATH_INVALID");
+        const folder = join(directory, "out", relative);
+        const info = await lstat(folder).catch(
+          (error: NodeJS.ErrnoException) => {
+            if (error.code !== "ENOENT") throw error;
+            return undefined;
+          },
+        );
+        if (!info) return;
+        if (!info.isDirectory()) throw new Error("PUBLICATION_PATH_INVALID");
+        const entries = await readdir(join(directory, "out", relative), {
+          withFileTypes: true,
+        });
+        for (const entry of entries) {
+          const path = `${relative}/${entry.name}`;
+          if (entry.isDirectory()) await pruneImages(path);
+          else if (
+            /\.(?:avif|jpe?g|png|webp)$/i.test(entry.name) &&
+            !retained.has(path)
+          )
+            await rm(join(directory, "out", path));
+        }
+      };
+      await pruneImages("assets");
+    }
     const changed = git(["diff", "--name-only", "-z"])
       .split("\0")
       .filter(Boolean);

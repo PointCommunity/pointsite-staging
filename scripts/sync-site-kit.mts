@@ -16,6 +16,7 @@ const files = [
   'linked-media.ts',
   'migrations.ts',
   'presets.ts',
+  'publication-media.ts',
   'registry.tsx',
   'schema.ts',
   'site.css',

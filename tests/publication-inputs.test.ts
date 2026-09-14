@@ -153,3 +153,36 @@ test("rejects source, candidate, path, manifest and byte substitution before acc
   );
   assert.deepEqual(await readdir(outside), []);
 });
+
+test("referenced candidates exclude unused Library bytes while preserving the revision checksum", async () => {
+  const { input } = await fixture();
+  input.document.media.push({
+    id: randomUUID(),
+    sourcePath: "/assets/unused.webp",
+    alt: "Unused",
+  });
+  input.candidate.revisionChecksum = await checksumDocument(input.document);
+  const candidate = { ...input.candidate, mediaSelection: "referenced" };
+  const selected = {
+    ...input,
+    candidate,
+    candidateChecksum: await checksumDocument({
+      ...candidate,
+      assets: input.assets,
+    }),
+  };
+  assert.deepEqual(
+    await validatePublicationInputs(selected, candidate.workflowRevision),
+    selected,
+  );
+  await assert.rejects(
+    validatePublicationInputs(
+      { ...selected, candidate: input.candidate },
+      candidate.workflowRevision,
+    ),
+  );
+  const missing = { ...selected, assets: [] };
+  await assert.rejects(
+    validatePublicationInputs(missing, candidate.workflowRevision),
+  );
+});

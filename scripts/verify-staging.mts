@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
+import { publicationMediaPaths } from "../site-kit/publication-media";
 import { migrateDocument } from "../site-kit/migrations";
 import { RENDERER_IDENTITY } from "../site-kit/version";
 import { publicationManifestChecksum } from "./publication-inputs.mts";
@@ -14,6 +15,7 @@ interface Check {
 }
 interface Manifest {
   publicationProtocol?: number;
+  mediaSelection?: "referenced";
   schemaVersion?: number;
   rendererVersion: string;
   source: string;
@@ -150,11 +152,13 @@ export async function verifyStaging(
     detail: manifest.source,
   });
   const paths =
-    manifest.publicationProtocol === 2
-      ? [...new Set(document.media.map((item) => item.sourcePath))].sort()
-      : document.media
-          .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
-          .map((item) => item.sourcePath);
+    manifest.mediaSelection === "referenced"
+      ? publicationMediaPaths(document)
+      : manifest.publicationProtocol === 2
+        ? [...new Set(document.media.map((item) => item.sourcePath))].sort()
+        : document.media
+            .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+            .map((item) => item.sourcePath);
   const candidateMedia = await Promise.all(
     paths.map(async (path) => ({
       path: `public${path}`,
@@ -207,16 +211,30 @@ export async function verifyStaging(
       });
     }
   }
-  for (const media of document.media) {
-    const asset = join(root, "public", media.sourcePath);
+  const requiredPaths =
+    manifest.mediaSelection === "referenced"
+      ? publicationMediaPaths(document)
+      : [...new Set(document.media.map((item) => item.sourcePath))];
+  for (const sourcePath of requiredPaths) {
+    const asset = join(root, "public", sourcePath);
     const present = await stat(asset)
       .then((value) => value.isFile())
       .catch(() => false);
     checks.push({
-      name: `asset:${media.sourcePath}`,
+      name: `asset:${sourcePath}`,
       passed: present,
       detail: present ? "present" : "missing",
     });
+    if (manifest.mediaSelection === "referenced") {
+      const exported = await stat(join(root, "out", sourcePath))
+        .then((value) => value.isFile())
+        .catch(() => false);
+      checks.push({
+        name: `exported-asset:${sourcePath}`,
+        passed: exported,
+        detail: exported ? "present" : "missing",
+      });
+    }
   }
   const outFiles = await filesBelow(join(root, "out"));
   const banned =
@@ -274,7 +292,7 @@ export async function verifyStaging(
     revisionChecksum: manifest.revisionChecksum ?? null,
     rendererVersion: manifest.rendererVersion,
     routes: document.pages.length,
-    assets: document.media.length,
+    assets: requiredPaths.length,
     liveProbes: liveUrl ? "completed" : "not-requested",
     checks,
   };

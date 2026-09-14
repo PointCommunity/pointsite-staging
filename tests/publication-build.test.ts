@@ -55,6 +55,7 @@ test("builds a captured candidate and refuses input substitution by the build su
       schemaVersion: document.schemaVersion,
       rendererVersion: document.rendererVersion,
       publicationProtocol: 2,
+      ...(!tamper ? { mediaSelection: "referenced" } : {}),
       workflowRevision: source,
       fileCount: 3,
     };
@@ -88,6 +89,10 @@ test("builds a captured candidate and refuses input substitution by the build su
           '<html lang="en"><a href="#point-main">Skip</a><main id="point-main"><h1>Fixture</h1></main></html>',
         );
       }
+      await mkdir(join(directory, "out/assets/fonts"), { recursive: true });
+      await writeFile(join(directory, "out/assets/image.png"), bytes);
+      await writeFile(join(directory, "out/assets/unused.png"), bytes);
+      await writeFile(join(directory, "out/assets/fonts/font.woff2"), bytes);
     };
     const pending = preparePublicationBuild(
       root,
@@ -104,6 +109,18 @@ test("builds a captured candidate and refuses input substitution by the build su
     const result = await pending;
     assert.deepEqual(await outputManifest(join(root, "out")), result.output);
     assert.equal(result.build.candidateChecksum, input.candidateChecksum);
+    assert.deepEqual(
+      await readFile(join(root, "out/assets/image.png")),
+      Buffer.from(bytes),
+    );
+    await assert.rejects(
+      readFile(join(root, "out/assets/unused.png")),
+      /ENOENT/,
+    );
+    assert.deepEqual(
+      await readFile(join(root, "out/assets/fonts/font.woff2")),
+      Buffer.from(bytes),
+    );
     assert.equal(
       git(
         "rev-parse",

@@ -3,6 +3,7 @@ import { lstat, mkdir, realpath, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { z } from "zod";
 import { checksumDocument } from "../site-kit/canonicalize";
+import { publicationMediaPaths } from "../site-kit/publication-media";
 import { SiteDocumentSchema } from "../site-kit/schema";
 import { RENDERER_IDENTITY } from "../site-kit/version";
 
@@ -32,6 +33,7 @@ const candidateInputSchema = z.strictObject({
     schemaVersion: z.literal(RENDERER_IDENTITY.schemaVersion),
     rendererVersion: z.literal(RENDERER_IDENTITY.rendererVersion),
     publicationProtocol: z.literal(2),
+    mediaSelection: z.literal("referenced").optional(),
     workflowRevision: revision,
     fileCount: z.number().int().min(2).max(502),
   }),
@@ -50,9 +52,12 @@ export async function validatePublicationCandidate(
   workflowRevision: string,
 ) {
   const input = candidateInputSchema.parse(value);
-  const paths = [
-    ...new Set(input.document.media.map((item) => item.sourcePath)),
-  ].sort();
+  const paths =
+    input.candidate.mediaSelection === "referenced"
+      ? publicationMediaPaths(input.document)
+      : [
+          ...new Set(input.document.media.map((item) => item.sourcePath)),
+        ].sort();
   if (
     input.candidate.workflowRevision !== revision.parse(workflowRevision) ||
     input.document.schemaVersion !== input.candidate.schemaVersion ||
