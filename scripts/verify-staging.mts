@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { migrateDocument } from "../site-kit/migrations";
 import { RENDERER_IDENTITY } from "../site-kit/version";
+import { publicationMediaPaths } from "../site-kit/publication-media";
 
 interface Check {
   name: string;
@@ -12,6 +13,7 @@ interface Check {
   detail: string;
 }
 interface Manifest {
+  mediaSelection?: "referenced";
   schemaVersion?: number;
   rendererVersion: string;
   source: string;
@@ -142,15 +144,22 @@ export async function verifyStaging(root = process.cwd()) {
     passed: manifest.source === "PointCommunity/pointsite-builder",
     detail: manifest.source,
   });
+  const selectedPaths =
+    manifest.mediaSelection === "referenced"
+      ? publicationMediaPaths(document)
+      : document.media.map((item) => item.sourcePath);
   const candidateMedia = await Promise.all(
-    document.media
-      .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
-      .map(async (item) => ({
-        path: `public${item.sourcePath}`,
-        encoded: Buffer.from(
-          await readFile(join(root, "public", item.sourcePath)),
-        ).toString("base64"),
-      })),
+    (manifest.mediaSelection === "referenced"
+      ? selectedPaths
+      : document.media
+          .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+          .map((item) => item.sourcePath)
+    ).map(async (sourcePath) => ({
+      path: `public${sourcePath}`,
+      encoded: Buffer.from(
+        await readFile(join(root, "public", sourcePath)),
+      ).toString("base64"),
+    })),
   );
   const observedChecksum = await expectedCandidateChecksum(
     content,
@@ -196,13 +205,17 @@ export async function verifyStaging(root = process.cwd()) {
       });
     }
   }
-  for (const media of document.media) {
-    const asset = join(root, "public", media.sourcePath);
+  for (const sourcePath of selectedPaths) {
+    const asset = join(
+      root,
+      manifest.mediaSelection === "referenced" ? "out" : "public",
+      sourcePath,
+    );
     const present = await stat(asset)
       .then((value) => value.isFile())
       .catch(() => false);
     checks.push({
-      name: `asset:${media.sourcePath}`,
+      name: `asset:${sourcePath}`,
       passed: present,
       detail: present ? "present" : "missing",
     });
@@ -263,7 +276,7 @@ export async function verifyStaging(root = process.cwd()) {
     revisionChecksum: manifest.revisionChecksum ?? null,
     rendererVersion: manifest.rendererVersion,
     routes: document.pages.length,
-    assets: document.media.length,
+    assets: selectedPaths.length,
     liveProbes: liveUrl ? "completed" : "not-requested",
     checks,
   };
