@@ -161,8 +161,19 @@ test("deploys only through the reserved, immutable publication coordinator", asy
     ".github/workflows/publish-runtime.yml",
     "utf8",
   );
-  assert.match(workflow, /node --import tsx scripts\/publication-run\.mts prepare/);
-  assert.match(workflow, /node --import tsx scripts\/publication-run\.mts deploy/);
+  assert.match(
+    workflow,
+    /node --import tsx scripts\/publication-run\.mts prepare/,
+  );
+  assert.match(
+    workflow,
+    /node --import tsx scripts\/publication-run\.mts authorize-pages/,
+  );
+  assert.match(workflow, /actions\/deploy-pages@[a-f0-9]{40}/);
+  assert.match(
+    workflow,
+    /node --import tsx scripts\/publication-run\.mts verify-pages/,
+  );
   assert.match(workflow, /needs: reserve/);
   assert.match(workflow, /deployment: false/);
   assert.match(workflow, /persist-credentials: false/);
@@ -181,10 +192,7 @@ test("names validation and deployment runs by purpose and trigger context", asyn
     qualityWorkflow,
     /^run-name: \$\{\{ github\.event_name == 'pull_request' && format\('Validate Staging PR \{0\} - \{1\}', github\.event\.pull_request\.number, github\.event\.pull_request\.title\) \|\| format\('Validate Staging candidate - \{0\}', github\.event\.head_commit\.message\) \}\}$/m,
   );
-  assert.match(
-    deployWorkflow,
-    /^name: Publish immutable candidate$/m,
-  );
+  assert.match(deployWorkflow, /^name: Publish immutable candidate$/m);
   assert.doesNotMatch(qualityWorkflow, /^run-name: .*Deploy Staging/m);
   assert.doesNotMatch(deployWorkflow, /^run-name: .*Validate Staging/m);
 });

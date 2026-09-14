@@ -1,4 +1,4 @@
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -10,7 +10,6 @@ import {
   pushPublicationCommit,
 } from "./publication-git.mts";
 import { outputManifest } from "./output-manifest.mts";
-import { deployPublicationWithProof } from "./deploy-staging.mts";
 import { verifyPublicationOutputWithRetry } from "./publication-live.mts";
 import { checkPublicationBrowser } from "./publication-browser.mts";
 
@@ -46,13 +45,8 @@ async function main() {
   const root = process.cwd();
   const client = new PublicationClient(jobId, nonce, source);
   const operation = z
-    .enum(["prepare", "deploy", "authorize-pages", "verify-pages"])
+    .enum(["prepare", "authorize-pages", "verify-pages"])
     .parse(process.argv[2]);
-  if (
-    (target === "production" && operation === "deploy") ||
-    (target === "staging" && operation.endsWith("-pages"))
-  )
-    throw new Error("PUBLICATION_OPERATION_INVALID");
   if (operation === "prepare") {
     await client.claim();
     const input = await client.inputs();
@@ -111,53 +105,6 @@ async function main() {
     process.stdout.write("Every public output file verified.\n");
     return;
   }
-  const environment: NodeJS.ProcessEnv = {
-    PATH: process.env.PATH,
-    HOME: process.env.HOME,
-    TMPDIR: process.env.TMPDIR,
-    CI: "true",
-    NODE_ENV: "production",
-    WRANGLER_SEND_METRICS: "false",
-    CLOUDFLARE_API_TOKEN: process.env.CLOUDFLARE_API_TOKEN,
-    CLOUDFLARE_ACCOUNT_ID: z
-      .literal("bc890091d86ddf9ce669e96e79d47746")
-      .parse(process.env.CLOUDFLARE_ACCOUNT_ID),
-  };
-  await client.authorizeDeployment();
-  const workerVersionId = await deployPublicationWithProof({
-    commitSha: build.commitSha,
-    candidateChecksum: build.candidateChecksum,
-    run: async (args) => {
-      if (args[0] !== "wrangler")
-        throw new Error("PUBLICATION_COMMAND_INVALID");
-      const result = spawnSync(
-        process.execPath,
-        [join(root, "node_modules/wrangler/bin/wrangler.js"), ...args.slice(1)],
-        {
-          cwd: root,
-          env: environment,
-          encoding: "utf8",
-          timeout: 15 * 60_000,
-          maxBuffer: 4 * 1024 * 1024,
-          stdio: ["ignore", "pipe", "pipe"],
-        },
-      );
-      return {
-        exitCode: result.status ?? 1,
-        output: `${result.stdout ?? ""}${result.stderr ?? ""}`,
-      };
-    },
-  });
-  await verifyPublicationOutputWithRetry({
-    target,
-    ...output,
-    candidateChecksum: build.candidateChecksum,
-    workflowRevision: source,
-    workerVersionId,
-    probeSecret: process.env.STAGING_PROBE_SECRET,
-  });
-  await client.reportDeployment(workerVersionId);
-  process.stdout.write("Native deployment and every output file verified.\n");
 }
 
 if (

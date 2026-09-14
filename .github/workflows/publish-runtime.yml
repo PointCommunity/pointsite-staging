@@ -11,13 +11,9 @@ on:
       target:
         required: true
         type: string
-    secrets:
-      CLOUDFLARE_API_TOKEN:
-        required: true
-      STAGING_PROBE_SECRET:
-        required: true
 permissions:
   contents: write
+  pages: write
   id-token: write
 env:
   PUBLICATION_JOB_ID: ${{ inputs.job_id }}
@@ -117,12 +113,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
-      - name: Deploy and verify every static output file
-        run: node --import tsx scripts/publication-run.mts deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
+      - name: Upload the verified static output for one day
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: out
+          retention-days: 1
+          include-hidden-files: true
+      - name: Recheck authority immediately before public deployment
+        run: node --import tsx scripts/publication-run.mts authorize-pages
+      - name: Deploy with GitHub Pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+      - name: Verify every public static file and report the result
+        run: node --import tsx scripts/publication-run.mts verify-pages
       - name: Remove this runner's publication files
         if: always()
         run: |
@@ -134,6 +136,7 @@ jobs:
             if (!/^[a-f0-9-]{36}$/.test(job ?? "")) process.exit(1);
             await rm(join(process.env.RUNNER_TEMP, `pointsite-publication-${job}.json`), { force: true });
             await rm(join(process.env.RUNNER_TEMP, "pointsite-publication-browser"), { recursive: true, force: true });
+            await rm(join(process.env.RUNNER_TEMP, "artifact.tar"), { force: true });
             for (const path of ["out", ".next", "node_modules"])
               await rm(path, { recursive: true, force: true });
           '

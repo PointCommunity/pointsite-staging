@@ -39,6 +39,8 @@ export async function verifyPublicationOutput(
   fetcher: typeof fetch = fetch,
 ) {
   z.enum(["staging", "production"]).parse(input.target);
+  const protectedWorker =
+    input.target === "staging" && input.workerVersionId !== undefined;
   const origin =
     input.target === "staging"
       ? "https://staging.pointatx.org"
@@ -49,7 +51,7 @@ export async function verifyPublicationOutput(
   z.string()
     .regex(/^[a-f0-9]{40}$/)
     .parse(input.workflowRevision);
-  if (input.target === "staging") {
+  if (protectedWorker) {
     z.uuid().parse(input.workerVersionId);
     z.string().min(32).max(4096).parse(input.probeSecret);
   }
@@ -86,7 +88,7 @@ export async function verifyPublicationOutput(
       fetcher(`${origin}${path}`, {
         headers: {
           "cache-control": "no-cache",
-          ...(protectedAsset && input.target === "staging"
+          ...(protectedAsset && protectedWorker
             ? { "X-PointSite-Staging-Probe": input.probeSecret! }
             : {}),
         },
@@ -117,12 +119,12 @@ export async function verifyPublicationOutput(
         candidateChecksum: z.literal(input.candidateChecksum),
         artifactDigest: z.literal(input.artifactDigest),
         workflowRevision: z.literal(input.workflowRevision),
-        ...(input.target === "staging"
+        ...(protectedWorker
           ? { workerVersionId: z.literal(input.workerVersionId!) }
           : {}),
       }).parse(JSON.parse(text + decoder.decode()));
     };
-    if (input.target === "staging") {
+    if (protectedWorker) {
       const anonymous = await read("/");
       await anonymous.body?.cancel();
       if (![401, 403].includes(anonymous.status))
@@ -135,7 +137,7 @@ export async function verifyPublicationOutput(
           ? ""
           : file.path.endsWith("/index.html")
             ? file.path.slice(0, -10)
-            : input.target === "staging" && file.path.endsWith(".html")
+            : protectedWorker && file.path.endsWith(".html")
               ? file.path.slice(0, -5)
               : file.path;
       const response = await read(
@@ -149,7 +151,7 @@ export async function verifyPublicationOutput(
       )
         throw new Error("Missing output");
       if (
-        input.target === "staging" &&
+        protectedWorker &&
         (response.headers.get("x-content-type-options") !== "nosniff" ||
           response.headers.get("x-frame-options") !== "DENY")
       )

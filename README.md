@@ -6,13 +6,13 @@ A complete, responsive, GitHub-owned replacement for the current Point ATX SnapP
 
 The published website is intentionally read-only. It has no visitor-facing editor, admin panel, sign-in, database, content mutation API, or code-writing capability. Only collaborators with write access to the GitHub repository can change the site, and every published change is traceable to a commit and deployment.
 
-This staging repository adds a Worker wrapper that denies anonymous requests and
-validates the shared PointSite Builder GitHub session through the Builder before
-serving static assets. A separate staging probe secret permits read-only CI
-verification. The `workers.dev` route is enabled only as an authenticated CI
-probe path because Bot Fight Mode challenges GitHub-hosted runners on the custom
-domain; preview URLs remain disabled. Both hosts execute the same Worker access
-gate before static assets are served.
+The Issue #61 publication runtime deploys captured staging candidates to GitHub
+Pages at `https://staging.pointatx.org`. Published staging content is public;
+private Builder drafts and mutation APIs remain authenticated. The Pages runtime
+uses the same artifact deployment and complete byte verification as production.
+The retained Worker and probe helpers support historical deployment evidence and
+rollback only. The live hosting cutover remains pending until the coordinated
+Issue #61 release and DNS verification complete.
 
 ## Everyday editing
 

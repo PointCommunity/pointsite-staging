@@ -34,8 +34,6 @@ export async function verifyRetainedPublication(
   try {
     const input = VerificationInputSchema.parse(value);
     const staging = input.target === "staging";
-    if (staging && !input.workerVersionId)
-      throw Error("Native Worker identity required");
     const repository = `PointCommunity/${staging ? "pointsite-staging" : "pointsite"}`;
     const api = `https://api.github.com/repos/${repository}`;
     const origin = staging
@@ -163,7 +161,7 @@ export async function verifyRetainedPublication(
         candidateChecksum: z.literal(input.build.candidateChecksum),
         artifactDigest: z.literal(input.build.artifactDigest),
         workflowRevision: z.literal(input.workflowRevision),
-        ...(staging
+        ...(input.workerVersionId
           ? { workerVersionId: z.literal(input.workerVersionId!) }
           : {}),
       })

@@ -4,7 +4,11 @@ import test from "node:test";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { verifyRetainedPublication } from "../scripts/verification-output.mts";
 
-async function fixture(target: "staging" | "production", change = "") {
+async function fixture(
+  target: "staging" | "production",
+  change = "",
+  pages = false,
+) {
   const body = Buffer.from("<h1>Retained public output</h1>");
   const files = [
     {
@@ -25,7 +29,7 @@ async function fixture(target: "staging" | "production", change = "") {
     checkRunId: "345",
     dispatchRevision: "a".repeat(40),
     workflowRevision: "b".repeat(40),
-    ...(target === "staging" ? { workerVersionId } : {}),
+    ...(target === "staging" && !pages ? { workerVersionId } : {}),
     build: {
       candidateChecksum: "c".repeat(64),
       commitSha: "d".repeat(40),
@@ -61,6 +65,7 @@ async function fixture(target: "staging" | "production", change = "") {
     assert.equal(
       headers.get("X-PointSite-Staging-Probe"),
       target === "staging" &&
+        !pages &&
         url.origin === origin &&
         url.pathname === "/" &&
         fileReads++ > 0
@@ -112,14 +117,18 @@ async function fixture(target: "staging" | "production", change = "") {
         candidateChecksum: input.build.candidateChecksum,
         artifactDigest,
         workflowRevision: input.workflowRevision,
-        ...(target === "staging"
+        ...(target === "staging" && !pages
           ? {
               workerVersionId:
                 change === "worker" ? randomUUID() : workerVersionId,
             }
           : {}),
       });
-    if (target === "staging" && !headers.has("X-PointSite-Staging-Probe"))
+    if (
+      target === "staging" &&
+      !pages &&
+      !headers.has("X-PointSite-Staging-Probe")
+    )
       return new Response("Protected", { status: 401 });
     return new Response(change === "file" ? "changed public bytes" : body, {
       headers: {
@@ -176,5 +185,23 @@ test("requires an independently captured native Worker identity for Staging", as
     ),
     /PUBLICATION_LIVE_VERIFICATION_UNCONFIRMED/,
   );
-  assert.equal(f.calls.length, 0);
+  assert.ok(f.calls.length > 0);
+});
+
+test("verifies public Pages staging without a probe secret or Worker identity", async () => {
+  const f = await fixture("staging", "", true);
+  assert.deepEqual(
+    await verifyRetainedPublication(f.input, undefined, f.fetcher),
+    {
+      artifactDigest: f.input.build.artifactDigest,
+      deploymentId: f.input.deploymentId,
+    },
+  );
+  for (const failure of ["blob", "file", "main", "replacement", "pending"]) {
+    const failed = await fixture("staging", failure, true);
+    await assert.rejects(
+      verifyRetainedPublication(failed.input, undefined, failed.fetcher),
+      /PUBLICATION_LIVE_VERIFICATION_UNCONFIRMED/,
+    );
+  }
 });

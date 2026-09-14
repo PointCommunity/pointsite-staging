@@ -49,6 +49,21 @@ for (const purpose of ["publication", "verification"] as const)
         assert.match(workflow, /persist-credentials: false/);
         assert.match(workflow, /npm ci --ignore-scripts --no-audit --no-fund/);
       }
+      if (purpose === "publication") {
+        assert.match(workflow, /pages: write/);
+        assert.match(workflow, /actions\/upload-pages-artifact@[a-f0-9]{40}/);
+        assert.match(workflow, /retention-days: 1/);
+        assert.match(workflow, /actions\/deploy-pages@[a-f0-9]{40}/);
+        assert.doesNotMatch(workflow, /CLOUDFLARE|STAGING_PROBE_SECRET/);
+        assert.ok(
+          workflow.indexOf("publication-run.mts authorize-pages") <
+            workflow.indexOf("uses: actions/deploy-pages"),
+        );
+        assert.ok(
+          workflow.indexOf("uses: actions/deploy-pages") <
+            workflow.indexOf("publication-run.mts verify-pages"),
+        );
+      }
       const body = workflow
         .split("  BOOTSTRAP_JS: |\n")[1]
         .split("\njobs:")[0]
