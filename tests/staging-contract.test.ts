@@ -11,6 +11,7 @@ import {
 import { migrateDocument } from "../site-kit/migrations";
 import { defaultSiteDocument } from "../site-kit/default-site";
 import { RENDERER_IDENTITY } from "../site-kit/version";
+import { publicationMediaPaths } from "../site-kit/publication-media";
 
 test("published candidate migrates into the committed renderer contract", async () => {
   const document = JSON.parse(
@@ -72,16 +73,20 @@ test("verifies the published candidate checksum including referenced media", asy
     source: string;
     sha256?: string;
     candidateChecksum?: string;
+    mediaSelection?: "referenced";
   };
   const media = await Promise.all(
-    document.media
-      .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
-      .map(async (item) => ({
-        path: `public${item.sourcePath}`,
-        encoded: Buffer.from(
-          await readFile(`public${item.sourcePath}`),
-        ).toString("base64"),
-      })),
+    (manifest.mediaSelection === "referenced"
+      ? publicationMediaPaths(migrateDocument(document).document)
+      : document.media
+          .filter((item) => item.sourcePath.startsWith("/assets/builder/"))
+          .map((item) => item.sourcePath)
+    ).map(async (sourcePath) => ({
+      path: `public${sourcePath}`,
+      encoded: Buffer.from(await readFile(`public${sourcePath}`)).toString(
+        "base64",
+      ),
+    })),
   );
   const observed = await expectedCandidateChecksum(content, manifest, media);
   assert.equal(observed, manifest.candidateChecksum ?? manifest.sha256);

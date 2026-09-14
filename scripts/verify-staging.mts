@@ -216,7 +216,11 @@ export async function verifyStaging(
       ? publicationMediaPaths(document)
       : [...new Set(document.media.map((item) => item.sourcePath))];
   for (const sourcePath of requiredPaths) {
-    const asset = join(root, "public", sourcePath);
+    const asset = join(
+      root,
+      manifest.mediaSelection === "referenced" ? "out" : "public",
+      sourcePath,
+    );
     const present = await stat(asset)
       .then((value) => value.isFile())
       .catch(() => false);
