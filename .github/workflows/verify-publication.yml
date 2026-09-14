@@ -9,10 +9,9 @@ permissions:
 jobs:
   verify:
     if: github.repository == 'PointCommunity/pointsite-staging' && github.ref == 'refs/heads/main'
-    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@74559f2755369d1685be0192a5b5251e42b6dadb
+    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@bed2916eb4ab7c3ebfd56a951a43b40cbd2b0081
     with:
+      builder_origin: ${{ github.event.client_payload.builderOrigin }}
       job_id: ${{ github.event.client_payload.verificationId }}
       nonce: ${{ github.event.client_payload.nonce }}
       target: staging
-    secrets:
-      STAGING_PROBE_SECRET: ${{ secrets.STAGING_PROBE_SECRET }}
