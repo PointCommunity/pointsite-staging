@@ -5,6 +5,8 @@ import { PublicationClient } from "../scripts/publication-client.mts";
 
 const source = "a".repeat(40);
 const environment = {
+  BUILDER_ORIGIN: "https://builder.eaglepass.io",
+  PUBLICATION_TARGET: "staging",
   ACTIONS_ID_TOKEN_REQUEST_URL:
     "https://pipelines.actions.githubusercontent.com/oidc",
   ACTIONS_ID_TOKEN_REQUEST_TOKEN: "fixture-request-token",
@@ -31,11 +33,11 @@ test("renews an in-memory job token and sends only bounded requests to the fixed
       issued = tokenAt(now);
       assert.equal(
         url.searchParams.get("audience"),
-        `https://builder.pointatx.org/publish/${job}/${nonce}`,
+        `https://builder.eaglepass.io/publish/${job}/${nonce}`,
       );
       return Response.json({ value: issued });
     }
-    assert.equal(url.origin, "https://builder.pointatx.org");
+    assert.equal(url.origin, "https://builder.eaglepass.io");
     assert.equal(
       new Headers(init?.headers).get("authorization"),
       `Bearer ${issued}`,
@@ -210,11 +212,11 @@ test("verification uses a separate audience and only metadata endpoints", async 
     if (url.hostname.endsWith(".actions.githubusercontent.com")) {
       assert.equal(
         url.searchParams.get("audience"),
-        `https://builder.pointatx.org/verify/${job}/${nonce}`,
+        `https://builder.eaglepass.io/verify/${job}/${nonce}`,
       );
       return Response.json({ value: tokenAt() });
     }
-    assert.equal(url.origin, "https://builder.pointatx.org");
+    assert.equal(url.origin, "https://builder.eaglepass.io");
     assert.ok(url.pathname.startsWith(`/api/publish/verification/${job}/`));
     const path = url.pathname.split("/").at(-1)!;
     paths.push(path);
@@ -294,4 +296,28 @@ test("verification report retries stop after three identical requests", async ()
     /PUBLICATION_REQUEST_REJECTED/,
   );
   assert.equal(bodies.length, 3);
+});
+
+test("rejects missing and substituted Builder origins and Canary Production callbacks", () => {
+  for (const BUILDER_ORIGIN of [
+    undefined,
+    "https://builder.pointatx.org",
+    "https://attacker.example",
+    "https://builder.eaglepass.io/",
+  ])
+    assert.throws(
+      () =>
+        new PublicationClient(randomUUID(), "b".repeat(64), source, {
+          ...environment,
+          BUILDER_ORIGIN,
+        }),
+    );
+  assert.throws(
+    () =>
+      new PublicationClient(randomUUID(), "b".repeat(64), source, {
+        ...environment,
+        BUILDER_ORIGIN: "https://builder-canary.eaglepass.io",
+        PUBLICATION_TARGET: "production",
+      }),
+  );
 });

@@ -30,12 +30,14 @@ test("the public entrypoint accepts only a captured job and pins the reusable im
   assert.match(caller, /^run-name: Publish Staging candidate /m);
 });
 
-for (const purpose of ["publication", "verification"] as const)
-  for (const target of ["staging", "production"] as const)
+for (const purpose of ["publication", "verification", "rollback"] as const)
+  for (const target of (purpose === "rollback"
+    ? ["production"]
+    : ["staging", "production"]) as ("staging" | "production")[])
     test(`${target} ${purpose} bootstrap reserves or finalizes only a Builder-verified native identity without exposing tokens`, async () => {
       const workflow = await readFile(
         new URL(
-          `../.github/workflows/${purpose === "verification" ? "verify-runtime" : target === "staging" ? "publish-runtime" : "publish-production-runtime"}.yml`,
+          `../.github/workflows/${purpose === "rollback" ? "rollback-runtime" : purpose === "verification" ? "verify-runtime" : target === "staging" ? "publish-runtime" : "publish-production-runtime"}.yml`,
           import.meta.url,
         ),
         "utf8",
@@ -64,6 +66,12 @@ for (const purpose of ["publication", "verification"] as const)
             workflow.indexOf("publication-run.mts verify-pages"),
         );
       }
+      assert.match(workflow, /concurrency:\n  group: pointsite-pages-/);
+      assert.match(workflow, /cancel-in-progress: false/);
+      assert.doesNotMatch(
+        workflow,
+        /builder\.pointatx\.org|STAGING_PROBE_SECRET/,
+      );
       const body = workflow
         .split("  BOOTSTRAP_JS: |\n")[1]
         .split("\njobs:")[0]
@@ -83,12 +91,20 @@ for (const purpose of ["publication", "verification"] as const)
         "endpoint",
         "claim",
         "oversized",
+        "builder",
+        ...(target === "production" ? ["canary"] : []),
       ]) {
         const revision = "a".repeat(40);
         const token = `fixture.${Buffer.from(JSON.stringify({ job_workflow_sha: revision })).toString("base64url")}.fixture`;
         const process = {
           exitCode: 0,
           env: {
+            BUILDER_ORIGIN:
+              failure === "builder"
+                ? "https://attacker.example"
+                : failure === "canary" || target === "staging"
+                  ? "https://builder-canary.eaglepass.io"
+                  : "https://builder.eaglepass.io",
             PUBLICATION_JOB_ID:
               failure === "job" ? "untrusted\ninput" : randomUUID(),
             PUBLICATION_NONCE: "b".repeat(64),
@@ -118,16 +134,16 @@ for (const purpose of ["publication", "verification"] as const)
             );
             assert.equal(
               parsed.searchParams.get("audience"),
-              `https://builder.pointatx.org/${purpose === "verification" ? "verify" : "publish"}/${process.env.PUBLICATION_JOB_ID}/${process.env.PUBLICATION_NONCE}`,
+              `${process.env.BUILDER_ORIGIN}/${purpose === "verification" ? "verify" : purpose === "rollback" ? "rollback" : "publish"}/${process.env.PUBLICATION_JOB_ID}/${process.env.PUBLICATION_NONCE}`,
             );
             return Response.json({
               value: failure === "oversized" ? "x".repeat(20_001) : token,
             });
           }
-          assert.equal(parsed.origin, "https://builder.pointatx.org");
+          assert.equal(parsed.origin, process.env.BUILDER_ORIGIN);
           assert.equal(
             parsed.pathname,
-            `/api/publish/${purpose === "verification" ? "verification" : "runner"}/${process.env.PUBLICATION_JOB_ID}/${process.env.PUBLICATION_OPERATION}`,
+            `/api/publish/${purpose === "verification" ? "verification" : purpose === "rollback" ? "rollback-runner" : "runner"}/${process.env.PUBLICATION_JOB_ID}/${process.env.PUBLICATION_OPERATION}`,
           );
           assert.equal(headers.get("authorization"), `Bearer ${token}`);
           assert.equal(init?.method, "POST");
@@ -166,7 +182,9 @@ for (const purpose of ["publication", "verification"] as const)
               ? "Verification identity or state rejected."
               : "Publication identity or state rejected. No deployment authorized.",
           ]);
-          if (["job", "target", "endpoint"].includes(failure))
+          if (
+            ["job", "target", "endpoint", "builder", "canary"].includes(failure)
+          )
             assert.equal(calls.length, 0);
         }
       }

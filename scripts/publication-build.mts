@@ -206,6 +206,12 @@ export async function preparePublicationBuild(
       `${JSON.stringify(output)}\n`,
       { mode: 0o600 },
     );
+    const commit = await preparePublicationCommit(directory, {
+      jobId,
+      baseSha: input.baseSha,
+      requestedAt: input.requestedAt,
+      files: [...paths, outputPath],
+    });
     await writeFile(
       join(directory, "out/__pointsite_release.json"),
       JSON.stringify({
@@ -213,15 +219,10 @@ export async function preparePublicationBuild(
         candidateChecksum: input.candidateChecksum,
         artifactDigest: output.artifactDigest,
         workflowRevision,
+        sourceCommit: commit.commitSha,
       }),
       { flag: "wx", mode: 0o600 },
     );
-    const commit = await preparePublicationCommit(directory, {
-      jobId,
-      baseSha: input.baseSha,
-      requestedAt: input.requestedAt,
-      files: [...paths, outputPath],
-    });
     return {
       build: {
         candidateChecksum: input.candidateChecksum,

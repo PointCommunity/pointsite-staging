@@ -3,7 +3,10 @@ import { validatePublicationInputs } from "./publication-inputs.mts";
 
 const sha = z.string().regex(/^[a-f0-9]{40}$/);
 const nonceSchema = z.string().regex(/^[a-f0-9]{64}$/);
-const builder = "https://builder.pointatx.org";
+const builderOrigins = z.enum([
+  "https://builder.eaglepass.io",
+  "https://builder-canary.eaglepass.io",
+]);
 
 export async function boundedBytes(
   response: Response,
@@ -41,6 +44,7 @@ export async function boundedBytes(
 
 /** A token lives only in this runner process and is renewed before its five-minute expiry. */
 export class PublicationClient {
+  private readonly builder: string;
   private token: { value: string; refreshAt: number } | undefined;
   constructor(
     private readonly jobId: string,
@@ -51,8 +55,14 @@ export class PublicationClient {
       string | undefined
     > = process.env,
     private readonly fetcher: typeof fetch = fetch,
-    private readonly purpose?: "verification",
+    private readonly purpose?: "verification" | "rollback",
   ) {
+    this.builder = builderOrigins.parse(environment.BUILDER_ORIGIN);
+    if (
+      environment.PUBLICATION_TARGET === "production" &&
+      this.builder !== "https://builder.eaglepass.io"
+    )
+      throw new Error("PUBLICATION_ORIGIN_REJECTED");
     z.uuid().parse(jobId);
     nonceSchema.parse(nonce);
     sha.parse(workflowRevision);
@@ -75,7 +85,7 @@ export class PublicationClient {
         throw new Error("Invalid OIDC endpoint");
       url.searchParams.set(
         "audience",
-        `${builder}/${this.purpose === "verification" ? "verify" : "publish"}/${this.jobId}/${this.nonce}`,
+        `${this.builder}/${this.purpose === "verification" ? "verify" : this.purpose === "rollback" ? "rollback" : "publish"}/${this.jobId}/${this.nonce}`,
       );
       const response = await this.fetcher(url, {
         headers: { authorization: `Bearer ${requestToken}` },
@@ -124,12 +134,19 @@ export class PublicationClient {
         !["claim", "inputs", "report"].includes(path)
       )
         throw new Error("PUBLICATION_REQUEST_REJECTED");
+      if (
+        this.purpose === "rollback" &&
+        !["claim", "inputs", "authorize-deployment", "deployment"].includes(
+          path,
+        )
+      )
+        throw new Error("PUBLICATION_REQUEST_REJECTED");
       const body = value === undefined ? undefined : JSON.stringify(value);
       if (body && Buffer.byteLength(body) > 8192)
         throw new Error("PUBLICATION_REQUEST_REJECTED");
       const token = await this.identity();
       const response = await this.fetcher(
-        `${builder}/api/publish/${this.purpose === "verification" ? "verification" : "runner"}/${this.jobId}/${path}`,
+        `${this.builder}/api/publish/${this.purpose === "verification" ? "verification" : this.purpose === "rollback" ? "rollback-runner" : "runner"}/${this.jobId}/${path}`,
         {
           method,
           headers: {
@@ -186,6 +203,16 @@ export class PublicationClient {
     } catch {
       throw new Error("PUBLICATION_INPUT_MISMATCH");
     }
+  }
+
+  async rollbackInputs(): Promise<unknown> {
+    if (this.purpose !== "rollback")
+      throw new Error("PUBLICATION_REQUEST_REJECTED");
+    return JSON.parse(
+      new TextDecoder("utf-8", { fatal: true }).decode(
+        await this.request("inputs", 8192),
+      ),
+    );
   }
 
   async reportVerification(value: {

@@ -134,6 +134,7 @@ test("builds a captured candidate and refuses input substitution by the build su
       await readFile(join(root, "out/__pointsite_release.json"), "utf8"),
     );
     assert.equal(release.artifactDigest, result.output.artifactDigest);
+    assert.equal(release.sourceCommit, result.build.commitSha);
     assert.equal(
       git("show", `${result.build.commitSha}:README.md`),
       "Public build fixture",

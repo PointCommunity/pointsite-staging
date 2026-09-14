@@ -1,30 +1,26 @@
-name: Verify retained publication
+name: Restore a verified public release
 on:
   workflow_call:
     inputs:
-      builder_origin:
-        required: true
-        type: string
       job_id:
         required: true
         type: string
       nonce:
         required: true
         type: string
-      target:
-        required: true
-        type: string
 permissions:
   contents: read
+  pages: write
   id-token: write
 concurrency:
-  group: pointsite-pages-${{ inputs.target }}
+  group: pointsite-pages-production
   cancel-in-progress: false
 env:
-  BUILDER_ORIGIN: ${{ inputs.builder_origin }}
+  BUILDER_ORIGIN: https://builder.eaglepass.io
   PUBLICATION_JOB_ID: ${{ inputs.job_id }}
   PUBLICATION_NONCE: ${{ inputs.nonce }}
-  PUBLICATION_TARGET: ${{ inputs.target }}
+  PUBLICATION_TARGET: production
+  NEXT_TELEMETRY_DISABLED: "1"
   BOOTSTRAP_JS: |
     import { appendFile } from 'node:fs/promises';
     try {
@@ -34,9 +30,8 @@ env:
       const builder = process.env.BUILDER_ORIGIN;
       if (!['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder) ||
           (process.env.PUBLICATION_TARGET === 'production' && builder !== 'https://builder.eaglepass.io')) throw Error();
-      if (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(job ?? '') ||
-          !/^[a-f0-9]{64}$/.test(nonce ?? '') || !['reserve', 'finalize'].includes(operation) ||
-          !['staging', 'production'].includes(process.env.PUBLICATION_TARGET)) throw Error();
+      if (!/^[a-f0-9-]{36}$/.test(job ?? '') || !/^[a-f0-9]{64}$/.test(nonce ?? '') ||
+          !['reserve', 'finalize'].includes(operation) || process.env.PUBLICATION_TARGET !== 'production') throw Error();
       const bounded = async (response, limit) => {
         if (!response.ok || !response.body) throw Error();
         const reader = response.body.getReader();
@@ -55,23 +50,23 @@ env:
       };
       const url = new URL(process.env.ACTIONS_ID_TOKEN_REQUEST_URL);
       if (url.protocol !== 'https:' || !url.hostname.endsWith('.actions.githubusercontent.com') ||
-          url.username || url.password || url.port || !process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN) throw Error();
-      url.searchParams.set('audience', `${builder}/verify/${job}/${nonce}`);
+          url.username || url.password || url.port) throw Error();
+      url.searchParams.set('audience', `${builder}/rollback/${job}/${nonce}`);
       const { value } = await bounded(await fetch(url, {
         headers: { authorization: `Bearer ${process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN}` },
         redirect: 'error', signal: AbortSignal.timeout(10000),
       }), 20000);
-      if (typeof value !== 'string' || !value || value.length > 16384) throw Error();
+      if (typeof value !== 'string' || value.length > 16384) throw Error();
       const source = JSON.parse(Buffer.from(value.split('.')[1], 'base64url').toString('utf8')).job_workflow_sha;
       if (!/^[a-f0-9]{40}$/.test(source ?? '')) throw Error();
-      const result = await bounded(await fetch(`${builder}/api/publish/verification/${job}/${operation}`, {
+      const result = await bounded(await fetch(`${builder}/api/publish/rollback-runner/${job}/${operation}`, {
         method: 'POST', headers: { authorization: `Bearer ${value}` },
         redirect: 'error', signal: AbortSignal.timeout(30000),
       }), 1000);
       if (result[operation === 'reserve' ? 'reserved' : 'verified'] !== true) throw Error();
       await appendFile(process.env.GITHUB_OUTPUT, `source=${source}\n`);
     } catch {
-      console.error('Verification identity or state rejected.');
+      console.error('Publication identity or state rejected. No deployment authorized.');
       process.exitCode = 1;
     }
 jobs:
@@ -79,23 +74,26 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     environment:
-      name: ${{ inputs.target == 'staging' && 'staging' || 'github-pages' }}
+      name: github-pages
       deployment: false
+    permissions:
+      contents: read
+      id-token: write
     outputs:
       source: ${{ steps.reserve.outputs.source }}
     steps:
       - id: reserve
-        name: Reserve the signed verification run
+        name: Reserve the signed run before creating a deployment record
         env:
           PUBLICATION_OPERATION: reserve
         run: node --input-type=module -e "$BOOTSTRAP_JS"
   execute:
     needs: reserve
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 35
     environment:
-      name: ${{ inputs.target == 'staging' && 'staging' || 'github-pages' }}
-      deployment: false
+      name: github-pages
+      url: https://pointatx.org
     env:
       PUBLICATION_SOURCE: ${{ needs.reserve.outputs.source }}
     steps:
@@ -110,21 +108,53 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Verify the retained manifest and every live output file
-        run: node --import tsx scripts/verification-run.mts
-      - name: Remove this runner's dependencies
+      - name: Install the locked Chromium build for candidate verification
+        run: node node_modules/playwright/cli.js install --with-deps --only-shell chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
+      - name: Restore and verify the retained release
+        run: node --import tsx scripts/rollback-run.mts prepare
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pointsite-publication-browser
+      - name: Upload the verified static output for one day
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: out
+          retention-days: 1
+          include-hidden-files: true
+      - name: Recheck authority immediately before public deployment
+        run: node --import tsx scripts/rollback-run.mts authorize-pages
+      - name: Deploy with GitHub Pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+      - name: Verify every public static file and report the result
+        run: node --import tsx scripts/rollback-run.mts verify-pages
+      - name: Remove this runner's publication files
         if: always()
         run: |
-          node --input-type=module -e 'import { rm } from "node:fs/promises"; await rm("node_modules", { recursive: true, force: true });'
+          # shellcheck disable=SC2016
+          node --input-type=module -e '
+            import { rm } from "node:fs/promises";
+            import { join } from "node:path";
+            const job = process.env.PUBLICATION_JOB_ID;
+            if (!/^[a-f0-9-]{36}$/.test(job ?? "")) process.exit(1);
+            await rm(join(process.env.RUNNER_TEMP, `pointsite-rollback-${job}.json`), { force: true });
+            await rm(join(process.env.RUNNER_TEMP, "pointsite-publication-browser"), { recursive: true, force: true });
+            await rm(join(process.env.RUNNER_TEMP, "artifact.tar"), { force: true });
+            for (const path of ["out", ".next", "node_modules"])
+              await rm(path, { recursive: true, force: true });
+          '
   finalize:
     needs: [reserve, execute]
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     environment:
-      name: ${{ inputs.target == 'staging' && 'staging' || 'github-pages' }}
+      name: github-pages
       deployment: false
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - name: Confirm the successful verification check and native deployment
+      - name: Verify the completed native deployment and release identity
         env:
           PUBLICATION_OPERATION: finalize
         run: node --input-type=module -e "$BOOTSTRAP_JS"

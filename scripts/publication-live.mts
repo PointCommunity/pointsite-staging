@@ -119,6 +119,10 @@ export async function verifyPublicationOutput(
         candidateChecksum: z.literal(input.candidateChecksum),
         artifactDigest: z.literal(input.artifactDigest),
         workflowRevision: z.literal(input.workflowRevision),
+        sourceCommit: z
+          .string()
+          .regex(/^[a-f0-9]{40}$/)
+          .optional(),
         ...(protectedWorker
           ? { workerVersionId: z.literal(input.workerVersionId!) }
           : {}),
