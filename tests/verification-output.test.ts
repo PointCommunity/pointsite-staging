@@ -29,6 +29,7 @@ async function fixture(
     checkRunId: "345",
     dispatchRevision: "a".repeat(40),
     workflowRevision: "b".repeat(40),
+    ...(pages ? { verificationDispatchRevision: "f".repeat(40) } : {}),
     ...(target === "staging" && !pages ? { workerVersionId } : {}),
     build: {
       candidateChecksum: "c".repeat(64),
@@ -87,7 +88,7 @@ async function fixture(
       if (url.pathname.endsWith("/git/ref/heads/main"))
         return Response.json({
           object: {
-            sha: change === "main" ? "f".repeat(40) : input.build.commitSha,
+            sha: change === "main" ? "0".repeat(40) : (input.verificationDispatchRevision ?? input.build.commitSha),
           },
         });
       if (url.pathname.endsWith("/deployments"))
@@ -96,9 +97,18 @@ async function fixture(
             id: change === "replacement" && deployments++ > 0 ? 124 : 123,
             sha: input.dispatchRevision,
             environment,
-            performed_via_github_app: { id: 15368, slug: "github-actions" },
+            performed_via_github_app: null,
           },
         ]);
+      if (url.pathname.endsWith("/check-runs/345"))
+        return Response.json({
+          id: 345,
+          status: change === "check-pending" ? "in_progress" : "completed",
+          head_sha: change === "check-source" ? "0".repeat(40) : input.dispatchRevision,
+          details_url: `https://github.com/${repository}/actions/runs/${input.runId}/job/${input.checkRunId}`,
+          app: { id: change === "check-app" ? 1 : 15368, slug: "github-actions" },
+          deployment: change === "check-missing" ? null : { id: change === "check-link" ? 124 : 123 },
+        });
       if (url.pathname.endsWith("/deployments/123/statuses"))
         return Response.json([
           {
@@ -117,6 +127,7 @@ async function fixture(
         candidateChecksum: input.build.candidateChecksum,
         artifactDigest,
         workflowRevision: input.workflowRevision,
+        ...(pages ? { sourceCommit: change === "release-source" ? "0".repeat(40) : input.build.commitSha } : {}),
         ...(target === "staging" && !pages
           ? {
               workerVersionId:
@@ -160,7 +171,7 @@ test("verifies retained output after native deployment failure without writing o
 });
 
 test("rejects a changed manifest, output, main, deployment, or incomplete native status", async () => {
-  for (const failure of ["blob", "file", "main", "replacement", "pending"]) {
+  for (const failure of ["blob", "file", "main", "replacement", "pending", "check-pending", "check-source", "check-app", "check-missing", "check-link"]) {
     const f = await fixture("production", failure);
     await assert.rejects(
       verifyRetainedPublication(f.input, undefined, f.fetcher),
@@ -197,7 +208,7 @@ test("verifies public Pages staging without a probe secret or Worker identity", 
       deploymentId: f.input.deploymentId,
     },
   );
-  for (const failure of ["blob", "file", "main", "replacement", "pending"]) {
+  for (const failure of ["blob", "file", "main", "replacement", "pending", "release-source"]) {
     const failed = await fixture("staging", failure, true);
     await assert.rejects(
       verifyRetainedPublication(failed.input, undefined, failed.fetcher),
