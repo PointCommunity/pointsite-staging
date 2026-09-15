@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import "./local-environment.mts";
 import { test } from "node:test";
 import { publicationDestination } from "../scripts/publication-destination.mts";
 
