@@ -261,7 +261,8 @@
               "element": {
                 "id": "00000000-0000-4000-8000-000000001001",
                 "type": "hero",
-                "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+                "heading": "Point Community Church",
+                "body": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
                 "mediaId": "00000000-0000-4000-8000-000000002000",
                 "align": "center",
                 "surface": "image",
@@ -2397,15 +2398,11 @@
                   },
                   {
                     "title": "Coves of Cimarron NG",
-                    "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: Nick and Jada Shock"
+                    "body": "Tuesdays at 6:00pm\nLantana Trail, Buda, TX 78610\nLeaders: John and April"
                   },
                   {
                     "title": "Oak Parke NG",
                     "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
-                  },
-                  {
-                    "title": "Hillcrest NG",
-                    "body": "Sundays at 6:00pm\nCoats Cove, Austin, TX 78748\nLeaders: Aaron and Haley Negron"
                   },
                   {
                     "title": "Shadow Creek NG",
@@ -2413,7 +2410,7 @@
                   },
                   {
                     "title": "The Bend at Nuckol’s Crossing NG",
-                    "body": "Wednesdays at 6:00pm\nMarble Creek Loop, Austin, TX 78747\nLeaders: Caleb Bryant"
+                    "body": "Wednesdays at 6:00pm\nArbor Crest Lane, Austin, TX 78747\nLeaders: Caleb Bryant"
                   }
                 ],
                 "variant": "groups"
