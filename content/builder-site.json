@@ -140,7 +140,7 @@
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005000",
-              "span": 4,
+              "span": 3,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -150,7 +150,7 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 4,
+                  "columnSpan": 3,
                   "rowSpan": 2
                 },
                 "tablet": {
@@ -172,12 +172,13 @@
                 "mediaId": "00000000-0000-4000-8000-000000002017",
                 "alt": "Point Community Church",
                 "aspect": "natural",
-                "fit": "contain"
+                "fit": "contain",
+                "variant": "wide"
               }
             },
             {
               "id": "3c3c3c3c-0000-4000-8000-000000005000",
-              "span": 8,
+              "span": 4,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -185,9 +186,9 @@
               },
               "grid": {
                 "desktop": {
-                  "column": 5,
+                  "column": 9,
                   "row": 1,
-                  "columnSpan": 8,
+                  "columnSpan": 4,
                   "rowSpan": 2
                 },
                 "tablet": {
@@ -260,7 +261,8 @@
               "element": {
                 "id": "00000000-0000-4000-8000-000000001001",
                 "type": "hero",
-                "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+                "heading": "Point Community Church",
+                "body": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
                 "mediaId": "00000000-0000-4000-8000-000000002000",
                 "align": "center",
                 "surface": "image",

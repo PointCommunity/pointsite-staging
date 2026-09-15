@@ -1,15 +1,15 @@
 {
   "siteId": "pointsite",
   "draftId": "aeb3bac8-8571-4afb-a3f6-244c2e9fc816",
-  "revisionId": "d7dae2a1-c3f8-46ae-93a5-b6304217842a",
-  "revisionChecksum": "147c802b5cbb143419554ce1e75f2ebd6329c6d89965c1b46372df33b60b155d",
+  "revisionId": "c71c51ad-ed82-43fc-8aae-b8af43f1bc54",
+  "revisionChecksum": "1973ecc99eb3731f60c71462c2a7dd73a2deb8064366361708a581d50fea644e",
   "schemaVersion": 9,
   "rendererVersion": "9.0.0",
   "publicationProtocol": 2,
   "mediaSelection": "referenced",
   "workflowRevision": "bed2916eb4ab7c3ebfd56a951a43b40cbd2b0081",
   "fileCount": 17,
-  "candidateChecksum": "4e2cc3a96c13fd8f74e9a7ab6d4f98fab721b5e8d532f20d25693164db9490ab",
+  "candidateChecksum": "6cf77766cdb239f1cf9d3e99f18dedaee07cb1873044b4549a8f75e6de8ea079",
   "assets": [
     {
       "assetId": "036560f8-ebe4-46d6-a6d7-fda84d134bc7",
