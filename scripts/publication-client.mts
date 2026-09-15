@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { publicationDestination } from "./publication-destination.mts";
 import { validatePublicationInputs } from "./publication-inputs.mts";
 
 const sha = z.string().regex(/^[a-f0-9]{40}$/);
@@ -58,6 +59,7 @@ export class PublicationClient {
     private readonly purpose?: "verification" | "rollback",
   ) {
     this.builder = builderOrigins.parse(environment.BUILDER_ORIGIN);
+    publicationDestination(z.enum(["staging", "production"]).parse(environment.PUBLICATION_TARGET ?? "staging"), this.builder);
     if (
       environment.PUBLICATION_TARGET === "production" &&
       this.builder !== "https://builder.eaglepass.io"

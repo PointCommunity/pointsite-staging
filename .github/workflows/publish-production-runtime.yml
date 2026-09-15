@@ -28,6 +28,7 @@ env:
       const nonce = process.env.PUBLICATION_NONCE;
       const operation = process.env.PUBLICATION_OPERATION;
       const builder = process.env.BUILDER_ORIGIN;
+      if (process.env.GITHUB_REPOSITORY !== 'PointCommunity/pointsite' || builder !== 'https://builder.eaglepass.io') throw Error();
       if (!['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder) ||
           (process.env.PUBLICATION_TARGET === 'production' && builder !== 'https://builder.eaglepass.io')) throw Error();
       if (!/^[a-f0-9-]{36}$/.test(job ?? '') || !/^[a-f0-9]{64}$/.test(nonce ?? '') ||

@@ -25,6 +25,7 @@ const stateSchema = z.strictObject({
   totalBytes: z.number().int().min(1).max(100_000_000),
 });
 
+let stage = "runner-validation";
 async function main() {
   if (
     process.env.GITHUB_ACTIONS !== "true" ||
@@ -48,9 +49,13 @@ async function main() {
     .enum(["prepare", "authorize-pages", "verify-pages"])
     .parse(process.argv[2]);
   if (operation === "prepare") {
+    stage = "claim";
     await client.claim();
+    stage = "inputs";
     const input = await client.inputs();
+    stage = "fetch-base";
     fetchPublicationBase(root, target, input.baseSha);
+    stage = "build";
     const { build } = await preparePublicationBuild(
       root,
       jobId,
@@ -58,8 +63,11 @@ async function main() {
       input,
       (asset, index) => client.chunk(asset, index),
     );
+    stage = "browser-verification";
     checkPublicationBrowser(root, build.artifactDigest);
+    stage = "authorize-build";
     await client.authorizeBuild(build);
+    stage = "push-candidate";
     pushPublicationCommit(
       root,
       target,
@@ -67,7 +75,9 @@ async function main() {
       build.commitSha,
       z.string().min(20).parse(process.env.GITHUB_TOKEN),
     );
+    stage = "confirm-commit";
     await client.commitBuild(build.commitSha);
+    stage = "save-receipt";
     await writeFile(stateFile, JSON.stringify(build), {
       flag: "wx",
       mode: 0o600,
@@ -75,6 +85,7 @@ async function main() {
     process.stdout.write("Publication commit confirmed.\n");
     return;
   }
+  stage = "verify-local-output";
   const build = stateSchema.parse(
     JSON.parse(await readFile(stateFile, "utf8")),
   );
@@ -91,16 +102,19 @@ async function main() {
   )
     throw new Error("PUBLICATION_OUTPUT_CHANGED");
   if (operation === "authorize-pages") {
+    stage = "authorize-pages";
     await client.authorizeDeployment();
     return;
   }
   if (operation === "verify-pages") {
+    stage = "verify-public-output";
     await verifyPublicationOutputWithRetry({
       target,
       ...output,
       candidateChecksum: build.candidateChecksum,
       workflowRevision: source,
     });
+    stage = "report-deployment";
     await client.reportPagesDeployment(build.artifactDigest);
     process.stdout.write("Every public output file verified.\n");
     return;
@@ -116,7 +130,7 @@ if (
   } catch {
     // Never print provider bodies, child output, credentials, manifests or selected draft content.
     process.stderr.write(
-      "Publication did not complete. Builder retains this job for reconciliation.\n",
+      `Publication stopped at ${stage}. Builder retains this job for reconciliation.\n`,
     );
     process.exitCode = 1;
   }

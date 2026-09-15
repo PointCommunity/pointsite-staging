@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
+import { publicationDestination } from "./publication-destination.mts";
 import { boundedBytes } from "./publication-client.mts";
 import { verifyPublicationOutput } from "./publication-live.mts";
 
@@ -35,11 +36,10 @@ export async function verifyRetainedPublication(
   try {
     const input = VerificationInputSchema.parse(value);
     const staging = input.target === "staging";
-    const repository = `PointCommunity/${staging ? "pointsite-staging" : "pointsite"}`;
+    const destination = publicationDestination(input.target);
+    const repository = `PointCommunity/${destination.repository}`;
     const api = `https://api.github.com/repos/${repository}`;
-    const origin = staging
-      ? "https://staging.pointatx.org"
-      : "https://pointatx.org";
+    const { origin } = destination;
     const environment = staging ? "staging" : "github-pages";
     const read = async (url: string, maximum = 32_768) => {
       const bytes = await boundedBytes(

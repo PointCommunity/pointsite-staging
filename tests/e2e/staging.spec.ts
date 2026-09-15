@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { loadImages } from "./images";
 
 const routes = [
   "/",
@@ -69,6 +70,7 @@ for (const route of routes) {
     expect(response?.ok()).toBe(true);
     await expect(page.locator("main#point-main")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await loadImages(page);
     expect(
       await page.locator("img").evaluateAll((images) =>
         images.map((image) => ({

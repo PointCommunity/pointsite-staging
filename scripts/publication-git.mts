@@ -3,6 +3,7 @@ import { lstat, mkdtemp, realpath, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { z } from "zod";
+import { publicationDestination } from "./publication-destination.mts";
 
 const sha = z.string().regex(/^[a-f0-9]{40}$/);
 const targetSchema = z.enum(["staging", "production"]);
@@ -12,7 +13,7 @@ const pathSchema = z
     /^(?:content\/builder-site(?:\.(?:manifest|output))?\.json|public\/assets\/(?:[a-z0-9][a-z0-9_-]*\/)*[a-z0-9][a-z0-9_-]*\.(?:avif|jpe?g|png|webp))$/,
   );
 const repositoryUrl = (target: "staging" | "production") =>
-  `https://github.com/PointCommunity/${target === "staging" ? "pointsite-staging" : "pointsite"}.git`;
+  `https://github.com/PointCommunity/${publicationDestination(target).repository}.git`;
 
 function git(
   root: string,

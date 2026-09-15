@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
+import { publicationDestination } from "./publication-destination.mts";
 import { checksumDocument } from "../site-kit/canonicalize";
 import type { OutputFile } from "./output-manifest.mts";
 
@@ -41,10 +42,7 @@ export async function verifyPublicationOutput(
   z.enum(["staging", "production"]).parse(input.target);
   const protectedWorker =
     input.target === "staging" && input.workerVersionId !== undefined;
-  const origin =
-    input.target === "staging"
-      ? "https://staging.pointatx.org"
-      : "https://pointatx.org";
+  const { origin } = publicationDestination(input.target);
   const digest = z.string().regex(/^[a-f0-9]{64}$/);
   digest.parse(input.artifactDigest);
   digest.parse(input.candidateChecksum);
