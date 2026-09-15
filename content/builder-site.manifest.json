@@ -1,15 +1,15 @@
 {
   "siteId": "pointsite",
   "draftId": "2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af",
-  "revisionId": "d92373a4-5e32-4ab0-bc25-57c203995383",
-  "revisionChecksum": "f45778c0dd716fdb6c732ce25efe0d8f6aaf7bb3e230a3c68859c372ac49c790",
+  "revisionId": "2215afc7-945d-4114-8056-6cbbaf282aa8",
+  "revisionChecksum": "70cbf11c813166768e2cdf857b0d65e092bd5d4f2ac10ef9a77bc6f1d9f67d5b",
   "schemaVersion": 9,
   "rendererVersion": "9.0.0",
   "publicationProtocol": 2,
   "mediaSelection": "referenced",
   "workflowRevision": "bed2916eb4ab7c3ebfd56a951a43b40cbd2b0081",
-  "fileCount": 17,
-  "candidateChecksum": "de927f72558d54dfd68acdfc67cf97891c096d3c6505440d12955233285613d6",
+  "fileCount": 19,
+  "candidateChecksum": "8432c95b1ea27918eaa4cfb7f9e36e9d16b4e273ab0f309d7fde849077213bf3",
   "assets": [
     {
       "assetId": "09cbb8fd-68e7-4835-b188-85252413c458",
@@ -17,6 +17,13 @@
       "checksum": "2bc3d6637ade7a802523c291952b36958789672d51ba1320abcfcb752695005a",
       "byteSize": 204551,
       "contentType": "image/jpeg"
+    },
+    {
+      "assetId": "0bb50e6b-b4c6-453e-9caf-e0deb4832c4d",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/0bb50e6b-b4c6-453e-9caf-e0deb4832c4d/gonzo-gonzalez.webp",
+      "checksum": "29bc9af5b8f5694e81643bf573fd623d4f62dd8d66b7f4ce14c009d4dd37b342",
+      "byteSize": 2919564,
+      "contentType": "image/webp"
     },
     {
       "assetId": "27e7877a-38b6-4d12-97fe-6f2d9aa51eff",
@@ -33,6 +40,13 @@
       "contentType": "image/jpeg"
     },
     {
+      "assetId": "432b06f7-6114-495f-b1c9-055aa8d579fe",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/432b06f7-6114-495f-b1c9-055aa8d579fe/nick-shock.webp",
+      "checksum": "7ceb6b3ddf65bfd0e294d32094ffff5fa77bd614e62337f82a97fc402474353d",
+      "byteSize": 2254782,
+      "contentType": "image/webp"
+    },
+    {
       "assetId": "46aaf2e4-2706-4e7a-be17-53a08039617d",
       "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/46aaf2e4-2706-4e7a-be17-53a08039617d/kids-ministry-3.jpeg",
       "checksum": "d9793dd16d19f341d1a4ec6d123f732b05892c037152cb8c7272d1c6ad0edded",
@@ -47,6 +61,13 @@
       "contentType": "image/png"
     },
     {
+      "assetId": "750a6d0d-2bb7-4852-be0f-6daa7c434748",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/750a6d0d-2bb7-4852-be0f-6daa7c434748/caleb-bryant.webp",
+      "checksum": "cc2a0d874f489539b5454f0c4cad671cd25e9aa33a18de1c2684ad4d0e7072b4",
+      "byteSize": 1808474,
+      "contentType": "image/webp"
+    },
+    {
       "assetId": "798575b3-40aa-404a-93f1-c8722c2fab5d",
       "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/798575b3-40aa-404a-93f1-c8722c2fab5d/laura-munoz.jpeg",
       "checksum": "a805c7a6f1662f7aa537bf439961fde0e8398433a1a7de892e256934c48a0266",
@@ -54,24 +75,17 @@
       "contentType": "image/jpeg"
     },
     {
+      "assetId": "83b6bd44-e1d8-4e1f-8419-ce0c4213498e",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/83b6bd44-e1d8-4e1f-8419-ce0c4213498e/sandra-louviere.webp",
+      "checksum": "107d44d9cc26e8e49471a22e1973bc3711a47d8d7f30cd466a568cd51e306d02",
+      "byteSize": 2437426,
+      "contentType": "image/webp"
+    },
+    {
       "assetId": "95abdf1a-6c58-406a-87bb-0ef5bf4a6490",
       "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/95abdf1a-6c58-406a-87bb-0ef5bf4a6490/josh-currer.jpeg",
       "checksum": "087e7f1cfd482b605341da78eaf6d2189fcc8b12f8200a18421d17841d45e86e",
       "byteSize": 84433,
-      "contentType": "image/jpeg"
-    },
-    {
-      "assetId": "9bd76005-eb00-4c62-8fbf-9c9ef42eb5ba",
-      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/9bd76005-eb00-4c62-8fbf-9c9ef42eb5ba/sandra-louviere.jpeg",
-      "checksum": "a0bec9073b47e7732198dc1a945034ada42258b46bfdd58944f4c01748822ac5",
-      "byteSize": 82743,
-      "contentType": "image/jpeg"
-    },
-    {
-      "assetId": "a82e2a0c-42f2-470d-89de-082c678dd8bc",
-      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/a82e2a0c-42f2-470d-89de-082c678dd8bc/gonzo-gonzales.jpeg",
-      "checksum": "9830a28497d2c0a5501ac753e2141bfe3f6353912ce37a628a9fe2e043eb9789",
-      "byteSize": 44652,
       "contentType": "image/jpeg"
     },
     {
@@ -96,11 +110,11 @@
       "contentType": "image/jpeg"
     },
     {
-      "assetId": "d27f0896-7895-464f-a3fe-260df637f052",
-      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/d27f0896-7895-464f-a3fe-260df637f052/nick-shock.jpeg",
-      "checksum": "9f5879f4e147b97e46e9dfcb7b24115469383aa904edc6a940045b8091225391",
-      "byteSize": 59084,
-      "contentType": "image/jpeg"
+      "assetId": "c2866290-4dcb-46f2-882f-06e25132430d",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/c2866290-4dcb-46f2-882f-06e25132430d/chris-piedra.webp",
+      "checksum": "7b5623e10fff6b8fb2f657eef5818bd1f2bd4404ab6d558f14b46c0d27258f6f",
+      "byteSize": 2178746,
+      "contentType": "image/webp"
     },
     {
       "assetId": "e948acf9-3347-4aa6-bf88-6d9388b669ca",
