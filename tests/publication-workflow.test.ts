@@ -34,7 +34,8 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
   for (const target of (purpose === "rollback"
     ? ["production"]
     : ["staging", "production"]) as ("staging" | "production")[])
-    test(`${target} ${purpose} bootstrap reserves or finalizes only a Builder-verified native identity without exposing tokens`, async () => {
+    for (const canary of target === "staging" ? [false, true] : [false])
+    test(`${canary ? "Canary" : "Production"} Builder ${target} ${purpose} bootstrap reserves or finalizes only a Builder-verified native identity without exposing tokens`, async () => {
       const workflow = await readFile(
         new URL(
           `../.github/workflows/${purpose === "rollback" ? "rollback-runtime" : purpose === "verification" ? "verify-runtime" : target === "staging" ? "publish-runtime" : "publish-production-runtime"}.yml`,
@@ -92,6 +93,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
         "claim",
         "oversized",
         "builder",
+        "repository",
         ...(target === "production" ? ["canary"] : []),
       ]) {
         const revision = "a".repeat(40);
@@ -102,7 +104,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
             BUILDER_ORIGIN:
               failure === "builder"
                 ? "https://attacker.example"
-                : failure === "canary" || target === "staging"
+                : failure === "canary" || canary
                   ? "https://builder-canary.eaglepass.io"
                   : "https://builder.eaglepass.io",
             PUBLICATION_JOB_ID:
@@ -111,6 +113,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
             PUBLICATION_OPERATION:
               failure === "finalize" ? "finalize" : "reserve",
             PUBLICATION_TARGET: failure === "target" ? "invalid" : target,
+            GITHUB_REPOSITORY: failure === "repository" ? "PointCommunity/wrong" : target === "production" ? "PointCommunity/pointsite" : canary ? "PointCommunity/pointsite-staging-canary" : "PointCommunity/pointsite-staging",
             ACTIONS_ID_TOKEN_REQUEST_URL:
               failure === "endpoint"
                 ? "https://evil.example"

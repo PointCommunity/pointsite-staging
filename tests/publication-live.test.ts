@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import "./local-environment.mts";
 import { createHash, randomUUID } from "node:crypto";
 import test from "node:test";
 import { checksumDocument } from "../site-kit/canonicalize";

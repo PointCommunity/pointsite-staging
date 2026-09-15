@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { loadImages } from "./images";
 
 const routes = [
   "/",
@@ -28,17 +29,8 @@ async function settle(page: Page, url: string) {
   });
   await page.evaluate(async () => {
     await document.fonts.ready;
-    await Promise.all(
-      [...document.images].map((image) =>
-        image.complete
-          ? Promise.resolve()
-          : new Promise<void>((resolve) => {
-              image.onload = () => resolve();
-              image.onerror = () => resolve();
-            }),
-      ),
-    );
   });
+  await loadImages(page);
 }
 
 test("preserves production route and responsive-layout coverage for staged candidates", async ({

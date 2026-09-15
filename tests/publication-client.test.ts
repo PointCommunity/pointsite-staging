@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import "./local-environment.mts";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 import { PublicationClient } from "../scripts/publication-client.mts";
