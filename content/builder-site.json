@@ -140,7 +140,7 @@
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005000",
-              "span": 3,
+              "span": 4,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -150,7 +150,7 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
+                  "columnSpan": 4,
                   "rowSpan": 2
                 },
                 "tablet": {
@@ -172,13 +172,12 @@
                 "mediaId": "00000000-0000-4000-8000-000000002017",
                 "alt": "Point Community Church",
                 "aspect": "natural",
-                "fit": "contain",
-                "variant": "wide"
+                "fit": "contain"
               }
             },
             {
               "id": "3c3c3c3c-0000-4000-8000-000000005000",
-              "span": 4,
+              "span": 8,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -186,9 +185,9 @@
               },
               "grid": {
                 "desktop": {
-                  "column": 9,
+                  "column": 5,
                   "row": 1,
-                  "columnSpan": 4,
+                  "columnSpan": 8,
                   "rowSpan": 2
                 },
                 "tablet": {
@@ -261,8 +260,7 @@
               "element": {
                 "id": "00000000-0000-4000-8000-000000001001",
                 "type": "hero",
-                "heading": "Point Community Church",
-                "body": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
+                "heading": "We are a family of Jesus-followers empowered by the Holy Spirit to make disciples of Jesus in all of life for the glory of God",
                 "mediaId": "00000000-0000-4000-8000-000000002000",
                 "align": "center",
                 "surface": "image",
@@ -4150,97 +4148,97 @@
   "media": [
     {
       "id": "00000000-0000-4000-8000-000000002000",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/d2e7bb38-15c1-4e67-9d4f-adccf75bd1d2/austin-skyline.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/b10bfad8-c78d-491c-a65e-231b6a08fccf/austin-skyline.jpeg",
       "alt": "Austin skyline over the Colorado River"
     },
     {
       "id": "00000000-0000-4000-8000-000000002001",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/036560f8-ebe4-46d6-a6d7-fda84d134bc7/neighborhood-table.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/e948acf9-3347-4aa6-bf88-6d9388b669ca/neighborhood-table.jpeg",
       "alt": "Friends and families sharing a meal"
     },
     {
       "id": "00000000-0000-4000-8000-000000002002",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/4963af28-e9f1-46e3-a3f3-f2cc7be5b3a2/next-generation.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/09cbb8fd-68e7-4835-b188-85252413c458/next-generation.jpeg",
       "alt": "Families worshiping together at Point ATX"
     },
     {
       "id": "00000000-0000-4000-8000-000000002003",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/5a6435a3-7be2-4570-a024-63724690b5ba/next-generation-secondary.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/5007b36c-b943-4d18-a4be-385a7df56fab/next-generation-secondary.jpeg",
       "alt": "Point families gathering together"
     },
     {
       "id": "00000000-0000-4000-8000-000000002004",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/0d440737-11f8-487e-bc57-4e794dc46340/giving.png",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/483a443e-74c7-40eb-8558-3392927f69bc/giving.png",
       "alt": "Point Community Church giving"
     },
     {
       "id": "00000000-0000-4000-8000-000000002005",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/5ebe885b-ee9b-46dc-ae83-6727a966e630/kids-ministry-1.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/2f07589c-53a9-44ec-9892-2db34cc8c22e/kids-ministry-1.jpeg",
       "alt": "Children participating in Point kids ministry"
     },
     {
       "id": "00000000-0000-4000-8000-000000002006",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/7ae1e1cf-6f34-4022-a0b9-2f9375621233/kids-ministry-2.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/f02c3e0b-d7a8-45b4-99bd-02e7efae57f0/kids-ministry-2.jpeg",
       "alt": "Point ATX kids ministry"
     },
     {
       "id": "00000000-0000-4000-8000-000000002007",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/dfd8958a-e008-4178-aa3f-a1c28c56edd4/kids-ministry-3.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/46aaf2e4-2706-4e7a-be17-53a08039617d/kids-ministry-3.jpeg",
       "alt": "Children and families at Point ATX"
     },
     {
       "id": "00000000-0000-4000-8000-000000002008",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/7a1a568a-c785-4961-aa86-0ea3c32e88e3/neighborhood-map.png",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/ab666b8d-8ffb-4f9b-8d43-67ceaa4d8c94/neighborhood-map.png",
       "alt": "Map of Point neighborhood groups"
     },
     {
       "id": "00000000-0000-4000-8000-000000002009",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/d6fab8fc-c5b5-4bf3-b9a3-755b45f7971f/who-we-are.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/b75dd8dd-dc67-40a3-b4bf-65f512daa56d/who-we-are.jpeg",
       "alt": "Point Community Church gathered together"
     },
     {
       "id": "00000000-0000-4000-8000-000000002010",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/abb3b6e5-3e7f-4b9b-9de3-a8c94dd8a917/gonzo-gonzales.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/a82e2a0c-42f2-470d-89de-082c678dd8bc/gonzo-gonzales.jpeg",
       "alt": "Gonzo Gonzales"
     },
     {
       "id": "00000000-0000-4000-8000-000000002011",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/157a262d-4e19-4fdc-883d-7bcb0aab145b/josh-currer.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/95abdf1a-6c58-406a-87bb-0ef5bf4a6490/josh-currer.jpeg",
       "alt": "Josh Currer"
     },
     {
       "id": "00000000-0000-4000-8000-000000002012",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/50ceb61d-2bbe-4126-be5a-fab701a5c146/landon-berryhill.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/dc8788c3-3405-47dc-99fd-8cb97d5eafbe/landon-berryhill.jpeg",
       "alt": "Landon Berryhill"
     },
     {
       "id": "00000000-0000-4000-8000-000000002013",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/cb2d04e6-b320-4170-8db3-c1d669be0c57/laura-munoz.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/798575b3-40aa-404a-93f1-c8722c2fab5d/laura-munoz.jpeg",
       "alt": "Laura Munoz"
     },
     {
       "id": "00000000-0000-4000-8000-000000002014",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/3066d529-3f61-4300-b600-77ec70f07a5d/nick-shock.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/d27f0896-7895-464f-a3fe-260df637f052/nick-shock.jpeg",
       "alt": "Nick Shock"
     },
     {
       "id": "00000000-0000-4000-8000-000000002015",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/afb08730-fa79-4e0e-a43d-cc5f7c5b2a76/sandra-louviere.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/9bd76005-eb00-4c62-8fbf-9c9ef42eb5ba/sandra-louviere.jpeg",
       "alt": "Sandra Louviere"
     },
     {
       "id": "00000000-0000-4000-8000-000000002016",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/a7983edc-cec4-48a3-853a-d336bafd5ff5/tim-gillen.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/90adcf14-8071-4a32-b414-de8c42d22773/tim-gillen.jpeg",
       "alt": "Tim Gillen"
     },
     {
       "id": "00000000-0000-4000-8000-000000002017",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/63b1de1c-b427-45a3-8b54-bf06942ba610/point-logo.png",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/27e7877a-38b6-4d12-97fe-6f2d9aa51eff/point-logo.png",
       "alt": "Point Community Church"
     },
     {
       "id": "00000000-0000-4000-8000-000000002018",
-      "sourcePath": "/assets/builder/aeb3bac8-8571-4afb-a3f6-244c2e9fc816/472334b9-dbf7-4c2a-855e-ce7c0485df4e/point-wordmark.jpeg",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/9678675c-cdfa-4106-9954-6be0b23bf009/point-wordmark.jpeg",
       "alt": "Point Community Church"
     }
   ],
