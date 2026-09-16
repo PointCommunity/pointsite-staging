@@ -9,6 +9,10 @@ import { outputManifest } from "../scripts/output-manifest.mts";
 import { restoreRollbackOutput } from "../scripts/rollback-output.mts";
 
 test("restores exact baseline bytes, rejects archive substitution, and never follows archive links", async (t) => {
+  const environment = { ...process.env };
+  process.env.GITHUB_REPOSITORY = "PointCommunity/pointsite";
+  process.env.BUILDER_ORIGIN = "https://builder.eaglepass.io";
+  t.after(() => { process.env = environment; });
   const temporary = await mkdtemp(join(tmpdir(), "pointsite-rollback-test-"));
   t.after(() => rm(temporary, { recursive: true, force: true }));
   const original = join(temporary, "original");
