@@ -60,11 +60,6 @@ export class PublicationClient {
   ) {
     this.builder = builderOrigins.parse(environment.BUILDER_ORIGIN);
     publicationDestination(z.enum(["staging", "production"]).parse(environment.PUBLICATION_TARGET ?? "staging"), this.builder);
-    if (
-      environment.PUBLICATION_TARGET === "production" &&
-      this.builder !== "https://builder.eaglepass.io"
-    )
-      throw new Error("PUBLICATION_ORIGIN_REJECTED");
     z.uuid().parse(jobId);
     nonceSchema.parse(nonce);
     sha.parse(workflowRevision);

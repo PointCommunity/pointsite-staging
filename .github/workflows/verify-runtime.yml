@@ -32,10 +32,10 @@ env:
       const nonce = process.env.PUBLICATION_NONCE;
       const operation = process.env.PUBLICATION_OPERATION;
       const builder = process.env.BUILDER_ORIGIN;
-      const repository = process.env.PUBLICATION_TARGET === 'production' ? 'pointsite' : builder === 'https://builder-canary.eaglepass.io' ? 'pointsite-staging-canary' : 'pointsite-staging';
+      const canary = builder === 'https://builder-canary.eaglepass.io';
+      const repository = process.env.PUBLICATION_TARGET === 'production' ? (canary ? 'pointsite-canary' : 'pointsite') : canary ? 'pointsite-staging-canary' : 'pointsite-staging';
       if (process.env.GITHUB_REPOSITORY !== `PointCommunity/${repository}`) throw Error();
-      if (!['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder) ||
-          (process.env.PUBLICATION_TARGET === 'production' && builder !== 'https://builder.eaglepass.io')) throw Error();
+      if (!['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder)) throw Error();
       if (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(job ?? '') ||
           !/^[a-f0-9]{64}$/.test(nonce ?? '') || !['reserve', 'finalize'].includes(operation) ||
           !['staging', 'production'].includes(process.env.PUBLICATION_TARGET)) throw Error();

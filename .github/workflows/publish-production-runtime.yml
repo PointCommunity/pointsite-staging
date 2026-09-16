@@ -2,6 +2,10 @@ name: Publish accepted public candidate
 on:
   workflow_call:
     inputs:
+      builder_origin:
+        required: false
+        default: https://builder.eaglepass.io
+        type: string
       job_id:
         required: true
         type: string
@@ -16,7 +20,7 @@ concurrency:
   group: pointsite-pages-production
   cancel-in-progress: false
 env:
-  BUILDER_ORIGIN: https://builder.eaglepass.io
+  BUILDER_ORIGIN: ${{ inputs.builder_origin }}
   PUBLICATION_JOB_ID: ${{ inputs.job_id }}
   PUBLICATION_NONCE: ${{ inputs.nonce }}
   PUBLICATION_TARGET: production
@@ -28,9 +32,9 @@ env:
       const nonce = process.env.PUBLICATION_NONCE;
       const operation = process.env.PUBLICATION_OPERATION;
       const builder = process.env.BUILDER_ORIGIN;
-      if (process.env.GITHUB_REPOSITORY !== 'PointCommunity/pointsite' || builder !== 'https://builder.eaglepass.io') throw Error();
-      if (!['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder) ||
-          (process.env.PUBLICATION_TARGET === 'production' && builder !== 'https://builder.eaglepass.io')) throw Error();
+      const repository = builder === 'https://builder-canary.eaglepass.io' ? 'pointsite-canary' : 'pointsite';
+      if (process.env.GITHUB_REPOSITORY !== `PointCommunity/${repository}` ||
+          !['https://builder.eaglepass.io', 'https://builder-canary.eaglepass.io'].includes(builder)) throw Error();
       if (!/^[a-f0-9-]{36}$/.test(job ?? '') || !/^[a-f0-9]{64}$/.test(nonce ?? '') ||
           !['reserve', 'finalize'].includes(operation) || process.env.PUBLICATION_TARGET !== 'production') throw Error();
       const bounded = async (response, limit) => {
@@ -94,7 +98,7 @@ jobs:
     timeout-minutes: 35
     environment:
       name: github-pages
-      url: https://pointatx.org
+      url: ${{ inputs.builder_origin == 'https://builder-canary.eaglepass.io' && 'https://canary.pointatx.org' || 'https://pointatx.org' }}
     env:
       PUBLICATION_SOURCE: ${{ needs.reserve.outputs.source }}
     steps:
