@@ -34,7 +34,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
   for (const target of (purpose === "rollback"
     ? ["production"]
     : ["staging", "production"]) as ("staging" | "production")[])
-    for (const canary of target === "staging" ? [false, true] : [false])
+    for (const canary of [false, true])
     test(`${canary ? "Canary" : "Production"} Builder ${target} ${purpose} bootstrap reserves or finalizes only a Builder-verified native identity without exposing tokens`, async () => {
       const workflow = await readFile(
         new URL(
@@ -94,7 +94,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
         "oversized",
         "builder",
         "repository",
-        ...(target === "production" ? ["canary"] : []),
+        "exchanged-origin",
       ]) {
         const revision = "a".repeat(40);
         const token = `fixture.${Buffer.from(JSON.stringify({ job_workflow_sha: revision })).toString("base64url")}.fixture`;
@@ -104,7 +104,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
             BUILDER_ORIGIN:
               failure === "builder"
                 ? "https://attacker.example"
-                : failure === "canary" || canary
+                : (failure === "exchanged-origin" ? !canary : canary)
                   ? "https://builder-canary.eaglepass.io"
                   : "https://builder.eaglepass.io",
             PUBLICATION_JOB_ID:
@@ -113,7 +113,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
             PUBLICATION_OPERATION:
               failure === "finalize" ? "finalize" : "reserve",
             PUBLICATION_TARGET: failure === "target" ? "invalid" : target,
-            GITHUB_REPOSITORY: failure === "repository" ? "PointCommunity/wrong" : target === "production" ? "PointCommunity/pointsite" : canary ? "PointCommunity/pointsite-staging-canary" : "PointCommunity/pointsite-staging",
+            GITHUB_REPOSITORY: failure === "repository" ? "PointCommunity/wrong" : target === "production" ? (canary ? "PointCommunity/pointsite-canary" : "PointCommunity/pointsite") : canary ? "PointCommunity/pointsite-staging-canary" : "PointCommunity/pointsite-staging",
             ACTIONS_ID_TOKEN_REQUEST_URL:
               failure === "endpoint"
                 ? "https://evil.example"
@@ -186,7 +186,7 @@ for (const purpose of ["publication", "verification", "rollback"] as const)
               : "Publication identity or state rejected. No deployment authorized.",
           ]);
           if (
-            ["job", "target", "endpoint", "builder", "canary"].includes(failure)
+            ["job", "target", "endpoint", "builder", "exchanged-origin"].includes(failure)
           )
             assert.equal(calls.length, 0);
         }

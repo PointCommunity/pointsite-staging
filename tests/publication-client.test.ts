@@ -299,7 +299,7 @@ test("verification report retries stop after three identical requests", async ()
   assert.equal(bodies.length, 3);
 });
 
-test("rejects missing and substituted Builder origins and Canary Production callbacks", () => {
+test("rejects missing and substituted Builder origins and accepts the isolated Canary public lane", () => {
   for (const BUILDER_ORIGIN of [
     undefined,
     "https://builder.pointatx.org",
@@ -313,7 +313,7 @@ test("rejects missing and substituted Builder origins and Canary Production call
           BUILDER_ORIGIN,
         }),
     );
-  assert.throws(
+  assert.doesNotThrow(
     () =>
       new PublicationClient(randomUUID(), "b".repeat(64), source, {
         ...environment,

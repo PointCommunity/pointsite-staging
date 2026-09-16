@@ -7,10 +7,12 @@ import { join } from "node:path";
 import { z } from "zod";
 import { boundedBytes } from "./publication-client.mts";
 import { outputManifest } from "./output-manifest.mts";
+import { publicationDestination } from "./publication-destination.mts";
 
 const sha = z.string().regex(/^[a-f0-9]{40}$/),
   digest = z.string().regex(/^[a-f0-9]{64}$/);
 const size = {
+  repository: z.enum(["PointCommunity/pointsite", "PointCommunity/pointsite-canary"]).default("PointCommunity/pointsite"),
   artifactDigest: digest,
   fileCount: z.number().int().min(1).max(2000),
   totalBytes: z.number().int().min(1).max(100_000_000),
@@ -66,6 +68,8 @@ export async function restoreRollbackOutput(
 ) {
   const input = RollbackInputSchema.parse(value),
     source = input.source;
+  const destination = publicationDestination("production");
+  assert.equal(source.repository, `PointCommunity/${destination.repository}`);
   const temporary = await mkdtemp(join(tmpdir(), "pointsite-rollback-"));
   const run = (command: string, args: string[], cwd = temporary) =>
     execFileSync(command, args, {
@@ -81,7 +85,7 @@ export async function restoreRollbackOutput(
       const read = async (path: string, blobSha: string, maximum: number) => {
         const bytes = await boundedBytes(
           await fetcher(
-            `https://raw.githubusercontent.com/PointCommunity/pointsite/${source.archiveRevision}/${path}`,
+            `https://raw.githubusercontent.com/${source.repository}/${source.archiveRevision}/${path}`,
             {
               redirect: "error",
               signal: AbortSignal.timeout(30_000),
@@ -175,7 +179,7 @@ with tarfile.open(sys.argv[1],'r:gz') as archive:
         "fetch",
         "--depth=1",
         "--no-tags",
-        "https://github.com/PointCommunity/pointsite.git",
+        `https://github.com/${source.repository}.git`,
         source.commitSha,
       );
       assert.equal(
