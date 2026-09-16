@@ -5,7 +5,7 @@ import { z } from "zod";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { publicationMediaPaths } from "../site-kit/publication-media";
 import { SiteDocumentSchema } from "../site-kit/schema";
-import { RENDERER_IDENTITY } from "../site-kit/version";
+import { supportsRenderer } from "../site-kit/version";
 
 const digest = z.string().regex(/^[a-f0-9]{64}$/);
 const revision = z.string().regex(/^[a-f0-9]{40}$/);
@@ -30,8 +30,8 @@ const candidateInputSchema = z.strictObject({
     draftId: z.uuid(),
     revisionId: z.uuid(),
     revisionChecksum: digest,
-    schemaVersion: z.literal(RENDERER_IDENTITY.schemaVersion),
-    rendererVersion: z.literal(RENDERER_IDENTITY.rendererVersion),
+    schemaVersion: z.union([z.literal(9), z.literal(10)]),
+    rendererVersion: z.enum(["9.0.0", "10.0.0"]),
     publicationProtocol: z.literal(2),
     mediaSelection: z.literal("referenced").optional(),
     workflowRevision: revision,
@@ -59,6 +59,7 @@ export async function validatePublicationCandidate(
           ...new Set(input.document.media.map((item) => item.sourcePath)),
         ].sort();
   if (
+    !supportsRenderer(input.candidate) ||
     input.candidate.workflowRevision !== revision.parse(workflowRevision) ||
     input.document.schemaVersion !== input.candidate.schemaVersion ||
     input.document.rendererVersion !== input.candidate.rendererVersion ||

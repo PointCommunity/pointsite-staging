@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { publicationMediaPaths } from "../site-kit/publication-media";
 import { migrateDocument } from "../site-kit/migrations";
-import { RENDERER_IDENTITY } from "../site-kit/version";
+import { supportsRenderer } from "../site-kit/version";
 import { publicationManifestChecksum } from "./publication-inputs.mts";
 
 interface Check {
@@ -141,9 +141,7 @@ export async function verifyStaging(
   });
   checks.push({
     name: "renderer-version",
-    passed:
-      document.rendererVersion === RENDERER_IDENTITY.rendererVersion &&
-      document.schemaVersion === RENDERER_IDENTITY.schemaVersion,
+    passed: supportsRenderer(document),
     detail: `${document.schemaVersion}/${document.rendererVersion}`,
   });
   checks.push({

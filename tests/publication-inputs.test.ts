@@ -6,14 +6,17 @@ import { join } from "node:path";
 import test from "node:test";
 import { defaultSiteDocument } from "../site-kit/default-site";
 import { checksumDocument } from "../site-kit/canonicalize";
+import { upgradeNavigation } from "../site-kit/migrations";
 import {
   materializePublication,
   validatePublicationInputs,
 } from "../scripts/publication-inputs.mts";
 import { expectedCandidateChecksum } from "../scripts/verify-staging.mts";
 
-async function fixture() {
-  const document = structuredClone(defaultSiteDocument);
+async function fixture(upgrade = false) {
+  const document = upgrade
+    ? upgradeNavigation(defaultSiteDocument)
+    : structuredClone(defaultSiteDocument);
   const assetId = randomUUID();
   const draftId = randomUUID();
   const sourcePath = `/assets/builder/${draftId}/${assetId}/image.png`;
@@ -50,14 +53,19 @@ async function fixture() {
   return { input, bytes };
 }
 
-test("materializes only the exact validated inputs and verifies each complete image", async (t) => {
+for (const upgrade of [false, true])
+test(`materializes exact schema ${upgrade ? 10 : 9} inputs and verifies each complete image`, async (t) => {
   const root = await mkdtemp(join(tmpdir(), "pointsite-publication-"));
   t.after(() => rm(root, { recursive: true, force: true }));
-  const { input, bytes } = await fixture();
+  const { input, bytes } = await fixture(upgrade);
   assert.deepEqual(
     await validatePublicationInputs(input, "a".repeat(40)),
     input,
   );
+  await assert.rejects(validatePublicationInputs({
+    ...input,
+    candidate: { ...input.candidate, rendererVersion: upgrade ? "9.0.0" : "10.0.0" },
+  }, "a".repeat(40)));
   const requests: number[] = [];
   const files = await materializePublication(
     root,
