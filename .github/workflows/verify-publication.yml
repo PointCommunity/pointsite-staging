@@ -9,7 +9,7 @@ permissions:
 jobs:
   verify:
     if: github.ref == 'refs/heads/main' && ((github.repository == 'PointCommunity/pointsite-staging' && github.event.client_payload.builderOrigin == 'https://builder.eaglepass.io') || (github.repository == 'PointCommunity/pointsite-staging-canary' && github.event.client_payload.builderOrigin == 'https://builder-canary.eaglepass.io'))
-    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@8e0a568e21cf00518cc0e8754c7ce692e83b4461
+    uses: PointCommunity/pointsite-staging/.github/workflows/verify-runtime.yml@3789751c8725f023945b9348d7b3b43737976f81
     with:
       builder_origin: ${{ github.event.client_payload.builderOrigin }}
       job_id: ${{ github.event.client_payload.verificationId }}
