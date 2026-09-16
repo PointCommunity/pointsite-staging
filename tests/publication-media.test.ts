@@ -12,12 +12,17 @@ import { join, dirname } from "node:path";
 import { tmpdir } from "node:os";
 import { defaultSiteDocument } from "../site-kit/default-site";
 import { publicationMediaPaths } from "../site-kit/publication-media";
+import { upgradeNavigation } from "../site-kit/migrations";
 import { prunePublicationMedia } from "../scripts/prune-publication-media.mts";
 
-test("new publications retain required images and fonts, remove unused exports, and preserve source documents", async () => {
+for (const upgrade of [false, true])
+test(`schema ${upgrade ? 10 : 9} publications retain required images and fonts and preserve source documents`, async () => {
   const root = await mkdtemp(join(tmpdir(), "pointsite-used-images-"));
   try {
-    const document = structuredClone(defaultSiteDocument);
+    const document = upgrade ? upgradeNavigation(defaultSiteDocument) : structuredClone(defaultSiteDocument);
+    const navigation = document.navigationDesigns?.[0].items ?? document.navigation;
+    navigation[0].href = "/assets/menu-download";
+    assert.ok(publicationMediaPaths(document).includes("/assets/menu-download"));
     document.media.push({
       id: crypto.randomUUID(),
       sourcePath: "/assets/unused.png",
