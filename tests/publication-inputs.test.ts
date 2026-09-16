@@ -17,6 +17,16 @@ async function fixture(upgrade = false) {
   const document = upgrade
     ? upgradeNavigation(defaultSiteDocument)
     : structuredClone(defaultSiteDocument);
+  if (!upgrade) {
+    document.schemaVersion = 9;
+    document.rendererVersion = "9.0.0";
+    document.navigation = document.navigationDesigns![0].items;
+    delete document.navigationDesigns;
+    for (const page of document.pages)
+      for (const section of page.blocks)
+        for (const { element } of section.items)
+          if (element.type === "navigation") delete element.navigationDesignId;
+  }
   const assetId = randomUUID();
   const draftId = randomUUID();
   const sourcePath = `/assets/builder/${draftId}/${assetId}/image.png`;
