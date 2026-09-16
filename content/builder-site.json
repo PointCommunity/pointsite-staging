@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 9,
-  "rendererVersion": "9.0.0",
+  "schemaVersion": 10,
+  "rendererVersion": "10.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -48,67 +48,74 @@
     "buttonStyle": "solid",
     "surfaceStyle": "warm"
   },
-  "navigation": [
+  "navigation": [],
+  "navigationDesigns": [
     {
-      "id": "00000000-0000-4000-8000-000000007001",
-      "label": "About",
-      "href": "/who-we-are",
-      "children": [
+      "id": "00000000-0000-4000-8000-000000000036",
+      "name": "Main navigation",
+      "items": [
         {
-          "id": "00000000-0000-4000-8000-000000007002",
-          "label": "Who We Are",
-          "href": "/who-we-are"
+          "id": "00000000-0000-4000-8000-000000007001",
+          "label": "About",
+          "href": "/who-we-are",
+          "children": [
+            {
+              "id": "00000000-0000-4000-8000-000000007002",
+              "label": "Who We Are",
+              "href": "/who-we-are"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000007003",
+              "label": "What We Believe",
+              "href": "/what-we-believe"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000007004",
+              "label": "Leadership",
+              "href": "/leadership"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000007005",
+              "label": "Next Generation",
+              "href": "/next-generation"
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000007003",
-          "label": "What We Believe",
-          "href": "/what-we-believe"
+          "id": "00000000-0000-4000-8000-000000007006",
+          "label": "Connect",
+          "href": "/connect-card",
+          "children": [
+            {
+              "id": "00000000-0000-4000-8000-000000007007",
+              "label": "Connect Card",
+              "href": "/connect-card"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000007008",
+              "label": "Neighborhood Groups",
+              "href": "/neighborhood-groups"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000007009",
+              "label": "Prayer Request",
+              "href": "/prayer-request"
+            }
+          ]
         },
         {
-          "id": "00000000-0000-4000-8000-000000007004",
-          "label": "Leadership",
-          "href": "/leadership"
+          "id": "00000000-0000-4000-8000-000000007010",
+          "label": "Give",
+          "href": "/give",
+          "children": []
         },
         {
-          "id": "00000000-0000-4000-8000-000000007005",
-          "label": "Next Generation",
-          "href": "/next-generation"
+          "id": "00000000-0000-4000-8000-000000007011",
+          "label": "Contact",
+          "href": "/contact",
+          "children": []
         }
       ]
-    },
-    {
-      "id": "00000000-0000-4000-8000-000000007006",
-      "label": "Connect",
-      "href": "/connect-card",
-      "children": [
-        {
-          "id": "00000000-0000-4000-8000-000000007007",
-          "label": "Connect Card",
-          "href": "/connect-card"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000007008",
-          "label": "Neighborhood Groups",
-          "href": "/neighborhood-groups"
-        },
-        {
-          "id": "00000000-0000-4000-8000-000000007009",
-          "label": "Prayer Request",
-          "href": "/prayer-request"
-        }
-      ]
-    },
-    {
-      "id": "00000000-0000-4000-8000-000000007010",
-      "label": "Give",
-      "href": "/give",
-      "children": []
-    },
-    {
-      "id": "00000000-0000-4000-8000-000000007011",
-      "label": "Contact",
-      "href": "/contact",
-      "children": []
     }
   ],
   "pages": [
@@ -162,8 +169,8 @@
                 "mobile": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "columnSpan": 7,
+                  "rowSpan": 3
                 }
               },
               "element": {
@@ -192,21 +199,22 @@
                   "rowSpan": 2
                 },
                 "tablet": {
-                  "column": 5,
+                  "column": 11,
                   "row": 1,
-                  "columnSpan": 8,
+                  "columnSpan": 2,
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
-                  "rowSpan": 3
+                  "column": 9,
+                  "row": 2,
+                  "columnSpan": 4,
+                  "rowSpan": 1
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005000",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -561,13 +569,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005001",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -577,8 +585,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -588,9 +596,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -616,7 +624,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -625,15 +633,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005001",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -940,13 +949,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005002",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -956,8 +965,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -967,9 +976,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -995,7 +1004,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -1004,15 +1013,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005002",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -1256,13 +1266,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005003",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -1272,8 +1282,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -1283,9 +1293,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -1300,7 +1310,7 @@
             },
             {
               "id": "3c3c3c3c-0000-4000-8000-000000005003",
-              "span": 5,
+              "span": 6,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -1308,10 +1318,10 @@
               },
               "grid": {
                 "desktop": {
-                  "column": 8,
+                  "column": 7,
                   "row": 1,
-                  "columnSpan": 5,
-                  "rowSpan": 2
+                  "columnSpan": 6,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -1320,15 +1330,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005003",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -1460,7 +1471,7 @@
                   "6918312a-d32e-49e8-a978-27b0f34d5fa1"
                 ],
                 "layout": "grid",
-                "variant": "leadership"
+                "variant": "standard"
               }
             }
           ]
@@ -1625,13 +1636,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005004",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -1641,8 +1652,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -1652,9 +1663,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -1680,7 +1691,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -1689,15 +1700,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005004",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -1970,13 +1982,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005005",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -1986,8 +1998,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -1997,9 +2009,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -2025,7 +2037,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -2034,15 +2046,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005005",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -2195,13 +2208,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005006",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -2211,8 +2224,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -2222,9 +2235,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -2250,7 +2263,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -2259,15 +2272,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005006",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -2402,15 +2416,18 @@
                   },
                   {
                     "title": "Oak Parke NG",
-                    "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener"
+                    "body": "Thursdays at 6:00pm\nLeadville Drive, Austin, TX 78749\nLeaders: Jase and Claire Michener",
+                    "mediaId": "cf9255d8-96bb-4964-ab18-3cc3f1f48cc4"
                   },
                   {
                     "title": "Shadow Creek NG",
-                    "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler"
+                    "body": "Wednesdays at 6:00pm\nSouth First, Austin, TX 78748\nLeaders: Russel and Kristen Hutzler",
+                    "mediaId": "a5d03e2e-74b7-4b27-bee3-c9f29783771d"
                   },
                   {
                     "title": "The Bend at Nuckol’s Crossing NG",
-                    "body": "Wednesdays at 6:00pm\nArbor Crest Lane, Austin, TX 78747\nLeaders: Caleb Bryant"
+                    "body": "Wednesdays at 6:00pm\nArbor Crest Lane, Austin, TX 78747\nLeaders: Caleb Bryant",
+                    "mediaId": "5ca0fbc9-9eeb-4b75-a98f-7069aeeb5c1f"
                   }
                 ],
                 "variant": "groups"
@@ -2575,13 +2592,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005007",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -2591,8 +2608,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -2602,9 +2619,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -2630,7 +2647,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -2639,15 +2656,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005007",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -2800,13 +2818,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005008",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -2816,8 +2834,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -2827,9 +2845,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -2855,7 +2873,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -2864,15 +2882,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005008",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -3153,13 +3172,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005009",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -3169,8 +3188,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -3180,9 +3199,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -3208,7 +3227,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -3217,15 +3236,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005009",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",
@@ -3442,13 +3462,13 @@
           "width": "shell",
           "surface": "primary",
           "padding": "small",
-          "minRows": 2,
+          "minRows": 1,
           "backgroundPosition": "center",
           "overlay": "none",
           "items": [
             {
               "id": "1a1a1a1a-0000-4000-8000-000000005010",
-              "span": 3,
+              "span": 2,
               "align": {
                 "desktop": "center",
                 "tablet": "center",
@@ -3458,8 +3478,8 @@
                 "desktop": {
                   "column": 1,
                   "row": 1,
-                  "columnSpan": 3,
-                  "rowSpan": 2
+                  "columnSpan": 2,
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 1,
@@ -3469,9 +3489,9 @@
                 },
                 "mobile": {
                   "column": 1,
-                  "row": 1,
-                  "columnSpan": 8,
-                  "rowSpan": 2
+                  "row": 2,
+                  "columnSpan": 7,
+                  "rowSpan": 1
                 }
               },
               "element": {
@@ -3497,7 +3517,7 @@
                   "column": 7,
                   "row": 1,
                   "columnSpan": 6,
-                  "rowSpan": 2
+                  "rowSpan": 1
                 },
                 "tablet": {
                   "column": 5,
@@ -3506,15 +3526,16 @@
                   "rowSpan": 2
                 },
                 "mobile": {
-                  "column": 1,
-                  "row": 3,
-                  "columnSpan": 12,
+                  "column": 8,
+                  "row": 1,
+                  "columnSpan": 5,
                   "rowSpan": 3
                 }
               },
               "element": {
                 "id": "4d4d4d4d-0000-4000-8000-000000005010",
                 "type": "navigation",
+                "navigationDesignId": "00000000-0000-4000-8000-000000000036",
                 "label": "Church navigation",
                 "orientation": "responsive",
                 "align": "right",

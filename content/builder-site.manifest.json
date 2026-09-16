@@ -1,15 +1,15 @@
 {
   "siteId": "pointsite",
   "draftId": "2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af",
-  "revisionId": "ed22df63-9480-4aba-ba72-6854052624b7",
-  "revisionChecksum": "91b103cd1e7aac767746ebaf914a3973f4dc25b4f7ad020e54c17ce710be6741",
-  "schemaVersion": 9,
-  "rendererVersion": "9.0.0",
+  "revisionId": "09932832-fa29-41ef-8673-5de9d233cb2a",
+  "revisionChecksum": "6f56f18b9400cd82c68d69bc8319c310de5de2aeddc21924367aba0e28623098",
+  "schemaVersion": 10,
+  "rendererVersion": "10.0.0",
   "publicationProtocol": 2,
   "mediaSelection": "referenced",
-  "workflowRevision": "33619a5d8413e748f90cb0b8a23b3d1e7a511bf0",
-  "fileCount": 19,
-  "candidateChecksum": "a60a97976d944d908abd6b3ece0400381b1fcebfa6b5281a919d081004274477",
+  "workflowRevision": "e9b411b6a9d7603321f921704c4f6d17ecb60fb7",
+  "fileCount": 21,
+  "candidateChecksum": "da8e5950634a3a78ef646c2212263f1e64b77cee6800ea8c40a90a70a5f0780a",
   "assets": [
     {
       "assetId": "09cbb8fd-68e7-4835-b188-85252413c458",
@@ -38,6 +38,13 @@
       "checksum": "eee0583c473018693de49d3c13498b11f8202c1e35bbbc5f526e0ae6be4f0a57",
       "byteSize": 54106,
       "contentType": "image/jpeg"
+    },
+    {
+      "assetId": "3eda9e76-a82c-4509-808b-62ab586f02ee",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/3eda9e76-a82c-4509-808b-62ab586f02ee/russell-and-kristin.webp",
+      "checksum": "0dcf831fa5fa0c9c12202162b92b800fdd326668c425cfe1e8069e1c7cac65c7",
+      "byteSize": 2331744,
+      "contentType": "image/webp"
     },
     {
       "assetId": "432b06f7-6114-495f-b1c9-055aa8d579fe",
@@ -114,6 +121,13 @@
       "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/c2866290-4dcb-46f2-882f-06e25132430d/chris-piedra.webp",
       "checksum": "7b5623e10fff6b8fb2f657eef5818bd1f2bd4404ab6d558f14b46c0d27258f6f",
       "byteSize": 2178746,
+      "contentType": "image/webp"
+    },
+    {
+      "assetId": "dbe47e89-62e0-4bc2-b93d-17b96fcc86bd",
+      "sourcePath": "/assets/builder/2c94dbf0-91c4-44b4-bb45-4c6d0a1a08af/dbe47e89-62e0-4bc2-b93d-17b96fcc86bd/jase-and-claire.webp",
+      "checksum": "9bd10ff3c82c5acd11b454fa25eed780c8c542964c447d9265eb412fa5fb248c",
+      "byteSize": 2533908,
       "contentType": "image/webp"
     },
     {
