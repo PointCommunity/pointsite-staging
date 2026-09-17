@@ -14,7 +14,7 @@ test("published compatibility page heroes retain the editor clipping wrapper", (
     if (hero.type !== "hero") throw new Error("Expected page Hero");
     hero.surface = surface;
     const html = renderToStaticMarkup(renderSection(candidate, defaultSiteDocument));
-    assert.match(html, /<div class="point-layout-item point-layout-item--grid"><section class="page-hero /);
+    assert.match(html, /<div class="point-layout-item point-layout-item--grid"[^>]*><section class="page-hero /);
     assert.match(html, /Who We Are/);
   }
 });
