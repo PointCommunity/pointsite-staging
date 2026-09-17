@@ -1186,14 +1186,16 @@ export function LayoutSection({
   sectionId?: string;
   interaction?: Pick<HTMLAttributes<HTMLElement>, 'onPointerMoveCapture' | 'onPointerLeave'>;
 }) {
+  // Older Flow sections always stacked, regardless of their stored column count.
+  const columns = document.schemaVersion >= 11 ? section.columns : 1;
   if (section.layout === 'compatibility')
     return (
-      <LayoutContext value={section}>
+      <LayoutContext value={{ layout: section.layout, columns }}>
         {renderContent ? renderContent('point-compatibility-slot', {}) : children}
       </LayoutContext>
     );
   const style = {
-    '--point-section-columns': section.layout === 'flow' ? section.columns : 12,
+    '--point-section-columns': section.layout === 'flow' ? columns : 12,
     '--point-section-gap':
       section.gapPixels === undefined ? sectionGap[section.gap] : `${section.gapPixels}px`,
     '--point-section-total-gap':
@@ -1203,7 +1205,7 @@ export function LayoutSection({
     '--point-section-min-rows': section.minRows,
   } as CSSProperties;
   return (
-    <LayoutContext value={section}>
+    <LayoutContext value={{ layout: section.layout, columns }}>
       <section
         className={`point-layout-section point-layout-section--${section.layout} point-layout-section--position-${section.position} point-layout-section--${section.width} point-layout-section--${section.surface} point-layout-section--pad-${section.padding} point-layout-section--overlay-${section.overlay}${section.border && section.border !== 'none' ? ` point-layout-section--border-${section.border}` : ''}${section.layout === 'flow' ? ` point-layout-section--stack-${section.stackAt ?? 'smallTablet'}` : ''}`}
         style={
