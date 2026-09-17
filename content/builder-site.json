@@ -55,6 +55,12 @@
       "name": "Main navigation",
       "items": [
         {
+          "id": "bf24a5f5-59fb-4a30-bae2-41a8c024594c",
+          "label": "Home",
+          "href": "/",
+          "children": []
+        },
+        {
           "id": "00000000-0000-4000-8000-000000007001",
           "label": "About",
           "href": "/who-we-are",
@@ -2408,7 +2414,7 @@
                 "items": [
                   {
                     "title": "Elm Grove NG",
-                    "body": "Mondays at 5:30pm\n673 Oyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
+                    "body": "Mondays at 5:30pm\nOyster Creek, Buda, TX 78610\nLeaders: Richard and Rose Paez"
                   },
                   {
                     "title": "Coves of Cimarron NG",
