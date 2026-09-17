@@ -35,7 +35,7 @@ test("preserves Desktop composition when the viewport widens", async ({
         return {
           overflow: document.documentElement.scrollWidth - innerWidth,
           elements: Array.from(
-            document.querySelectorAll("h1, h2, .point-layout-item--grid"),
+            document.querySelectorAll("h1, h2, .point-layout-section--grid .point-layout-item--grid"),
           ).map((element) => {
             const bounds = element.getBoundingClientRect();
             const style = getComputedStyle(element);

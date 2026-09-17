@@ -10,6 +10,8 @@ const files = [
   'SiteRenderer.tsx',
   'canonicalize.ts',
   'default-site.ts',
+  'document-sections.ts',
+  'editable-footer.ts',
   'editable-header.ts',
   'editable-page-hero.ts',
   'grid-layout.ts',
