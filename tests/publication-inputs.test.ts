@@ -7,7 +7,6 @@ import test from "node:test";
 import { defaultSiteDocument } from "../site-kit/default-site";
 import { checksumDocument } from "../site-kit/canonicalize";
 import { upgradeNavigation } from "../site-kit/migrations";
-import { createEditableFooterSection } from "../site-kit/editable-footer";
 import {
   materializePublication,
   validatePublicationInputs,
@@ -16,14 +15,12 @@ import { expectedCandidateChecksum } from "../scripts/verify-staging.mts";
 
 async function fixture(version: 9 | 10 | 11 = 9) {
   const document = upgradeNavigation(defaultSiteDocument);
-  if (version === 11) {
-    document.schemaVersion = 11;
-    document.rendererVersion = "11.0.0";
-    document.footer = [createEditableFooterSection(document.site)];
+  if (version < 11) {
+    document.schemaVersion = version;
+    document.rendererVersion = `${version}.0.0`;
+    delete document.footer;
   }
   if (version === 9) {
-    document.schemaVersion = 9;
-    document.rendererVersion = "9.0.0";
     document.navigation = document.navigationDesigns![0].items;
     delete document.navigationDesigns;
     for (const page of document.pages)

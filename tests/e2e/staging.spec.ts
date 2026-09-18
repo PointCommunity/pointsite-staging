@@ -121,7 +121,7 @@ test("honors saved grid placement at every responsive breakpoint", async ({
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
 
-    const geometry = await page.locator(".point-layout-item--grid").evaluateAll(
+    const geometry = await page.locator(".point-layout-item--grid:not(.point-layout-item--flow)").evaluateAll(
       (items, viewportWidth) =>
         items.map((item) => {
           const element = item as HTMLElement;

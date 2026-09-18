@@ -6,6 +6,9 @@ import { renderSection } from "../site-kit/registry";
 
 test("legacy Flow sections retain their single-column composition", () => {
   const document = structuredClone(defaultSiteDocument);
+  document.schemaVersion = 10;
+  document.rendererVersion = "10.0.0";
+  delete document.footer;
   const section = document.pages[0].blocks[0];
   section.layout = "flow";
   section.columns = 3;

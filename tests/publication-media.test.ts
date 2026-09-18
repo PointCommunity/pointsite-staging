@@ -13,7 +13,6 @@ import { tmpdir } from "node:os";
 import { defaultSiteDocument } from "../site-kit/default-site";
 import { publicationMediaPaths } from "../site-kit/publication-media";
 import { upgradeNavigation } from "../site-kit/migrations";
-import { createEditableFooterSection } from "../site-kit/editable-footer";
 import { prunePublicationMedia } from "../scripts/prune-publication-media.mts";
 
 for (const version of [10, 11] as const)
@@ -21,17 +20,19 @@ for (const version of [10, 11] as const)
     const root = await mkdtemp(join(tmpdir(), "pointsite-used-images-"));
     try {
       const document = upgradeNavigation(defaultSiteDocument);
+      if (version === 10) {
+        document.schemaVersion = 10;
+        document.rendererVersion = "10.0.0";
+        delete document.footer;
+      }
       if (version === 11) {
-        document.schemaVersion = 11;
-        document.rendererVersion = "11.0.0";
-        document.footer = [createEditableFooterSection(document.site)];
         const media = {
           id: crypto.randomUUID(),
           sourcePath: "/assets/footer-only.png",
           alt: "Footer background",
         };
         document.media.push(media);
-        document.footer[0].backgroundMediaId = media.id;
+        document.footer![0].backgroundMediaId = media.id;
         assert.ok(publicationMediaPaths(document).includes(media.sourcePath));
       }
       const navigation =
