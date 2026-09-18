@@ -42,7 +42,7 @@ test("published candidate migrates into the committed renderer contract", async 
   assert.deepEqual(migrateDocument(migrated.document).applied, []);
 });
 
-test("v8 content migrates to the v10 renderer independently of published content", () => {
+test("v8 content migrates to the v11 renderer independently of published content", () => {
   const legacyDocument = {
     ...structuredClone(defaultSiteDocument),
     schemaVersion: 8,
@@ -50,14 +50,16 @@ test("v8 content migrates to the v10 renderer independently of published content
   };
   legacyDocument.navigation = legacyDocument.navigationDesigns![0].items;
   delete legacyDocument.navigationDesigns;
+  delete legacyDocument.footer;
   for (const page of legacyDocument.pages)
     for (const section of page.blocks)
       for (const { element } of section.items)
         if (element.type === "navigation") delete element.navigationDesignId;
   const migrated = migrateDocument(legacyDocument);
-  assert.deepEqual(migrated.applied, ["8-to-9", "9-to-10"]);
-  assert.equal(migrated.document.schemaVersion, 10);
-  assert.equal(migrated.document.rendererVersion, "10.0.0");
+  assert.deepEqual(migrated.applied, ["8-to-9", "9-to-10", "10-to-11"]);
+  assert.equal(migrated.document.schemaVersion, 11);
+  assert.equal(migrated.document.rendererVersion, "11.0.0");
+  assert.deepEqual(migrated.document.footer, defaultSiteDocument.footer);
   assert.deepEqual(migrateDocument(migrated.document).applied, []);
 });
 
