@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 10,
-  "rendererVersion": "10.0.0",
+  "schemaVersion": 11,
+  "rendererVersion": "11.0.0",
   "site": {
     "name": "Point Community Church",
     "shortName": "Point ATX",
@@ -1187,6 +1187,14 @@
                     "title": "The return of Christ",
                     "body": "We believe Jesus Christ will return to the earth in the future to finalize his work of redemption and restoration.",
                     "supportingText": "Daniel 7:13–14; Acts 1:11; 1 Thessalonians 4:15; Revelation 19:11–16"
+                  },
+                  {
+                    "title": "Discipleship",
+                    "body": "We believe that discipleship is learning to follow Jesus, becoming like Jesus, and helping others do the same."
+                  },
+                  {
+                    "title": "Sanctification",
+                    "body": "We believe that sanctification is the process of becoming who Christ already created us to be."
                   }
                 ],
                 "variant": "beliefs"
@@ -4491,5 +4499,163 @@
       }
     ],
     "events": []
-  }
+  },
+  "footer": [
+    {
+      "id": "00000000-0000-4000-8000-000000000078",
+      "type": "section",
+      "name": "Footer information",
+      "layout": "flow",
+      "position": "flow",
+      "columns": 3,
+      "gap": "none",
+      "width": "site",
+      "surface": "transparent",
+      "padding": "none",
+      "gapPixels": 50,
+      "paddingPixels": 65,
+      "border": "top",
+      "stackAt": "phone",
+      "minRows": 1,
+      "backgroundPosition": "center",
+      "overlay": "none",
+      "items": [
+        {
+          "id": "0000000a-0000-4000-8000-000000000078",
+          "span": 1,
+          "align": {
+            "desktop": "stretch",
+            "tablet": "stretch",
+            "mobile": "stretch"
+          },
+          "grid": {
+            "desktop": {
+              "column": 1,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "tablet": {
+              "column": 1,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "mobile": {
+              "column": 1,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            }
+          },
+          "element": {
+            "id": "00000001-0000-4000-8000-000000000078",
+            "type": "richText",
+            "content": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Sunday at 10:30 AM"
+                  }
+                ]
+              }
+            ],
+            "heading": "Service Times",
+            "variant": "footer"
+          }
+        },
+        {
+          "id": "0000000b-0000-4000-8000-000000000078",
+          "span": 1,
+          "align": {
+            "desktop": "stretch",
+            "tablet": "stretch",
+            "mobile": "stretch"
+          },
+          "grid": {
+            "desktop": {
+              "column": 5,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "tablet": {
+              "column": 5,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "mobile": {
+              "column": 5,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            }
+          },
+          "element": {
+            "id": "00000002-0000-4000-8000-000000000078",
+            "type": "richText",
+            "content": [
+              {
+                "type": "address",
+                "text": "11300 Old San Antonio Rd\nManchaca, TX 78652"
+              }
+            ],
+            "heading": "Contact Info",
+            "variant": "footer"
+          }
+        },
+        {
+          "id": "0000000c-0000-4000-8000-000000000078",
+          "span": 1,
+          "align": {
+            "desktop": "stretch",
+            "tablet": "stretch",
+            "mobile": "stretch"
+          },
+          "grid": {
+            "desktop": {
+              "column": 9,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "tablet": {
+              "column": 9,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            },
+            "mobile": {
+              "column": 9,
+              "row": 1,
+              "columnSpan": 4,
+              "rowSpan": 3
+            }
+          },
+          "element": {
+            "id": "00000003-0000-4000-8000-000000000078",
+            "type": "socialLinks",
+            "heading": "Follow Us",
+            "links": [
+              {
+                "platform": "facebook",
+                "label": "Point ATX on Facebook",
+                "url": "https://www.facebook.com/pointatx/"
+              },
+              {
+                "platform": "instagram",
+                "label": "Point ATX on Instagram",
+                "url": "https://www.instagram.com/pointatx/"
+              }
+            ],
+            "align": "center",
+            "appearance": "icons",
+            "variant": "footer"
+          }
+        }
+      ]
+    }
+  ]
 }
