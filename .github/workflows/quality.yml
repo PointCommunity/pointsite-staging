@@ -18,6 +18,8 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
       - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Verify approved runtime commits remain available after branch cleanup
+        run: node --import tsx scripts/verify-workflow-pins.mts
       - run: npm run lint
       - run: npm test
       - run: npm audit --audit-level=high

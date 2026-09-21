@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Publication runtime retention</title>
+<style>
+  body { background: #101418; color: #e6edf3; font: 17px/1.6 system-ui, sans-serif; max-width: 800px; margin: 3rem auto; padding: 0 1.5rem; }
+  a { color: #80c7ff; } code { color: #b6e3ff; overflow-wrap: anywhere; }
+</style>
+<main>
+<h1>Publication runtime retention</h1>
+<p>Every reusable workflow commit must remain available after its development branch is deleted. Keep full SHA pins and the Builder-approved runtime identity unchanged.</p>
+<h2>Failure and repair</h2>
+<p>On September 21, 2026, <a href="https://github.com/PointCommunity/pointsite-staging/actions/runs/35594540659">GitHub rejected publication before starting any job</a>: the called workflow at <code>0524bc8f58acbd8ca875e8a797f58cc1f83d99d9</code> was not found. The development branch had been deleted after squash merge. The original commit remained readable through the Contents API, but had no branch or tag retaining it. Its tree matches the merged commit <code>de4a13a8480c8703f521ef437b6bb91e12b3716e</code>.</p>
+<p>Protected <code>runtime/&lt;full-sha&gt;</code> tags retain both current publication and verification commits. The <a href="https://github.com/PointCommunity/pointsite-staging/rules/23764853">runtime retention ruleset</a> prohibits tag updates and deletion, with no bypass actors. <a href="https://github.com/PointCommunity/pointsite-staging/actions/runs/35595026680">A diagnostic dispatch parsed successfully</a> and skipped publication because its origin was deliberately outside the allowed origins.</p>
+<h2>Runtime activation sequence</h2>
+<ol>
+  <li>Review and validate the exact runtime commit under the parent Builder Issue.</li>
+  <li>Create a lightweight tag named <code>runtime/&lt;full-sha&gt;</code> in the canonical <code>PointCommunity/pointsite-staging</code> repository, pointing to that same commit. Confirm the retention ruleset is active.</li>
+  <li>Update the callers and Builder contract together through their existing approval process. Continue using the full SHA in <code>uses:</code>; the tag retains the object, while the SHA identifies trusted code.</li>
+  <li>Run <code>node --import tsx scripts/verify-workflow-pins.mts</code> and require Quality to pass before merging callers. Only then remove development branches.</li>
+</ol>
+<h2>Checks and boundaries</h2>
+<p>Quality checks every canonical reusable workflow pin against live retained tags. The regression test rejects missing tags, tags pointing to another SHA, mutable references, and an empty set of pins. Existing publication tests continue checking the runtime authorization boundaries.</p>
+<p>This maintenance changes runtime retention and CI validation. It does not authorize content publication. Publication and acceptance testing still start inside authenticated Administrator Builder workflows. A skipped diagnostic confirms workflow resolution, not a successful publication.</p>
+</main>
+</html>
