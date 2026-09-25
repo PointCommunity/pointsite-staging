@@ -1368,7 +1368,12 @@ export function LayoutItem({
     if (!footprint) continue;
     const variables = style as CSSProperties & Record<string, string>;
     variables[`--point-wrap-${breakpoint}-side`] = footprint.side;
-    variables[`--point-wrap-${breakpoint}-columns`] = String(footprint.columns);
+    const widthPercent = ((footprint.columns / footprint.textColumns) * 100).toFixed(6);
+    const gapShare = ((footprint.textColumns - footprint.columns) / footprint.textColumns).toFixed(
+      6,
+    );
+    variables[`--point-wrap-${breakpoint}-width`] =
+      `calc(${widthPercent}% - ${gapShare} * var(--point-section-gap))`;
     variables[`--point-wrap-${breakpoint}-rows`] = String(footprint.rows);
   }
   return (

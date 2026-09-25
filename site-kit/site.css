@@ -1907,10 +1907,7 @@ body:has(.point-site) {
 .point-site .point-layout-item--text-wrap > .point-text::before {
   display: block;
   float: var(--point-wrap-desktop-side, none);
-  width: calc(
-    var(--point-wrap-desktop-columns, 0) * var(--point-grid-cell) +
-      (var(--point-wrap-desktop-columns, 0) - 1) * var(--point-section-gap)
-  );
+  width: var(--point-wrap-desktop-width, 0px);
   height: calc(
     var(--point-wrap-desktop-rows, 0) * var(--point-grid-cell) +
       (var(--point-wrap-desktop-rows, 0) - 1) * var(--point-section-gap)
@@ -2154,10 +2151,7 @@ body:has(.point-site) {
 @media (max-width: 900px) {
   .point-site .point-layout-item--text-wrap > .point-text::before {
     float: var(--point-wrap-tablet-side, none);
-    width: calc(
-      var(--point-wrap-tablet-columns, 0) * var(--point-grid-cell) +
-        (var(--point-wrap-tablet-columns, 0) - 1) * var(--point-section-gap)
-    );
+    width: var(--point-wrap-tablet-width, 0px);
     height: calc(
       var(--point-wrap-tablet-rows, 0) * var(--point-grid-cell) +
         (var(--point-wrap-tablet-rows, 0) - 1) * var(--point-section-gap)
@@ -2240,10 +2234,7 @@ body:has(.point-site) {
 @media (max-width: 520px) {
   .point-site .point-layout-item--text-wrap > .point-text::before {
     float: var(--point-wrap-mobile-side, none);
-    width: calc(
-      var(--point-wrap-mobile-columns, 0) * var(--point-grid-cell) +
-        (var(--point-wrap-mobile-columns, 0) - 1) * var(--point-section-gap)
-    );
+    width: var(--point-wrap-mobile-width, 0px);
     height: calc(
       var(--point-wrap-mobile-rows, 0) * var(--point-grid-cell) +
         (var(--point-wrap-mobile-rows, 0) - 1) * var(--point-section-gap)

@@ -16,7 +16,10 @@ type WrapCandidate = {
 };
 
 export type TextWrapFootprint = Partial<
-  Record<GridBreakpoint, { side: 'left' | 'right'; columns: number; rows: number }>
+  Record<
+    GridBreakpoint,
+    { side: 'left' | 'right'; columns: number; textColumns: number; rows: number }
+  >
 >;
 
 export function textWrapForItem(
@@ -44,6 +47,7 @@ export function textWrapForItem(
     footprint[breakpoint] = {
       side: imageArea.column === area.column ? 'left' : 'right',
       columns: imageArea.columnSpan,
+      textColumns: area.columnSpan,
       rows: imageArea.rowSpan,
     };
   }
