@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build && tsx scripts/prune-publication-media.mts",
     "start": "next start",
-    "lint": "eslint . --ignore-pattern .next --ignore-pattern out",
+    "lint": "node --import ./tools/eslint-minimatch.mjs node_modules/eslint/bin/eslint.js . --ignore-pattern .next --ignore-pattern out",
     "check": "npm run lint && npm run build",
     "test": "tsx --test tests/*.test.ts",
     "verify:staging": "npm run build && tsx scripts/verify-staging.mts",
@@ -31,13 +31,15 @@
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
     "eslint-config-next": "16.4.3",
+    "minimatch": "11.0.3",
     "sharp": "0.35.5",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
     "wrangler": "4.156.0"
   },
   "overrides": {
-    "sharp": "$sharp"
+    "sharp": "$sharp",
+    "minimatch": "$minimatch"
   },
   "type": "module"
 }
