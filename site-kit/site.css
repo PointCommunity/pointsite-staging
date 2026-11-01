@@ -1903,6 +1903,16 @@ body:has(.point-site) {
   max-width: 100%;
   min-width: 0;
 }
+/* Media fits its authored frame without contributing intrinsic height to text tracks. */
+.point-site
+  :is(
+    .point-composition__grid,
+    .point-layout-section--grid > .point-layout-section__grid:has(.point-text, .point-composition)
+  )
+  > .point-layout-item--grid:has(> .point-image, > .wide-photo, > .point-linked-media) {
+  height: 100%;
+  contain: size;
+}
 /* Navigation menus extend beyond their fixed grid placement. */
 .point-site .point-layout-section:has(.point-navigation),
 .point-site .point-layout-section--grid .point-layout-section__grid:has(.point-navigation),
